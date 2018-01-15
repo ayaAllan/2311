@@ -6,11 +6,10 @@ package enamel;
  * 
  */
 public class AudioPlayer extends Player {
-	
+	//finally
 	
 	public AudioPlayer(int cellNum, int buttonNum)
 	{
-		int t;
 	}
 
 	@Override
