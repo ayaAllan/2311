@@ -6,7 +6,7 @@ package enamel;
  * 
  */
 public class AudioPlayer extends Player {
-	//something
+	//something something something
 	
 	public AudioPlayer(int cellNum, int buttonNum)
 	{
