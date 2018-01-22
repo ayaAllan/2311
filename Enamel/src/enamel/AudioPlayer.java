@@ -6,8 +6,6 @@ package enamel;
  * 
  */
 public class AudioPlayer extends Player {
-	//something something something
-	
 	public AudioPlayer(int cellNum, int buttonNum)
 	{
 	}
@@ -15,7 +13,6 @@ public class AudioPlayer extends Player {
 	@Override
 	public void refresh() {
 		// TODO Auto-generated method stub
-		//hello
 		
 	}
 
@@ -35,6 +32,13 @@ public class AudioPlayer extends Player {
 	public void addRepeatButtonListener(int index, ScenarioParser sp) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public boolean testing(int i, int r) {
+		if (i == r) {
+			return true;
+		}
+		return false;
 	}
 
 }

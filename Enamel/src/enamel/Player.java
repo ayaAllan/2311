@@ -1,5 +1,5 @@
 package enamel;
-// option2
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -19,7 +19,10 @@ import java.util.logging.Logger;
 * @author ENAMEL team: Sunjik Lee, Li Yin, Vassilios Tzerpos.
 *
 */
+/*<<<<<<< HEAD
 //a
+=======
+>>>>>>> branch 'master' of https://github.com/ayaAllan/2311*/
 public abstract class Player {
 
 	int brailleCellNumber;
