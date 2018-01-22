@@ -35,9 +35,7 @@ public class AudioPlayer extends Player {
 	}
 
 public boolean test(int i, int r) {
-	if (i == r) {
-		return false;
-	}
-	return true;
+	return i + r == 2;
+	
 }
 }
