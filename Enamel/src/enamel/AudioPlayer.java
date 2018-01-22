@@ -33,21 +33,8 @@ public class AudioPlayer extends Player {
 		// TODO Auto-generated method stub
 		
 	}
-
-	public boolean testing(int i, int r) {
-<<<<<<< HEAD
-		return false;
-		
-=======
-		if (i == r) {
-			return false;
-		}
+	public boolean test(int i, int r) {
 		return true;
->>>>>>> refs/remotes/origin/B1
 	}
 
-
-	public int test(){
-		return 0;
-	}
 }
