@@ -33,17 +33,11 @@ public class AudioPlayer extends Player {
 		// TODO Auto-generated method stub
 		
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-=======
-=======
-	
->>>>>>> refs/remotes/origin/Gianluca-Branch
+
 	public boolean testing(int i, int r) {
 		return false;
 		
 	}
->>>>>>> branch 'master' of https://github.com/ayaAllan/2311
+
 
 }
