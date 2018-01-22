@@ -1,5 +1,5 @@
 package enamel;
-//option 1
+
 import java.util.HashMap;
 import java.util.*;
 
@@ -41,7 +41,6 @@ public class BrailleCell {
 	 * with the appropriate alphabet, which in this case is the English alphabet,
 	 * and the corresponding String representations of the braille cell.
 	 */
-	//Constructors
 	public BrailleCell() {
 		this.initializeAlphabet();
 		
