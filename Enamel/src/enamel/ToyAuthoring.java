@@ -29,5 +29,6 @@ public class ToyAuthoring {
 		s.setScenarioFile("FactoryScenarios/" + chooser.getSelectedFile().getName());
 		
 		//this is a second test for branching in the master branch
+		//creating a new line to test merging
 	}
 }
