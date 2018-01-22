@@ -34,20 +34,10 @@ public class AudioPlayer extends Player {
 		
 	}
 
-	public boolean testing(int i, int r) {
-<<<<<<< HEAD
+public boolean test(int i, int r) {
+	if (i == r) {
 		return false;
-		
-=======
-		if (i == r) {
-			return false;
-		}
-		return true;
->>>>>>> refs/remotes/origin/B1
 	}
-
-
-	public int test(){
-		return 0;
-	}
+	return true;
+}
 }
