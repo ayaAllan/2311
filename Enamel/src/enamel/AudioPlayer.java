@@ -40,4 +40,7 @@ public class AudioPlayer extends Player {
 		return true;
 	}
 
+	public int test(){
+		return 0;
+	}
 }
