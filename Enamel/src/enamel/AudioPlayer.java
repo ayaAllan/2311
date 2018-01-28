@@ -2,47 +2,34 @@ package enamel;
 
 /**
  * 
- * @author Team 15: Gianluca Corvinelli, Mark Savin, Aya Allan 
+ * @author Team 15: Gianluca Corvinelli, Mark Savin, Aya Allan
  * 
  */
 public class AudioPlayer extends Player {
-	public AudioPlayer(int cellNum, int buttonNum)
-	{
+	public AudioPlayer(int cellNum, int buttonNum) {
 	}
 
 	@Override
 	public void refresh() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void addSkipButtonListener(int index, String param, ScenarioParser sp) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removeButtonListener(int index) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void addRepeatButtonListener(int index, ScenarioParser sp) {
 		// TODO Auto-generated method stub
-		
-	}
-	public boolean testing(int i, int r) {
-		if(i + r == 2) {
-			return true;
-		} else {
-			return false;
-		}
-		
-	}
 
-	public int test(){
-		return 0;
 	}
 }
