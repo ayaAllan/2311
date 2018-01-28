@@ -33,5 +33,16 @@ public class AudioPlayer extends Player {
 		// TODO Auto-generated method stub
 		
 	}
+	public boolean testing(int i, int r) {
+		if(i + r == 2) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 
+	public int test(){
+		return 0;
+	}
 }
