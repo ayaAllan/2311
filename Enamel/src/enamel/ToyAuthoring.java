@@ -27,5 +27,6 @@ public class ToyAuthoring {
 
 		ScenarioParser s = new ScenarioParser(true);
 		s.setScenarioFile("FactoryScenarios/" + chooser.getSelectedFile().getName());
+
 	}
 }
