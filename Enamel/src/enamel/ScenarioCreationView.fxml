@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="enamel.ScenarioCreationController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Close" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TitledPane animated="true" layoutX="815.0" prefHeight="667.0" prefWidth="202.0" text="Previous Scenes">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="200.0">
+                     <children>
+                        <ScrollBar layoutX="186.0" orientation="VERTICAL" prefHeight="750.0" prefWidth="14.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
+            <HBox alignment="CENTER" layoutY="668.0" prefHeight="105.0" prefWidth="1024.0" spacing="125.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="668.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#mainMenuButton" prefHeight="42.0" prefWidth="135.0" text="Main Menu">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="135.0" text="Save Scene">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="135.0" text="Finish Scene">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="135.0" text="Previous Scene">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <AnchorPane layoutY="4.0" prefHeight="667.0" prefWidth="813.0">
+               <children>
+                  <Label layoutX="355.0" layoutY="45.0" text="Scene Creation">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="9.0" text="Scenario Builder">
+                     <font>
+                        <Font name="Broadway" size="32.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="191.0" layoutY="229.0" text="Step 2: Choose which pins to display for the current scene:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <GridPane alignment="CENTER" layoutX="196.0" layoutY="280.0" prefHeight="135.0" prefWidth="148.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <RadioButton mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <RadioButton mnemonicParsing="false" GridPane.columnIndex="1" />
+                        <RadioButton mnemonicParsing="false" GridPane.columnIndex="2" />
+                        <RadioButton mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <RadioButton mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <RadioButton mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <RadioButton mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <RadioButton mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label prefHeight="17.0" prefWidth="15.0" text="1">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="3" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="48.0" prefHeight="17.0" prefWidth="15.0" text="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="82.0" prefHeight="17.0" prefWidth="15.0" text="7" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="4" GridPane.columnIndex="3">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="121.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="5" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="6" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="8" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <Label layoutX="192.0" layoutY="107.0" text="Step 1: Either type or record a question/statement for the current scene: ">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="608.0" layoutY="135.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="119.0" text="Add Text" />
+                  <TextArea layoutX="189.0" layoutY="135.0" prefHeight="75.0" prefWidth="402.0" />
+                  <TextField layoutX="449.0" layoutY="334.0" />
+                  <Label layoutX="241.0" layoutY="263.0" text="Select Pins:" />
+                  <Label layoutX="364.0" layoutY="267.0" text="OR">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="431.0" layoutY="263.0" text="Enter a letter from the english alphabet:" />
+                  <Label layoutX="191.0" layoutY="427.0" text="Step 3: Setup interactive buttons for user feedback:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="274.0" layoutY="503.0" text="/* I am unsure how to implement this yet */" />
+                  <Button layoutX="608.0" layoutY="183.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="119.0" text="Record Audio" />
+                  <Button layoutX="616.0" layoutY="334.0" mnemonicParsing="false" text="Set Pins" />
+                  <Label layoutX="196.0" layoutY="553.0" text="Step 4: Give this scene a name incase you would like to change it in the furture:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="333.0" layoutY="589.0" />
+               </children>
+            </AnchorPane>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

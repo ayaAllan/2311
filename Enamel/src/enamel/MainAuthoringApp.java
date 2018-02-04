@@ -14,13 +14,16 @@ public class MainAuthoringApp extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		
-		
-		Parent root = FXMLLoader.load(getClass().getResource("ViewAuthoringApp.fxml"));
-		primaryStage.setTitle("AuthoringApp v1.0.0");
-		primaryStage.setScene(new Scene(root, 1000, 800));
-		primaryStage.show();
+	public void start(Stage mainMenuStage) throws Exception {
+
+		/*
+		 * The main menu which is linked to
+		 */
+		Parent root = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
+		mainMenuStage.setTitle("AuthoringApp v1.0.0");
+		mainMenuStage.setScene(new Scene(root, 1000, 800));
+		mainMenuStage.show();
+
 	}
 
 }
