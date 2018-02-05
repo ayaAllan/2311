@@ -1,0 +1,66 @@
+USER MANUAL
+Table of Contents
+1. Getting Started
+	1.1 Authors
+	1.2 About Braille
+	1.3 What is Authoring App?
+2. The Main Menu
+	2.1 Options for those who are visually impaired
+	2.2 Reading Speed
+	2.3 Breif Intro to Each Button
+3. Create A Teaching Scenario
+	3.1 Intro
+	3.2 Scenario Setup
+	3.3 The four Steps
+	3.4 Accessing Previous Scenes
+	3.5 Saving/Finishing a Scene
+	3.6 Where to Find a Newly Created Scenario
+4. Loading an Existing Scenario
+	4.1 Using the Main Menu
+	4.2 Browsing File Location
+5.  Editing a Previously Existing Scenario
+	5.1 TO BE IMPLEMENTED
+	
+--Section 1.1: Authors
+Gianluca Corvinelli
+Mark Savin
+Aya Allan
+
+Contact us:
+corv9@my.yorku.ca
+email 2
+email 3
+
+--Section 1.2: About Braille
+Braille is a form of written language for blind people, in which characters are represented 
+by patterns of raised dots that are felt with the fingertips.
+
+Braille symbols are formed within units of space known as braille cells. A full braille cell
+consists of six raised dots arranged in two parallel rows each having three dots. The dot 
+positions are identified by numbers from one through six. Sixty-four combinations are 
+possible using one or more of these six dots. A single cell can be used to represent an 
+alphabet letter, number, punctuation mark, or even a whole word
+
+--Section 1.3: What is Authoring App?
+The authoring app is a tool for visually impaired/capable users to teach braille to 
+students.  This is done by the teacher creating teaching scenarios for the student 
+in which they could create the flow of each scenario as well as edit/load them at anytime.
+Many other options for the student as well as the teacher can be found in more detail in
+the following sections.
+
+--Section 2.1: Options for those who are visually impaired
+In the lower right corner of the main menu there is an option for visually impaired users,
+this will do (YET TO BE IMPLEMENTED).  Another recommended option for those who are visually 
+impaired is to download and use a screen reader. Our app is fully functional with most popular
+screen readers.  Our recommended screen reader to use is NVDA.  We have tested the app using this
+screen reader for every version.
+
+--Section 2.2: Reading Speed
+The reading speed feature is placed in the main menu to set the default reading speed for a newly
+created scenario. More on this later as it is not implemented yet.
+
+--Section 2.3-5.1
+Pointless to write on these sections as they have not been implemented yet, will build on the user
+manual and table of contents as time goes on.
+
+

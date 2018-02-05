@@ -3,6 +3,10 @@ Button 4
 Directional orientation
 
 /~disp-cell-pins:0 11100000
+/~pause:2
+/~disp-cell-pins:0 11000000
+/~pause:2
+/~disp-cell-pins:0 00011100
 These are pins 1, 2 and 3, the 3 pins on the left side. 
 Press button 1 to continue.
 /~skip-button:0 ONEE
@@ -13,6 +17,8 @@ Press button 1 to continue.
 /~pause:1
 /~reset-buttons
 /~disp-cell-pins:0 00011100
+
+
 These are pins 4, 5 and 6, the 3 pins on the right side. 
 Press button 1 to continue.
 /~skip-button:0 ONEE
