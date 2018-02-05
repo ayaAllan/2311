@@ -1,7 +1,8 @@
 Cell 1
 Button 4
 Directional orientation
-
+/~ THIS IS A TEST
+Repeat Directional orientation
 /~disp-cell-pins:0 11100000
 /~pause:2
 /~disp-cell-pins:0 11000000
