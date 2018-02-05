@@ -22,19 +22,21 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainMenuControllerAA implements Initializable {
 
+	// current options for the users reading speed
 	ObservableList<String> readSpeedList = FXCollections.observableArrayList("Very Fast", "Fast", "Medium", "Slow",
 			"Very Slow", "Beginner");
 
+	// self explanatory, pretty useless now as it will be implemented in the late
+	// future
 	@FXML
 	private ChoiceBox readSpeedBox;
 
+	// initialize the main menu with the choice box containing the reading speed
+	// options. The default is set to begginer
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("View is now loaded!");
-		System.out.println("This is a test");
 		readSpeedBox.setValue("Beginner");
 		readSpeedBox.setItems(readSpeedList);
-
 	}
 
 	/*
@@ -51,10 +53,10 @@ public class MainMenuControllerAA implements Initializable {
 	}
 
 	/*
-	 * On load scenario button click I have implemented a file chooser for the user
-	 * to easily select which factory scenario file that they would like to use. I
-	 * set it up so that it starts in the factory scenarios directory and only shows
-	 * text files.
+	 * When the user clicks the load scenario button they will be prompted with a
+	 * file chooser so that they can easily select which factory scenario file that
+	 * they would like to use. I set it up so that it starts in the factory
+	 * scenarios directory and only shows text files.
 	 */
 	public void loadScenarioButton() {
 

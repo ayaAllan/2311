@@ -20,7 +20,7 @@
             <ChoiceBox fx:id="nobBox" layoutX="223.0" layoutY="269.0" prefHeight="25.0" prefWidth="53.0" />
             <Label layoutX="67.0" layoutY="202.0" text="NUMBER OF BRAILLE CELLS" />
             <Label layoutX="92.0" layoutY="273.0" text="NUMBER OF BUTTONS" />
-            <TextField layoutX="126.0" layoutY="143.0" />
+            <TextField fx:id="scenarioName" layoutX="126.0" layoutY="143.0" />
             <Label layoutX="115.0" layoutY="107.0" text="Please enter the scenario name: " />
             <Button layoutX="227.0" layoutY="333.0" mnemonicParsing="false" onAction="#continueButton" prefHeight="42.0" prefWidth="135.0" text="Continue">
                <font>
@@ -32,7 +32,7 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <TextField layoutX="223.0" layoutY="198.0" prefHeight="25.0" prefWidth="53.0" />
+            <TextField fx:id="noc" layoutX="223.0" layoutY="198.0" prefHeight="25.0" prefWidth="53.0" text="1" />
          </children>
     </AnchorPane>
   </children>
