@@ -38,7 +38,7 @@ public class Scene {
 		return buttons;
 	}
 
-	public void setName(String sceneName) {
+	public void setSceneName(String sceneName) {
 		this.sceneName = sceneName;
 	}
 	
@@ -65,7 +65,7 @@ public class Scene {
 	}
 
 	public void audioOnButtonClick(int buttonNumber, AudioClip audio) {
-		// TODO
+		// how to create a method that records audio and saves it in an attribute, in the controller access it and play the audio the user presses the button
 	}
 
 	public void audioNextScene(int buttonNumber, AudioClip audio) {
