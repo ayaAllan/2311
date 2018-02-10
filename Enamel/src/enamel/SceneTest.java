@@ -54,11 +54,6 @@ public class SceneTest {
 		Scene testScene = new Scene(null, null, null, buttons);
 		assertEquals(buttons, testScene.getButtons());
 	}
-	
-	@Test
-	public void test07() {
-		
-	}
 }
 
 
