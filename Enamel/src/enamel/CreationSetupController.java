@@ -29,20 +29,18 @@ public class CreationSetupController implements Initializable {
 
 	// elements that the 'number of buttons' choice box has. Twelve is the maximum
 	// buttons allowed by the ScenarioParser Class
-	ObservableList<String> nobList = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9",
-			"10", "11", "12");
+	private ObservableList<Integer> nobList = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 
 	// number of buttons choicebox
 	@FXML
-	private ChoiceBox nobBox;
+	private ChoiceBox<Integer> nobBox;
 
-	// scenario name textbox
 	@FXML
-	private TextField scenarioName;
+	private TextField scenarioNameTextField;
 
 	// number of cells textbox
 	@FXML
-	private TextField noc;
+	private TextField nocTextField;
 
 	/*
 	 * Setup the creation window with the drop down window for the number of buttons
@@ -51,7 +49,7 @@ public class CreationSetupController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		nobBox.setValue("1");
+		nobBox.setValue(1);
 		nobBox.setItems(nobList);
 
 	}
@@ -75,30 +73,47 @@ public class CreationSetupController implements Initializable {
 	public void continueButton(ActionEvent event) throws IOException {
 
 		try {
+
 			// get the number of cells that the user inputs and check if it is an integer,
 			// if it is not go straight to catch block and a pop up error will occur
-			String nocString = noc.getText();
+			String nocString = nocTextField.getText();
 			Integer.parseInt(nocString);
 
 			// get the scenario name and number of buttons as a string
-			String primitiveScenarioName = scenarioName.getText();
+			String primitiveScenarioName = scenarioNameTextField.getText();
 			String scenarioNameString = primitiveScenarioName + ".txt";
-			String nobString = (String) nobBox.getValue();
+			String nobString = Integer.toString(nobBox.getValue());
 
-			// setup the Scenario file with the number of cells and buttons as the first two
-			// lines and store it in the factory scenarios folder
-			List<String> setupLines = Arrays.asList("Cell " + nocString, "Button " + nobString, "");
-			Path file = Paths.get("./FactoryScenarios/" + scenarioNameString);
-			Files.write(file, setupLines, Charset.forName("UTF-8"));
+			// pop up error if the user does not type in a file name
+			if (primitiveScenarioName.equals("")) {
+				JOptionPane.showMessageDialog(null, "ERROR: Please enter a scenario name with at least one character.");
+			} else {
 
-			// loads the next window which will be the scenario creation
-			Parent mmParent = FXMLLoader.load(getClass().getResource("ScenarioCreationView.fxml"));
-			Scene mmScene = new Scene(mmParent);
+				// setup the Scenario file with the number of cells and buttons as the first two
+				// lines and store it in the factory scenarios folder
+				List<String> setupLines = Arrays.asList("Cell " + nocString, "Button " + nobString, "");
+				Path file = Paths.get("./FactoryScenarios/" + scenarioNameString);
+				Files.write(file, setupLines, Charset.forName("UTF-8"));
 
-			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			window.setScene(mmScene);
-			window.show();
+				// setup the loader with the info needed in a scenario so that it can be
+				// accessed in the scene creation window
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("ScenarioCreationView.fxml"));
 
+				// loads the next window which will be the scenario creation
+				Parent mmParent = loader.load();
+				Scene mmScene = new Scene(mmParent);
+
+				// after the scene is set, forward the number of buttons, number of braille
+				// cells and scenario name to the scenario creation controller
+				ScenarioCreationController controller = loader.getController();
+				controller.initializeScenario(primitiveScenarioName, nobBox.getValue(), Integer.parseInt(nocString));
+
+				// go to the scenario creation window
+				Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				window.setScene(mmScene);
+				window.show();
+			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}

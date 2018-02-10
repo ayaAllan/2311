@@ -1,11 +1,17 @@
 package enamel;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.media.AudioClip;
 
-public class Scene {
-	
-	//attribute for each user input in the ScenarioCreationView
+public class SceneAA {
+
+	// INCOMPLETE CLASS
+	// It works and can be tested but alot of methods that are needed dont exist as
+	// well as the implementation of certain methods need to be changed in the
+	// future
+
+	// attribute for each user input in the ScenarioCreationView
 	private String question;
 
 	private BrailleCell pins;
@@ -14,12 +20,23 @@ public class Scene {
 
 	private List<Integer> buttons;
 
-	//constructor that creates the scene with the scene name, pins to display, the question the user inputed, and the list of buttons
-	public Scene(String sceneName, String question, BrailleCell pins, List<Integer> buttons) {
+	// number of buttons
+	private int nob;
+
+	// constructor that creates the scene with the scene name, pins to display, the
+	// question the user inputed, and the list of buttons
+	public SceneAA(String sceneName, String question, BrailleCell pins, List<Integer> buttons) {
 		this.sceneName = sceneName;
 		this.question = question;
 		this.pins = pins;
 		this.buttons = buttons;
+	}
+
+	public SceneAA() {
+		this.sceneName = null;
+		this.question = null;
+		this.pins = new BrailleCell();
+		this.buttons = new ArrayList<Integer>();
 	}
 
 	public String getQuestion() {
@@ -41,7 +58,7 @@ public class Scene {
 	public void setName(String sceneName) {
 		this.sceneName = sceneName;
 	}
-	
+
 	public void setPins(char letter) throws InterruptedException {
 		pins.displayCharacter(letter);
 	}
