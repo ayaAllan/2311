@@ -30,15 +30,7 @@ public class AudioPlayer extends Player {
 	@Override
 	public void addRepeatButtonListener(int index, ScenarioParser sp) {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
-		
+
 	}
 
-public boolean test(int i, int r) {
-	return i + r == 2;
-	
-}
-=======
-	}
->>>>>>> branch 'master' of https://github.com/ayaAllan/2311
 }
