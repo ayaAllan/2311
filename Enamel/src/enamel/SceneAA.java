@@ -55,7 +55,7 @@ public class SceneAA {
 		return buttons;
 	}
 
-	public void setSceneName(String sceneName) {
+	public void setName(String sceneName) {
 		this.sceneName = sceneName;
 	}
 

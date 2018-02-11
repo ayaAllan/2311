@@ -32,7 +32,7 @@ public class SceneAATest {
 		final String sceneName = "Scene 1";
 		SceneAA testScene = new SceneAA("", null, null, null);
 		assertEquals("", testScene.getSceneName());
-		testScene.setSceneName(sceneName);
+		testScene.setName(sceneName);
 		assertEquals(sceneName, testScene.getSceneName());
 
 	}
