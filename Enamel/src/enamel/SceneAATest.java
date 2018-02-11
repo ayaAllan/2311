@@ -32,6 +32,8 @@ public class SceneAATest {
 		final String sceneName = "Scene 1";
 		SceneAA testScene = new SceneAA("", null, null, null);
 		assertEquals("", testScene.getSceneName());
+		testScene.setSceneName(sceneName);
+		assertEquals(sceneName, testScene.getSceneName());
 
 	}
 	
@@ -52,10 +54,6 @@ public class SceneAATest {
 		List<Integer> buttons = Arrays.asList(1,2,3,4,5);
 		SceneAA testScene = new SceneAA(null, null, null, buttons);
 		assertEquals(buttons, testScene.getButtons());
-	}
-	@Test
-	public void test07() {
-		
 	}
 }
 
