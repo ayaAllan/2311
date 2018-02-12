@@ -29,21 +29,26 @@ import javafx.stage.Stage;
 
 public class ScenarioCreationController implements Initializable {
 
-	// nob that will be used per scene, initialized in the initializeScenario method
+	// number of buttons that will be used per scene, initialized in the
+	// initializeScenario method
 	private ObservableList<Integer> nobList;
 
-	// all interactions that will be used for all scenes, also initialized in the
+	// all interactions that will be used for all scenes, initialized in the
 	// initializeScenario method
 	private ObservableList<String> interactionList;
+
+	// all letters of the alphabet as options for the user to set pins, initialized
+	// in the initializeScenario method
+	private ObservableList<Character> letterList;
 
 	@FXML
 	private Label sceneNameLabel, scenarioNameLabel;
 
 	@FXML
-	private TextField sceneNameTextField, letterTextField;
+	private TextField sceneNameTextField;
 
 	@FXML
-	private TextArea questionTextArea, interactionButtonTextArea;
+	private TextArea questionTextArea, interactionTextArea;
 
 	// all radio buttons that simulate the pins on the braille cell
 	@FXML
@@ -52,6 +57,9 @@ public class ScenarioCreationController implements Initializable {
 	// number of buttons drop down box
 	@FXML
 	private ChoiceBox<Integer> nobBox;
+
+	@FXML
+	private ChoiceBox<Character> letterBox;
 
 	@FXML
 	private ChoiceBox<String> interactionBox;
@@ -93,6 +101,11 @@ public class ScenarioCreationController implements Initializable {
 		interactionBox.setValue("No Interaction");
 		interactionBox.setItems(interactionList);
 
+		// initialize the letters of the alphabet drop down menu
+		letterList = FXCollections.observableArrayList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+				'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+		letterBox.setValue('a');
+		letterBox.setItems(letterList);
 	}
 
 	public void sceneNameButton(ActionEvent event) throws IOException {
@@ -179,12 +192,68 @@ public class ScenarioCreationController implements Initializable {
 		// TODO
 	}
 
-	public void setPinsButton(ActionEvent event) throws IOException {
+	public void setPinsButton(ActionEvent event) throws IOException, InterruptedException {
+
+		// change the current scenes braille cells pins to the character that the user
+		// enters
+		BrailleCell cell = this.scenario.getCurrentScene().getBrailleCell();
+		char letterChar = letterBox.getValue();
+		cell.displayCharacter(letterChar);
+
+		// whichever letter the user selected, display the pins as the braille cell
+		// value equivalent
+		List<Boolean> pinsAsBoolean = this.scenario.getCurrentScene().getPinsAsBoolean(cell);
+		rb1.setSelected(pinsAsBoolean.get(0));
+		rb2.setSelected(pinsAsBoolean.get(1));
+		rb3.setSelected(pinsAsBoolean.get(2));
+		rb4.setSelected(pinsAsBoolean.get(3));
+		rb5.setSelected(pinsAsBoolean.get(4));
+		rb6.setSelected(pinsAsBoolean.get(5));
+		rb7.setSelected(pinsAsBoolean.get(6));
+		rb8.setSelected(pinsAsBoolean.get(7));
+
+	}
+
+	public void recordAudioInteractionButton(ActionEvent event) throws IOException {
 		// TODO
 	}
 
 	public void saveInteractionButton(ActionEvent event) throws IOException {
-		// TODO
+
+		// get the current button number that the user wants to add interactions to
+		int currentButtonNumber = this.nobBox.getValue();
+		System.out.println(currentButtonNumber);
+		// used in the boolean statements at the end for the jpane
+		String oldText = this.scenario.getCurrentScene().getInteractionTextInput().get(currentButtonNumber);
+		String oldPreset = this.scenario.getCurrentScene().getInteractionPreset().get(currentButtonNumber);
+
+		// save the preset interaction for the current button number in the current
+		// scene object
+		String interactionString = interactionBox.getValue();
+		this.scenario.getCurrentScene().setInteractionPreset(currentButtonNumber, interactionString);
+
+		// save the text-to-speach input for the current button number in the current
+		// scene object
+		String interactionTextInput = interactionTextArea.getText();
+		this.scenario.getCurrentScene().setInteractionTextInput(currentButtonNumber, interactionTextInput);
+
+		// when the user clicks the button, set the drop down menu back to 'no
+		// interaction'
+		this.interactionBox.setValue("No Interaction");
+		this.interactionTextArea.clear();
+
+		// give the user feedback when the button is clicked to whether they have
+		// overwritten or created an interaction for the specified button number
+		Boolean textFieldIsEmpty = oldText == null;
+		Boolean interactionNotSet = oldPreset == null;
+		if (textFieldIsEmpty || interactionNotSet) {
+			JOptionPane.showMessageDialog(null,
+					"The interaction for button number " + currentButtonNumber + " has been successfully created.");
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"The interaction for button number " + currentButtonNumber + " has been successfully overwritten.");
+		}
+		System.out.println(currentButtonNumber);
 	}
 
 	/*
@@ -208,6 +277,9 @@ public class ScenarioCreationController implements Initializable {
 		// ATTRIBUTES
 		// OTHERWISE IT WILL BE STUCK ON THE SAME SCENE
 		// currentSceneNumber++;
+
+		// remember to extract current radio button values (simulated pins) and set them
+		// in txt file b/c it should not be done in the set pins button method
 	}
 
 	public void selectedSceneButton(ActionEvent event) throws IOException {
