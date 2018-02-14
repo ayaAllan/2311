@@ -32,6 +32,10 @@ public class ScenarioAA {
 	public int getNOB() {
 		return this.nob;
 	}
+	
+	public String getScenarioName() {
+		return this.scenarioName;
+	}
 
 	public SceneAA getCurrentScene() {
 		return this.currentScene;

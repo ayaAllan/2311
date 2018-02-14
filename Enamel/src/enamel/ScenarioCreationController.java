@@ -1,11 +1,14 @@
 package enamel;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -260,12 +263,21 @@ public class ScenarioCreationController implements Initializable {
 	 * clicking this button returns the user to the main menu
 	 */
 	public void mainMenuButton(ActionEvent event) throws IOException {
-		Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
-		Scene mmScene = new Scene(mmParent);
+		//a prompt that tells the user they have not saved their work
+		int value = JOptionPane.showConfirmDialog(null, "If you return to the main menu now without saving your scenario, all progress will be lost!\n Click no to stay. \n Click yes to lose all progress", "Please Confirm:", JOptionPane.YES_NO_OPTION);
+		if (value == JOptionPane.YES_OPTION) {
+			Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
+			Scene mmScene = new Scene(mmParent);
 
-		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		window.setScene(mmScene);
-		window.show();
+			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			window.setScene(mmScene);
+			window.show();
+			
+	        }
+	        else {
+	           //do nothing
+		
+	        }
 	}
 
 	public void finishScenarioButton(ActionEvent event) throws IOException {
@@ -280,6 +292,8 @@ public class ScenarioCreationController implements Initializable {
 
 		// remember to extract current radio button values (simulated pins) and set them
 		// in txt file b/c it should not be done in the set pins button method
+		
+		
 	}
 
 	public void selectedSceneButton(ActionEvent event) throws IOException {
