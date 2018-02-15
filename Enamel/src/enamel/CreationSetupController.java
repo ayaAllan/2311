@@ -9,8 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,24 +25,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 public class CreationSetupController implements Initializable {
 
 	// elements that the 'number of buttons' choice box has. Twelve is the maximum
 	// buttons allowed by the ScenarioParser Class
 	private ObservableList<Integer> nobList = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 
-	// number of buttons choicebox
+	private ObservableList<Integer> nocList = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+
+	// number of buttons, number of cells
 	@FXML
-	private ChoiceBox<Integer> nobBox;
+	private ChoiceBox<Integer> nobBox, nocBox;
 
 	@FXML
 	private TextField scenarioNameTextField;
 
-	// number of cells textbox
 	@FXML
-	private TextField nocTextField;
+	private Button continueButton;
 
 	/*
 	 * Setup the creation window with the drop down window for the number of buttons
@@ -49,9 +50,12 @@ public class CreationSetupController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		nocBox.setValue(1);
+		nocBox.setItems(nocList);
 		nobBox.setValue(1);
 		nobBox.setItems(nobList);
 
+		this.continueButton.setDisable(true);
 	}
 
 	/*
@@ -72,52 +76,49 @@ public class CreationSetupController implements Initializable {
 	 */
 	public void continueButton(ActionEvent event) throws IOException {
 
-		try {
+		// get the number of cells that the user inputs and check if it is an integer,
+		// if it is not go straight to catch block and a pop up error will occur
+		int noc = nocBox.getValue();
 
-			// get the number of cells that the user inputs and check if it is an integer,
-			// if it is not go straight to catch block and a pop up error will occur
-			String nocString = nocTextField.getText();
-			Integer.parseInt(nocString);
+		// get the scenario name and number of buttons as a string
+		String primitiveScenarioName = scenarioNameTextField.getText();
+		String scenarioNameString = primitiveScenarioName + ".txt";
+		String nobString = Integer.toString(nobBox.getValue());
 
-			// get the scenario name and number of buttons as a string
-			String primitiveScenarioName = scenarioNameTextField.getText();
-			String scenarioNameString = primitiveScenarioName + ".txt";
-			String nobString = Integer.toString(nobBox.getValue());
+		// setup the Scenario file with the number of cells and buttons as the first two
+		// lines and store it in the factory scenarios folder
+		List<String> setupLines = Arrays.asList("Cell " + noc, "Button " + nobString, "");
+		Path file = Paths.get("./FactoryScenarios/" + scenarioNameString);
+		Files.write(file, setupLines, Charset.forName("UTF-8"));
 
-			// pop up error if the user does not type in a file name
-			if (primitiveScenarioName.equals("")) {
-				JOptionPane.showMessageDialog(null, "ERROR: Please enter a scenario name with at least one character.");
-			} else {
+		// setup the loader with the info needed in a scenario so that it can be
+		// accessed in the scene creation window
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("ScenarioCreationView.fxml"));
 
-				// setup the Scenario file with the number of cells and buttons as the first two
-				// lines and store it in the factory scenarios folder
-				List<String> setupLines = Arrays.asList("Cell " + nocString, "Button " + nobString, "");
-				Path file = Paths.get("./FactoryScenarios/" + scenarioNameString);
-				Files.write(file, setupLines, Charset.forName("UTF-8"));
+		// loads the next window which will be the scenario creation
+		Parent mmParent = loader.load();
+		Scene mmScene = new Scene(mmParent);
 
-				// setup the loader with the info needed in a scenario so that it can be
-				// accessed in the scene creation window
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(getClass().getResource("ScenarioCreationView.fxml"));
+		// after the scene is set, forward the number of buttons, number of braille
+		// cells and scenario name to the scenario creation controller
+		ScenarioCreationController controller = loader.getController();
+		controller.initializeScenario(primitiveScenarioName, nobBox.getValue(), noc);
 
-				// loads the next window which will be the scenario creation
-				Parent mmParent = loader.load();
-				Scene mmScene = new Scene(mmParent);
+		// go to the scenario creation window
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		window.setScene(mmScene);
+		window.show();
 
-				// after the scene is set, forward the number of buttons, number of braille
-				// cells and scenario name to the scenario creation controller
-				ScenarioCreationController controller = loader.getController();
-				controller.initializeScenario(primitiveScenarioName, nobBox.getValue(), Integer.parseInt(nocString));
+	}
 
-				// go to the scenario creation window
-				Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				window.setScene(mmScene);
-				window.show();
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+	@FXML
+	public void userTyped(KeyEvent event) {
+		if (!scenarioNameTextField.getText().isEmpty()) {
+			continueButton.setDisable(false);
+		} else {
+			continueButton.setDisable(true);
 		}
-
 	}
 
 }

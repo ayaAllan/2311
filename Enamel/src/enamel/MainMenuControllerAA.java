@@ -72,8 +72,15 @@ public class MainMenuControllerAA implements Initializable {
 			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
 		}
 
-		ScenarioParser s = new ScenarioParser(true);
-		s.setScenarioFile("FactoryScenarios/" + chooser.getSelectedFile().getName());
+		// code prof gave us to run in seperate thread to aviod crashing
+		Thread starterCodeThread = new Thread("Starter Code Thread") {
+			public void run() {
+				ScenarioParser s = new ScenarioParser(true);
+				s.setScenarioFile("FactoryScenarios/" + chooser.getSelectedFile().getName());
+			}
+		};
+		starterCodeThread.start();
+
 	}
 
 }
