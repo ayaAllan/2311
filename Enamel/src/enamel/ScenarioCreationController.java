@@ -467,32 +467,44 @@ public class ScenarioCreationController implements Initializable {
 		// need to finish implementing this part where if the scene name already exists
 		// it should overwrite it not create another scene with the same name, this will
 		// cause many complications with the other buttons
-		//
-		// // check to see if the scenename exists already
-		// Boolean sceneExists = false;
-		// for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-		// if (sceneName.equals(this.scenario.getScenario().get(i).getSceneName())) {
-		// sceneExists = true;
-		// }
-		// }
-		//
-		// System.out.println(sceneExists);
-		//
-		// if (sceneExists) {
-		//
-		// // this.sceneNameLabel.setText(sceneName);
-		// // String questionText = questionTextArea.getText();
-		// // // set the question to what the user typed
-		// // this.scenario.getCurrentScene().setQuestion(questionText);
-		// // this.listOfScenesBox.setValue(sceneName);
-		// int index = this.scenario.findSceneIndex(sceneName);
-		// if(index == -1) {
-		// //do nothing
-		// } else {
-		// this.scenario.getScenario().remove(index);
-		// }
-		//
-		// }
+
+		// check to see if the scenename exists already
+		Boolean sceneExists = false;
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+			if (sceneName.equals(this.scenario.getScenario().get(i).getSceneName())) {
+				sceneExists = true;
+			}
+		}
+		System.out.println("new line here ===================");
+		System.out.println("scene exists?" + sceneExists);
+
+		// wrong boolean it should be if it exists AND your currently at the end of the
+		// index which is at a different location of what u found
+		if (sceneExists) {
+
+			// this.sceneNameLabel.setText(sceneName);
+			// String questionText = questionTextArea.getText();
+			// // set the question to what the user typed
+			// this.scenario.getCurrentScene().setQuestion(questionText);
+			// this.listOfScenesBox.setValue(sceneName);
+			int index = this.scenario.findSceneIndex(sceneName);
+			System.out.println("scene name we are searching for:" + sceneName);
+			System.out.println("index of existing scene: " + index);
+			System.out.println("currentSceneIndex (should be at the end):" + this.scenario.getCurrentSceneIndex());
+			System.out.println("is the current scene index NOT the same as the duplicate index?"
+					+ (this.scenario.getCurrentSceneIndex() != index));
+
+			if (index == -1) {
+				// do nothing
+			} else if (this.scenario.getCurrentSceneIndex() != index) {
+				this.scenario.getScenario().remove(index);
+				System.out.println(index);
+
+			} else {
+				// do nothing
+			}
+
+		}
 		// add the scene name to the scenario and set the text in the top right corner
 		// to the current scene name
 		this.scenario.getCurrentScene().setName(sceneName);
@@ -521,16 +533,16 @@ public class ScenarioCreationController implements Initializable {
 
 		// need to remove all the extra created null scenes due to the user incorrectly
 		// pressing new scene too many times
-		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-
-			System.out.println(this.scenario.getScenario().get(i) == null);
-			System.out.println(this.scenario.getScenario().get(i).getSceneName());
-			System.out.println(this.scenario.getScenario().get(i).equals(null));
-			System.out.println(this.scenario.getScenario().get(i).getSceneName() == null);
-			if (this.scenario.getScenario().get(i).getSceneName() == null) {
-				this.scenario.getScenario().remove(i);
-			}
-		}
+//		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+//
+//			System.out.println(this.scenario.getScenario().get(i) == null);
+//			System.out.println(this.scenario.getScenario().get(i).getSceneName());
+//			System.out.println(this.scenario.getScenario().get(i).equals(null));
+//			System.out.println(this.scenario.getScenario().get(i).getSceneName() == null);
+//			if (this.scenario.getScenario().get(i).getSceneName() == null) {
+//				this.scenario.getScenario().remove(i);
+//			}
+//		}
 
 		this.newSceneButton.setDisable(false);
 		this.deleteSceneButton.setDisable(false);
@@ -546,6 +558,7 @@ public class ScenarioCreationController implements Initializable {
 
 		this.scenario.newCurrentScene(s);
 		this.scenario.addScene(this.scenario.getCurrentScene());
+		this.scenario.setCurrentSceneIndex(this.scenario.getScenario().size() - 1);
 
 		// clear whatever needs to be cleared
 		this.sceneNameTextField.clear();
@@ -574,7 +587,15 @@ public class ScenarioCreationController implements Initializable {
 			// do nothing
 		} else {
 
-			int indexOfValue = this.scenario.findSceneIndex(selectedSceneName);
+			// was getting a wierd null pointer exception based on the method
+			// findSceneIndex() implementation
+			// this fixes it
+			int indexOfValue;
+			if (selectedSceneName == null) {
+				indexOfValue = -1;
+			} else {
+				indexOfValue = this.scenario.findSceneIndex(selectedSceneName);
+			}
 
 			if (indexOfValue == -1) {
 				// temporary joption pane for testing purposes
@@ -599,6 +620,20 @@ public class ScenarioCreationController implements Initializable {
 				this.interactionTextArea.setText(this.scenario.getCurrentScene().getInteractionTextInput().get(1));
 				this.saveSceneButton.setDisable(false);
 				this.deleteSceneButton.setDisable(false);
+				
+				//part for enabling the new scene button but also removing the new scene the user createdso you dont get null references
+				this.newSceneButton.setDisable(false);
+				for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+
+//					System.out.println(this.scenario.getScenario().get(i) == null);
+//					System.out.println(this.scenario.getScenario().get(i).getSceneName());
+//					System.out.println(this.scenario.getScenario().get(i).equals(null));
+//					System.out.println(this.scenario.getScenario().get(i).getSceneName() == null);
+					if (this.scenario.getScenario().get(i).getSceneName() == null) {
+						this.scenario.getScenario().remove(i);
+					}
+				}
+				
 			}
 		}
 	}
@@ -649,6 +684,13 @@ public class ScenarioCreationController implements Initializable {
 			this.interactionTextArea.clear();
 			saveSceneButton.setDisable(true);
 			newSceneButton.setDisable(false);
+			
+			//clean up any newly created scenes that arent used
+			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+				if (this.scenario.getScenario().get(i).getSceneName() == null) {
+					this.scenario.getScenario().remove(i);
+				}
+			}
 
 		}
 
@@ -678,6 +720,7 @@ public class ScenarioCreationController implements Initializable {
 			}
 			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
 			this.listOfScenesBox.setItems(listOfScenesOL);
+			
 
 		}
 

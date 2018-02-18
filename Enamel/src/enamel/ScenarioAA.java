@@ -60,6 +60,10 @@ public class ScenarioAA {
 	public void setNumberOfCells(int noc) {
 		this.noc = noc;
 	}
+	
+	public void setCurrentSceneIndex(int index) {
+		this.currentSceneIndex = index;
+	}
 
 	public void setScenarioName(String name) {
 		this.scenarioName = name;
@@ -67,11 +71,17 @@ public class ScenarioAA {
 
 	public int findSceneIndex(String sceneName) {
 		int index = -1;
+		System.out.println("-----------START ----------------- ");
 		for (int i = 0; i < this.listOfScenes.size(); i++) {
-			if (sceneName == this.listOfScenes.get(i).getSceneName()) {
+			System.out.println(this.listOfScenes.get(i).getSceneName());
+			System.out.println(sceneName);
+			System.out.println(sceneName.equals(this.listOfScenes.get(i).getSceneName()));
+			System.out.println("---end of line --- ");
+			if (sceneName.equals(this.listOfScenes.get(i).getSceneName())) {
 				index = i;
 			}
 		}
+		System.out.println("-----------END ----------------- ");
 		return index;
 
 	}
