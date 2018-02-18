@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -23,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -30,6 +32,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class ScenarioCreationController implements Initializable {
@@ -61,19 +64,22 @@ public class ScenarioCreationController implements Initializable {
 
 	// number of buttons drop down box
 	@FXML
-	private ChoiceBox<Integer> nobBox, nocBox;
+	private ComboBox<Integer> nobBox, nocBox;
 
 	@FXML
-	private ChoiceBox<Character> letterBox;
+	private ComboBox<Character> letterBox;
 
 	@FXML
-	private ChoiceBox<String> interactionBox, listOfScenesBox;
+	private ComboBox<String> interactionBox, listOfScenesBox;
 
 	@FXML
 	private ListView<String> sceneListView;
 
 	@FXML
-	private Button saveSceneButton;
+	private ObservableList<String> sceneList, sceneListBoxVersion;
+
+	@FXML
+	private Button saveSceneButton, newSceneButton, deleteSceneButton;
 
 	// create a scenario to keep track of all the scenes the user creates within the
 	// same scenario
@@ -84,13 +90,7 @@ public class ScenarioCreationController implements Initializable {
 
 	}
 
-	public void revisitScenarioBuilder(ScenarioAA scenarioPassed) throws IOException {
-		// when the user creates a new scene it should load this xml and controler but
-		// with this new initializer, this way it can store all the previous attributes
-		// TODO
-	}
-
-	public void initializeScenario(String name, int nob, int noc) throws IOException {
+	public void initializeScenario(String name, int nob, int noc) {
 
 		// initialize a new scene and scenario, the scenario will be constructed with
 		// the scenario name, number of buttons, and number of cells from the previous
@@ -135,24 +135,28 @@ public class ScenarioCreationController implements Initializable {
 		letterBox.setValue('-');
 		letterBox.setItems(letterList);
 
+		sceneList = FXCollections.observableArrayList();
+		sceneListBoxVersion = FXCollections.observableArrayList("No Scene Selected");
+		this.listOfScenesBox.setValue("No Scene Selected");
+
 		// cant save a scene that hasnt been created yet
+		// also set other buttons disable values based on what the user can do at this
+		// point
 		saveSceneButton.setDisable(true);
+		this.newSceneButton.setDisable(true);
+		this.deleteSceneButton.setDisable(true);
 
 	}
 
-	public void addTextButton(ActionEvent event) throws IOException {
-
-	}
-
-	public void recordAudioButton(ActionEvent event) throws IOException {
+	public void recordAudioButton(ActionEvent event) {
 		// TODO
 	}
 
-	public void setPinsButton(ActionEvent event) throws IOException, InterruptedException {
+	public void setPinsBox(ActionEvent event) throws InterruptedException {
+		// change the current scenes braille cells pins to a letter
+		int index = this.nocBox.getValue() - 1;
 
-		// change the current scenes braille cells pins to the character that the user
-		// enters
-		BrailleCell cell = this.scenario.getCurrentScene().getBrailleCell();
+		BrailleCell cell = new BrailleCell();
 		char letterChar = letterBox.getValue();
 
 		if (letterChar == '-') {
@@ -172,15 +176,237 @@ public class ScenarioCreationController implements Initializable {
 			rb6.setSelected(pinsAsBoolean.get(5));
 			rb7.setSelected(pinsAsBoolean.get(6));
 			rb8.setSelected(pinsAsBoolean.get(7));
+			this.scenario.getCurrentScene().getBrailleCells().set(index, cell);
 		}
-
 	}
 
-	public void recordAudioInteractionButton(ActionEvent event) throws IOException {
+	public void clearPinsButton(ActionEvent event) throws InterruptedException {
+
+		int index = this.nocBox.getValue() - 1;
+		this.scenario.getCurrentScene().getBrailleCells().get(index).clear();
+
+		rb1.setSelected(false);
+		rb2.setSelected(false);
+		rb3.setSelected(false);
+		rb4.setSelected(false);
+		rb5.setSelected(false);
+		rb6.setSelected(false);
+		rb7.setSelected(false);
+		rb8.setSelected(false);
+
+		// refresh letter value
+		letterBox.setValue('-');
+	}
+
+	public void selectedBrailleCell(ActionEvent event) {
+
+		int index = this.nocBox.getValue() - 1;
+
+		// set pins to the cell numbers previous state
+		BrailleCell cellAtindex = this.scenario.getCurrentScene().getBrailleCells().get(index);
+		List<Boolean> pinsAsBoolean = this.scenario.getCurrentScene().getPinsAsBoolean(cellAtindex);
+		rb1.setSelected(pinsAsBoolean.get(0));
+		rb2.setSelected(pinsAsBoolean.get(1));
+		rb3.setSelected(pinsAsBoolean.get(2));
+		rb4.setSelected(pinsAsBoolean.get(3));
+		rb5.setSelected(pinsAsBoolean.get(4));
+		rb6.setSelected(pinsAsBoolean.get(5));
+		rb7.setSelected(pinsAsBoolean.get(6));
+		rb8.setSelected(pinsAsBoolean.get(7));
+
+		// refresh letter value
+		letterBox.setValue('-');
+	}
+
+	public void radioButtonClicked1(ActionEvent event) {
+		int index = this.nocBox.getValue() - 1;
+		if (this.scenario.getCurrentScene().getBrailleCells().get(index).getPinState(0) == true) {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).lowerOnePin(1);
+		} else {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(1);
+		}
+		// leave this here for testing purposes in the future
+		// trying to print to test
+		// Boolean index11 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(0);
+		// Boolean index12 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(1);
+		// Boolean index13 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(2);
+		// Boolean index14 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(3);
+		// Boolean index15 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(4);
+		// Boolean index16 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(5);
+		// Boolean index17 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(6);
+		// Boolean index18 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(7);
+		//
+		// Boolean index21 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(0);
+		// Boolean index22 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(1);
+		// Boolean index23 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(2);
+		// Boolean index24 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(3);
+		// Boolean index25 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(4);
+		// Boolean index26 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(5);
+		// Boolean index27 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(6);
+		// Boolean index28 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(7);
+		//
+		// Boolean index31 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(0);
+		// Boolean index32 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(1);
+		// Boolean index33 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(2);
+		// Boolean index34 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(3);
+		// Boolean index35 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(4);
+		// Boolean index36 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(5);
+		// Boolean index37 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(6);
+		// Boolean index38 =
+		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(7);
+		//
+		//
+		// System.out.println("radio1 clicked");
+		// System.out.println(index11);
+		// System.out.println(index12);
+		// System.out.println(index13);
+		// System.out.println(index14);
+		// System.out.println(index15);
+		// System.out.println(index16);
+		// System.out.println(index17);
+		// System.out.println(index18);
+		// System.out.println("----------------------------------");
+		// System.out.println(index21);
+		// System.out.println(index22);
+		// System.out.println(index23);
+		// System.out.println(index24);
+		// System.out.println(index25);
+		// System.out.println(index26);
+		// System.out.println(index27);
+		// System.out.println(index28);
+		// System.out.println("----------------------------------");
+		// System.out.println(index31);
+		// System.out.println(index32);
+		// System.out.println(index33);
+		// System.out.println(index34);
+		// System.out.println(index35);
+		// System.out.println(index36);
+		// System.out.println(index37);
+		// System.out.println(index38);
+		// System.out.println("----------------------------------");
+	}
+
+	public void radioButtonClicked2(ActionEvent event) {
+		int index = this.nocBox.getValue() - 1;
+		if (this.scenario.getCurrentScene().getBrailleCells().get(index).getPinState(1) == true) {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).lowerOnePin(2);
+		} else {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(2);
+		}
+	}
+
+	public void radioButtonClicked3(ActionEvent event) {
+		int index = this.nocBox.getValue() - 1;
+		if (this.scenario.getCurrentScene().getBrailleCells().get(index).getPinState(2) == true) {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).lowerOnePin(3);
+		} else {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(3);
+		}
+	}
+
+	public void radioButtonClicked4(ActionEvent event) {
+		int index = this.nocBox.getValue() - 1;
+		if (this.scenario.getCurrentScene().getBrailleCells().get(index).getPinState(3) == true) {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).lowerOnePin(4);
+		} else {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(4);
+		}
+	}
+
+	public void radioButtonClicked5(ActionEvent event) {
+		int index = this.nocBox.getValue() - 1;
+		if (this.scenario.getCurrentScene().getBrailleCells().get(index).getPinState(4) == true) {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).lowerOnePin(5);
+		} else {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(5);
+		}
+	}
+
+	public void radioButtonClicked6(ActionEvent event) {
+		int index = this.nocBox.getValue() - 1;
+		if (this.scenario.getCurrentScene().getBrailleCells().get(index).getPinState(5) == true) {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).lowerOnePin(6);
+		} else {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(6);
+		}
+	}
+
+	public void radioButtonClicked7(ActionEvent event) {
+		int index = this.nocBox.getValue() - 1;
+		if (this.scenario.getCurrentScene().getBrailleCells().get(index).getPinState(6) == true) {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).lowerOnePin(7);
+		} else {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(7);
+		}
+	}
+
+	public void radioButtonClicked8(ActionEvent event) {
+		int index = this.nocBox.getValue() - 1;
+		if (this.scenario.getCurrentScene().getBrailleCells().get(index).getPinState(7) == true) {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).lowerOnePin(8);
+		} else {
+			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(8);
+		}
+	}
+
+	public void selectedButtonNumber(ActionEvent event) {
+		int buttonNumber = this.nobBox.getValue();
+
+		// get preset interaction
+		String currentInteraction = this.scenario.getCurrentScene().getInteractionPreset().get(buttonNumber);
+		// set preset interaction
+		this.interactionBox.setValue(currentInteraction);
+		System.out.println(currentInteraction);
+		// get interaction text
+		String currentText = this.scenario.getCurrentScene().getInteractionTextInput().get(buttonNumber);
+		// set interaction text
+		this.interactionTextArea.setText(currentText);
+		System.out.println(currentInteraction);
+	}
+
+	public void presetInteractionSet(ActionEvent event) {
+		int buttonNumber = this.nobBox.getValue();
+		String currentInteractionValue = this.interactionBox.getValue();
+		this.scenario.getCurrentScene().getInteractionPreset().put(buttonNumber, currentInteractionValue);
+
+		String currentInteraction = this.scenario.getCurrentScene().getInteractionPreset().get(buttonNumber);
+		System.out.println(currentInteraction);
+	}
+
+	public void interactionTextFinished(KeyEvent event) {
+		int buttonNumber = this.nobBox.getValue();
+		String inputedText = this.interactionTextArea.getText();
+		this.scenario.getCurrentScene().getInteractionTextInput().put(buttonNumber, inputedText);
+	}
+
+	public void recordAudioInteractionButton(ActionEvent event) {
 		// TODO
 	}
 
-	public void saveInteractionButton(ActionEvent event) throws IOException {
+	public void saveInteractionButton(ActionEvent event) {
 
 		// get the current button number that the user wants to add interactions to
 		int currentButtonNumber = this.nobBox.getValue();
@@ -228,74 +454,264 @@ public class ScenarioCreationController implements Initializable {
 		}
 	}
 
-	public void finishScenarioButton(ActionEvent event) throws IOException {
-		List<String> testString = new ArrayList<String>();
-		testString.add("line1");
-		testString.add("line 2");
-
-		String concatString = "";
-
-		for (int i = 0; i < testString.size(); i++) {
-			concatString = concatString + "\n" + testString.get(i);
-		}
-
-		this.sceneNameLabel.setText(concatString);
-		interactionList = FXCollections.observableArrayList("No Interaction", "Play Correct Audio Clip",
-				"Play Wrong Audio Clip", "Repeat Question/Comment", "Skip Question/Comment", "No Interaction",
-				"Play Correct Audio Clip", "Play Wrong Audio Clip", "Repeat Question/Comment", "Skip Question/Comment",
-				"No Interaction", "Play Correct Audio Clip", "Play Wrong Audio Clip", "Repeat Question/Comment",
-				"Skip Question/Comment");
-		this.sceneListView.setItems(interactionList);
-	}
-
-	public void saveSceneButton(ActionEvent event) throws IOException {
-
-		// ----------------- SCENE NAME PART------------------
-
-		// get the scenename that the user entered and create a new scene with that name
-		String sceneName = sceneNameTextField.getText();
-
-		// check to see if the scenename exists already
-		Boolean sceneExists = false;
-		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-			if (sceneName == this.scenario.getScenario().get(i).getSceneName()) {
-				sceneExists = true;
-			}
-		}
-
-		if (sceneExists) {
-			// popup that says choose a different name because it already exists
-		} else {
-			// add the scene name to the scenario and set the text in the top right corner
-			// to the current scene name
-			this.scenario.getCurrentScene().setName(sceneName);
-			this.sceneNameLabel.setText(sceneName);
-		}
-
-		// ----------------- QUESTION/COMMENT PART ------------------
-
-		// get the question or comment that the user inputed in the text area
-		String questionText = questionTextArea.getText();
-
-		// set the question to what the user typed, if they already typed a question or
-		// comment it will be overwritten for this scene
-		this.scenario.getCurrentScene().setQuestion(questionText);
-
-		// ----------------------------------------------------------
-
-	}
-
-	public void newSceneButton(ActionEvent event) throws IOException {
-		// REMEMBER TO INCREMENT THE SCENE IN THE SCENARIO CLASS FOR ALL NESSECARY
-		// ATTRIBUTES
-		// OTHERWISE IT WILL BE STUCK ON THE SAME SCENE
-		// currentSceneNumber++;
-
-		// remember to extract current radio button values (simulated pins) and set them
-		// in txt file b/c it should not be done in the set pins button method
+	public void finishScenarioButton(ActionEvent event) {
+		// remember to clear all the null elements in this.scenario.getscenario
 		// TODO
 	}
 
+	public void saveSceneButton(ActionEvent event) {
+
+		// get the scenename that the user entered
+		String sceneName = sceneNameTextField.getText();
+
+		// need to finish implementing this part where if the scene name already exists
+		// it should overwrite it not create another scene with the same name, this will
+		// cause many complications with the other buttons
+		//
+		// // check to see if the scenename exists already
+		// Boolean sceneExists = false;
+		// for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+		// if (sceneName.equals(this.scenario.getScenario().get(i).getSceneName())) {
+		// sceneExists = true;
+		// }
+		// }
+		//
+		// System.out.println(sceneExists);
+		//
+		// if (sceneExists) {
+		//
+		// // this.sceneNameLabel.setText(sceneName);
+		// // String questionText = questionTextArea.getText();
+		// // // set the question to what the user typed
+		// // this.scenario.getCurrentScene().setQuestion(questionText);
+		// // this.listOfScenesBox.setValue(sceneName);
+		// int index = this.scenario.findSceneIndex(sceneName);
+		// if(index == -1) {
+		// //do nothing
+		// } else {
+		// this.scenario.getScenario().remove(index);
+		// }
+		//
+		// }
+		// add the scene name to the scenario and set the text in the top right corner
+		// to the current scene name
+		this.scenario.getCurrentScene().setName(sceneName);
+		this.sceneNameLabel.setText(sceneName);
+
+		// get the inputed text
+		String questionText = questionTextArea.getText();
+		// set the question to what the user typed
+		this.scenario.getCurrentScene().setQuestion(questionText);
+
+		List<String> listOfScenesWO = new ArrayList<>();
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+			listOfScenesWO.add(this.scenario.getScenario().get(i).getSceneName());
+		}
+		ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
+		this.sceneListView.setItems(listOfScenesOWOL);
+
+		List<String> listOfScenesLS = new ArrayList<>();
+		listOfScenesLS.add("No Scene Selected");
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+			listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
+		}
+		ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
+		this.listOfScenesBox.setValue(sceneName);
+		this.listOfScenesBox.setItems(listOfScenesOL);
+
+		// need to remove all the extra created null scenes due to the user incorrectly
+		// pressing new scene too many times
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+
+			System.out.println(this.scenario.getScenario().get(i) == null);
+			System.out.println(this.scenario.getScenario().get(i).getSceneName());
+			System.out.println(this.scenario.getScenario().get(i).equals(null));
+			System.out.println(this.scenario.getScenario().get(i).getSceneName() == null);
+			if (this.scenario.getScenario().get(i).getSceneName() == null) {
+				this.scenario.getScenario().remove(i);
+			}
+		}
+
+		this.newSceneButton.setDisable(false);
+		this.deleteSceneButton.setDisable(false);
+
+	}
+
+	public void newSceneButton(ActionEvent event) {
+		this.listOfScenesBox.setValue("No Scene Selected");
+
+		// create new scene to work on but do not store it yet in the list, it should
+		// only be stored in the list(Scenario attribute list of scenes) when its saved
+		SceneAA s = new SceneAA(this.scenario.getNOC(), this.scenario.getNOB());
+
+		this.scenario.newCurrentScene(s);
+		this.scenario.addScene(this.scenario.getCurrentScene());
+
+		// clear whatever needs to be cleared
+		this.sceneNameTextField.clear();
+		this.questionTextArea.clear();
+		this.nocBox.setValue(1);
+		this.rb1.setSelected(false);
+		this.rb2.setSelected(false);
+		this.rb3.setSelected(false);
+		this.rb4.setSelected(false);
+		this.rb5.setSelected(false);
+		this.rb6.setSelected(false);
+		this.rb7.setSelected(false);
+		this.rb8.setSelected(false);
+		this.letterBox.setValue('-');
+		this.nobBox.setValue(1);
+		this.interactionBox.setValue("No Interaction");
+		this.interactionTextArea.clear();
+		saveSceneButton.setDisable(true);
+		this.newSceneButton.setDisable(true);
+	}
+
+	public void loadSceneBox(ActionEvent event) {
+		String selectedSceneName = listOfScenesBox.getValue();
+
+		if (selectedSceneName == "No Scene Selected") {
+			// do nothing
+		} else {
+
+			int indexOfValue = this.scenario.findSceneIndex(selectedSceneName);
+
+			if (indexOfValue == -1) {
+				// temporary joption pane for testing purposes
+				// JOptionPane.showConfirmDialog(null, "its -1 fix it -corv");
+			} else {
+				this.scenario.setCurrentScene(indexOfValue);
+				// update all text fields with the current scenes values
+				this.sceneNameTextField.setText(this.scenario.getCurrentScene().getSceneName());
+				this.questionTextArea.setText(this.scenario.getCurrentScene().getQuestion());
+				this.nocBox.setValue(1);
+				rb1.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(0));
+				rb2.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(1));
+				rb3.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(2));
+				rb4.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(3));
+				rb5.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(4));
+				rb6.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(5));
+				rb7.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(6));
+				rb8.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(7));
+				this.letterBox.setValue('-');
+				this.nobBox.setValue(1);
+				this.interactionBox.setValue(this.scenario.getCurrentScene().getInteractionPreset().get(1));
+				this.interactionTextArea.setText(this.scenario.getCurrentScene().getInteractionTextInput().get(1));
+				this.saveSceneButton.setDisable(false);
+				this.deleteSceneButton.setDisable(false);
+			}
+		}
+	}
+
+	public void deleteSceneOnClick(ActionEvent event) {
+
+		if (this.listOfScenesBox.getValue().equals("No Scene Selected")) {
+			// do nothing, there is nothing to delete
+		} else {
+			String currentlySelectedScene = this.listOfScenesBox.getValue();
+
+			int selectedSceneIndex = this.scenario.findSceneIndex(currentlySelectedScene);
+			this.scenario.getScenario().remove(selectedSceneIndex);
+
+			List<String> listOfScenesWO = new ArrayList<>();
+			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+				listOfScenesWO.add(this.scenario.getScenario().get(i).getSceneName());
+			}
+			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
+			this.sceneListView.setItems(listOfScenesOWOL);
+
+			List<String> listOfScenesLS = new ArrayList<>();
+			listOfScenesLS.add("No Scene Selected");
+			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
+			}
+			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
+			this.listOfScenesBox.setItems(listOfScenesOL);
+
+			// repeat code from new scene to clear everything
+			this.listOfScenesBox.setValue("No Scene Selected");
+
+			// clear whatever needs to be cleared
+			this.sceneNameTextField.clear();
+			this.questionTextArea.clear();
+			this.nocBox.setValue(1);
+			this.rb1.setSelected(false);
+			this.rb2.setSelected(false);
+			this.rb3.setSelected(false);
+			this.rb4.setSelected(false);
+			this.rb5.setSelected(false);
+			this.rb6.setSelected(false);
+			this.rb7.setSelected(false);
+			this.rb8.setSelected(false);
+			this.letterBox.setValue('-');
+			this.nobBox.setValue(1);
+			this.interactionBox.setValue("No Interaction");
+			this.interactionTextArea.clear();
+			saveSceneButton.setDisable(true);
+			newSceneButton.setDisable(false);
+
+		}
+
+	}
+
+	public void moveSceneUpOnClick(ActionEvent event) {
+
+		if (this.scenario.getCurrentSceneIndex() == 0) {
+			// do nothing, reached border
+		} else {
+			List<SceneAA> scenarioObjectList = this.scenario.getScenario();
+			// swap with the next scene in the list
+			Collections.swap(scenarioObjectList, this.scenario.getCurrentSceneIndex() - 1,
+					this.scenario.getCurrentSceneIndex());
+
+			List<String> listOfScenesWO = new ArrayList<>();
+			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+				listOfScenesWO.add(this.scenario.getScenario().get(i).getSceneName());
+			}
+			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
+			this.sceneListView.setItems(listOfScenesOWOL);
+
+			List<String> listOfScenesLS = new ArrayList<>();
+			listOfScenesLS.add("No Scene Selected");
+			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
+			}
+			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
+			this.listOfScenesBox.setItems(listOfScenesOL);
+
+		}
+
+	}
+
+	public void moveSceneDownOnClick(ActionEvent event) {
+
+		if (this.scenario.getCurrentSceneIndex() == this.scenario.getScenario().size() - 1) {
+			// do nothing, at beggining cant move down
+		} else {
+			List<SceneAA> scenarioObjectList = this.scenario.getScenario();
+			// swap with the next scene in the list
+			Collections.swap(scenarioObjectList, this.scenario.getCurrentSceneIndex() + 1,
+					this.scenario.getCurrentSceneIndex());
+
+			List<String> listOfScenesWO = new ArrayList<>();
+			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+				listOfScenesWO.add(this.scenario.getScenario().get(i).getSceneName());
+			}
+			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
+			this.sceneListView.setItems(listOfScenesOWOL);
+
+			List<String> listOfScenesLS = new ArrayList<>();
+			listOfScenesLS.add("No Scene Selected");
+			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
+			}
+			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
+			this.listOfScenesBox.setItems(listOfScenesOL);
+
+		}
+	}
+
+	// user cannot click save button unless they entered a valid scene name
 	@FXML
 	public void userTyped(KeyEvent event) {
 		if (!sceneNameTextField.getText().isEmpty()) {

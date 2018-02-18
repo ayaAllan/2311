@@ -10,14 +10,11 @@ import javafx.scene.media.AudioClip;
 public class SceneAA {
 
 	// INCOMPLETE CLASS
-	// It works and can be tested but alot of methods that are needed dont exist as
-	// well as the implementation of certain methods need to be changed in the
-	// future
 
 	// attribute for each user input in the ScenarioCreationView
 	private String question;
 
-	private BrailleCell brailleCell;
+	private List<BrailleCell> brailleCells;
 
 	private String sceneName;
 
@@ -32,28 +29,22 @@ public class SceneAA {
 	// number of buttons
 	private int nob;
 
-	// constructor that creates the scene with the scene name, pins to display, the
-	// question the user inputed, and the list of buttons
-	public SceneAA(String sceneName, String question, BrailleCell bCell, List<Integer> buttons) {
-		this.sceneName = sceneName;
-		this.question = question;
-		this.brailleCell = bCell;
-		this.buttons = buttons;
-		this.interactionPreset = new HashMap<Integer, String>();
-		this.interactionTextInput = new HashMap<Integer, String>();
-
-		for (int i = 1; i <= 8; i++) {
-			this.interactionPreset.put(i, null);
-			this.interactionTextInput.put(i, null);
-		}
-	}
-
-	public SceneAA() {
+	public SceneAA(int noc, int nob) {
 		this.sceneName = null;
 		this.question = null;
-		this.brailleCell = new BrailleCell();
+
+		this.brailleCells = new ArrayList<BrailleCell>();
+		for (int i = 0; i < noc; i++) {
+			BrailleCell emptyCell = new BrailleCell();
+			emptyCell.setPins("00000000");
+			this.brailleCells.add(emptyCell);
+		}
+
 		this.buttons = new ArrayList<Integer>();
 		this.interactionPreset = new HashMap<Integer, String>();
+		for (int i = 1; i <= nob; i++) {
+			this.interactionPreset.put(i, "No Interaction");
+		}
 		this.interactionTextInput = new HashMap<Integer, String>();
 	}
 
@@ -61,8 +52,8 @@ public class SceneAA {
 		return question;
 	}
 
-	public BrailleCell getBrailleCell() {
-		return this.brailleCell;
+	public List<BrailleCell> getBrailleCells() {
+		return this.brailleCells;
 	}
 
 	public String getSceneName() {
@@ -85,11 +76,11 @@ public class SceneAA {
 		this.sceneName = sceneName;
 	}
 
-	public void setPinsScene(char letter) throws InterruptedException {
-		this.brailleCell.displayCharacter(letter);
+	public void setPinsScene(char letter, int index) throws InterruptedException {
+		this.brailleCells.get(index).displayCharacter(letter);
 	}
 
-	public void setPinsScene(List<Boolean> radioButtons) {
+	public void setPinsScene(List<Boolean> radioButtons, int index) {
 		String pinsString = null;
 		for (int i = 0; i < 8; i++) {
 			if (radioButtons.get(i) == true) {
@@ -100,7 +91,7 @@ public class SceneAA {
 
 		}
 
-		this.brailleCell.setPins(pinsString);
+		this.brailleCells.get(index).setPins(pinsString);
 	}
 
 	// need this to get the current pins state of the scene and return as a list of
@@ -110,7 +101,7 @@ public class SceneAA {
 		List<Boolean> pinsAsBoolean = new ArrayList<Boolean>();
 
 		for (int i = 0; i < bCell.getNumberOfPins(); i++) {
-			Boolean tempState = this.brailleCell.getPinState(i);
+			Boolean tempState = bCell.getPinState(i);
 			pinsAsBoolean.add(tempState);
 
 		}
@@ -119,8 +110,8 @@ public class SceneAA {
 
 	}
 
-	public void clearPins() {
-		this.brailleCell.clear();
+	public void clearPins(int index) {
+		this.brailleCells.get(index).clear();
 	}
 
 	public void setInteractionTextInput(int currentButtonNumber, String text) {
@@ -129,18 +120,6 @@ public class SceneAA {
 
 	public void setInteractionPreset(int currentButtonNumber, String interaction) {
 		this.interactionPreset.put(currentButtonNumber, interaction);
-	}
-
-	public void audioOnButtonClick(int buttonNumber, AudioClip audio) {
-		// TODO
-	}
-
-	public void audioNextScene(int buttonNumber, AudioClip audio) {
-		// TODO
-	}
-
-	public void nextSceneOnClick(int buttonNumber) {
-		// TODO
 	}
 
 	public void setQuestion(String question) {

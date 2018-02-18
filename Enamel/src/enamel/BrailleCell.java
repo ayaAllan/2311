@@ -151,7 +151,7 @@ public class BrailleCell {
 	 *             if the argument is not between 1 and 8 inclusive
 	 */
 	public void raiseOnePin(int pin) {
-		if (pin < 0 || pin > 7) {
+		if (pin < 0 || pin > 8) {
 			throw new IllegalArgumentException("Invalid index");
 		}
 		listOfPins[pin - 1] = true;
@@ -166,7 +166,7 @@ public class BrailleCell {
 	 *             if the argument is not between 1 and 8 inclusive
 	 */
 	public void lowerOnePin(int pin) {
-		if (pin < 0 || pin > 7) {
+		if (pin < 0 || pin > 8) {
 			throw new IllegalArgumentException("Invalid index");
 		}
 		listOfPins[pin - 1] = false;

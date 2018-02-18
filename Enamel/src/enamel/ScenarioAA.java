@@ -2,13 +2,11 @@ package enamel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ScenarioAA {
 
 	// INCOMPLETE CLASS
-	// It works and can be tested but alot of methods that are needed dont exist as
-	// well as the implementation of certain methods need to be changed in the
-	// future
 
 	private List<SceneAA> listOfScenes;
 	private List<Integer> buttons;
@@ -16,7 +14,7 @@ public class ScenarioAA {
 	private SceneAA currentScene;
 
 	// number of buttons and number of cells
-	private int currentSceneNumber, nob, noc;
+	private int currentSceneIndex, nob, noc;
 
 	public ScenarioAA(String name, int nob, int noc) {
 		this.scenarioName = name;
@@ -24,15 +22,21 @@ public class ScenarioAA {
 		this.noc = noc;
 		this.listOfScenes = new ArrayList<SceneAA>();
 		this.buttons = new ArrayList<Integer>();
-		this.currentScene = new SceneAA();
-		this.currentSceneNumber = 0;
+		SceneAA s = new SceneAA(noc, nob);
+		this.currentScene = s;
+		this.listOfScenes.add(s);
+		this.currentSceneIndex = 0;
 
 	}
 
 	public int getNOB() {
 		return this.nob;
 	}
-	
+
+	public int getNOC() {
+		return this.noc;
+	}
+
 	public String getScenarioName() {
 		return this.scenarioName;
 	}
@@ -45,8 +49,8 @@ public class ScenarioAA {
 		return this.listOfScenes;
 	}
 
-	public int getCurrentSceneNumber() {
-		return this.currentSceneNumber;
+	public int getCurrentSceneIndex() {
+		return this.currentSceneIndex;
 	}
 
 	public void setNumberOfButtons(int nob) {
@@ -61,17 +65,41 @@ public class ScenarioAA {
 		this.scenarioName = name;
 	}
 
-	public void nextScene() {
-		this.currentSceneNumber++;
-		this.currentScene = listOfScenes.get(currentSceneNumber);
+	public int findSceneIndex(String sceneName) {
+		int index = -1;
+		for (int i = 0; i < this.listOfScenes.size(); i++) {
+			if (sceneName == this.listOfScenes.get(i).getSceneName()) {
+				index = i;
+			}
+		}
+		return index;
+
 	}
 
+	public void setCurrentScene(int index) {
+		this.currentScene = this.listOfScenes.get(index);
+		this.currentSceneIndex = index;
+	}
+
+	public void newCurrentScene(SceneAA scene) {
+		this.currentScene = scene;
+	}
+
+	// not used, keeping incase something changes
+	public void nextScene() {
+		this.currentSceneIndex++;
+		SceneAA s = new SceneAA(noc, nob);
+		this.currentScene = s;
+		this.listOfScenes.add(s);
+	}
+
+	// not used, keeping incase something changes
 	public void previousScene() throws IndexOutOfBoundsException {
-		if (this.currentSceneNumber == 0) {
+		if (this.currentSceneIndex == 0) {
 			throw new IndexOutOfBoundsException();
 		} else {
-			this.currentSceneNumber--;
-			this.currentScene = listOfScenes.get(currentSceneNumber);
+			this.currentSceneIndex--;
+			this.currentScene = listOfScenes.get(currentSceneIndex);
 		}
 	}
 
@@ -79,18 +107,7 @@ public class ScenarioAA {
 		this.currentScene = this.listOfScenes.get(scenarioNumber);
 	}
 
-	// this method is for when the user has already entered a scene name for the
-	// current scene but wants to change it
-	public void addSceneOverride(SceneAA scene) {
-
+	public void addScene(SceneAA scene) {
+		this.listOfScenes.add(scene);
 	}
-
-	public void removeScene(SceneAA scene) {
-		// TODO
-	}
-
-	// TODO
-	// remember to implement the list of scenes properly later when the user saves a
-	// scene and goes to the next one.
-	// Also increment the appropriate attributes in both classes
 }

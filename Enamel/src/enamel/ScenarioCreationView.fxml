@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -64,14 +64,9 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <HBox alignment="CENTER" layoutY="673.0" prefHeight="70.0" prefWidth="1024.0" spacing="125.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="673.0">
+            <HBox alignment="CENTER" layoutY="673.0" prefHeight="70.0" prefWidth="1024.0" spacing="75.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="673.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#mainMenuButton" prefHeight="42.0" prefWidth="135.0" text="Main Menu">
-                     <font>
-                        <Font name="Arial Black" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#finishScenarioButton" prefHeight="42.0" prefWidth="135.0" text="Finish Scenario (Save Scenario)" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
@@ -81,7 +76,17 @@
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Button>
-                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#newSceneButton" prefHeight="42.0" prefWidth="135.0" text="New Scene" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="newSceneButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newSceneButton" prefHeight="42.0" prefWidth="135.0" text="New Scene" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="deleteSceneButton" layoutX="325.0" layoutY="24.0" mnemonicParsing="false" onAction="#deleteSceneOnClick" prefHeight="42.0" prefWidth="135.0" text="Delete Currently Selected Scene" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#finishScenarioButton" prefHeight="42.0" prefWidth="135.0" text="Finish Scenario (Save Scenario)" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
@@ -166,8 +171,8 @@
                            <children>
                               <VBox alignment="CENTER" prefHeight="103.0" prefWidth="90.0" spacing="10.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="80.0" text="Cell Number:" />
-                                    <ChoiceBox fx:id="nocBox" prefHeight="25.0" prefWidth="46.0" />
+                                    <Label alignment="CENTER" prefHeight="27.0" prefWidth="80.0" text="Cell Number:" />
+                                    <ComboBox fx:id="nocBox" onAction="#selectedBrailleCell" prefHeight="25.0" prefWidth="42.0" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
@@ -186,14 +191,14 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <RadioButton fx:id="rb2" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <RadioButton fx:id="rb1" mnemonicParsing="false" GridPane.columnIndex="1" />
-                                          <RadioButton fx:id="rb4" mnemonicParsing="false" GridPane.columnIndex="2" />
-                                          <RadioButton fx:id="rb5" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <RadioButton fx:id="rb3" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <RadioButton fx:id="rb6" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <RadioButton fx:id="rb7" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <RadioButton fx:id="rb8" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="rb2" mnemonicParsing="false" onAction="#radioButtonClicked2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="rb1" mnemonicParsing="false" onAction="#radioButtonClicked1" GridPane.columnIndex="1" />
+                                          <RadioButton fx:id="rb4" mnemonicParsing="false" onAction="#radioButtonClicked4" GridPane.columnIndex="2" />
+                                          <RadioButton fx:id="rb5" mnemonicParsing="false" onAction="#radioButtonClicked5" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="rb3" mnemonicParsing="false" onAction="#radioButtonClicked3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="rb6" mnemonicParsing="false" onAction="#radioButtonClicked6" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="rb7" mnemonicParsing="false" onAction="#radioButtonClicked7" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="rb8" mnemonicParsing="false" onAction="#radioButtonClicked8" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                           <Label prefHeight="17.0" prefWidth="15.0" text="1">
                                              <font>
                                                 <Font name="Calibri Bold" size="21.0" />
@@ -240,15 +245,11 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="88.0" text="English Letter:" textAlignment="CENTER" />
-                                    <ChoiceBox fx:id="letterBox" prefHeight="25.0" prefWidth="59.0" />
+                                    <Label alignment="CENTER" prefHeight="46.0" prefWidth="88.0" text="Display English Letter:" textAlignment="CENTER" wrapText="true" />
+                                    <ComboBox fx:id="letterBox" onAction="#setPinsBox" prefHeight="25.0" prefWidth="60.0" />
                                  </children>
                               </VBox>
-                              <Button mnemonicParsing="false" onAction="#setPinsButton" prefHeight="42.0" prefWidth="72.0" text="Set Pins">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Button>
+                              <Button mnemonicParsing="false" onAction="#clearPinsButton" prefHeight="39.0" prefWidth="94.0" text="Clear Pins" />
                            </children>
                            <padding>
                               <Insets left="20.0" top="5.0" />
@@ -276,39 +277,31 @@
                               <VBox alignment="CENTER" maxHeight="55.0" prefHeight="82.0" prefWidth="94.0" spacing="10.0">
                                  <children>
                                     <Label text="Button Number:" />
-                                    <ChoiceBox fx:id="nobBox" prefHeight="25.0" prefWidth="47.0" />
+                                    <ComboBox fx:id="nobBox" onAction="#selectedButtonNumber" prefHeight="25.0" prefWidth="7.0" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" maxHeight="44.0" prefHeight="63.0" prefWidth="179.0" spacing="10.0">
                                  <children>
                                     <Label text="Interaction on button click:" />
-                                    <ChoiceBox fx:id="interactionBox" prefHeight="27.0" prefWidth="171.0" />
+                                    <ComboBox fx:id="interactionBox" onAction="#presetInteractionSet" prefHeight="25.0" prefWidth="168.0" />
                                  </children>
                               </VBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="408.0" spacing="15.0">
                                  <children>
                                     <VBox prefHeight="91.0" prefWidth="368.0">
                                        <children>
-                                          <HBox alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="478.0" spacing="5.0">
+                                          <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="478.0" spacing="5.0">
                                              <children>
-                                                <Label prefHeight="16.0" prefWidth="263.0" text="Speech/Audio on button click. (OPTIONAL)">
-                                                   <font>
-                                                      <Font size="11.0" />
-                                                   </font></Label>
-                                                <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" text="Record Audio">
+                                                <Label prefHeight="16.0" prefWidth="369.0" text="Speech/Audio on button click. (OPTIONAL)" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="59.0" prefWidth="358.0" spacing="10.0">
+                                             <children>
+                                                <TextArea fx:id="interactionTextArea" onKeyReleased="#interactionTextFinished" prefHeight="60.0" prefWidth="395.0" />
+                                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="272.0" text="Record Audio">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font></Button>
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" prefHeight="59.0" prefWidth="358.0" spacing="30.0">
-                                             <children>
-                                                <TextArea fx:id="interactionTextArea" prefHeight="60.0" prefWidth="395.0" />
-                                                <Button mnemonicParsing="false" onAction="#saveInteractionButton" prefHeight="49.0" prefWidth="253.0" text="Save Interaction">
-                                                   <font>
-                                                      <Font size="11.0" />
-                                                   </font>
-                                                </Button>
                                              </children>
                                           </HBox>
                                        </children>
@@ -394,14 +387,20 @@
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="325.0" spacing="5.0">
                                  <children>
-                                    <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="283.0" spacing="80.0">
+                                    <Label text="Select which scene to edit:">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="listOfScenesBox" onAction="#loadSceneBox" prefWidth="150.0" />
+                                    <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="283.0" spacing="80.0">
                                        <children>
-                                          <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Move Scene Up">
+                                          <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneUpOnClick" text="Move Scene Up">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" text="Move Scene Down">
+                                          <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneDownOnClick" text="Move Scene Down">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
@@ -414,17 +413,6 @@
                                           <Insets top="5.0" />
                                        </padding>
                                     </HBox>
-                                    <Label text="Select which scene to edit:">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <ChoiceBox fx:id="listOfScenesBox" prefWidth="150.0" />
-                                    <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="85.0" text="Load Scene">
-                                       <font>
-                                          <Font size="11.0" />
-                                       </font>
-                                    </Button>
                                  </children>
                               </VBox>
                            </children>
