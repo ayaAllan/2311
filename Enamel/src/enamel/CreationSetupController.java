@@ -30,16 +30,13 @@ public class CreationSetupController implements Initializable {
 	// elements that the 'number of buttons' choice box has. Twelve is the maximum
 	// buttons allowed by the ScenarioParser Class
 	private ObservableList<Integer> nobList = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-
 	private ObservableList<Integer> nocList = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 
 	// number of buttons, number of cells
 	@FXML
 	private ChoiceBox<Integer> nobBox, nocBox;
-
 	@FXML
 	private TextField scenarioNameTextField;
-
 	@FXML
 	private Button continueButton;
 
@@ -82,14 +79,6 @@ public class CreationSetupController implements Initializable {
 
 		// get the scenario name and number of buttons as a string
 		String primitiveScenarioName = scenarioNameTextField.getText();
-		String scenarioNameString = primitiveScenarioName + ".txt";
-		String nobString = Integer.toString(nobBox.getValue());
-
-		// setup the Scenario file with the number of cells and buttons as the first two
-		// lines and store it in the factory scenarios folder
-		List<String> setupLines = Arrays.asList("Cell " + noc, "Button " + nobString, "");
-		Path file = Paths.get("./FactoryScenarios/" + scenarioNameString);
-		Files.write(file, setupLines, Charset.forName("UTF-8"));
 
 		// setup the loader with the info needed in a scenario so that it can be
 		// accessed in the scene creation window

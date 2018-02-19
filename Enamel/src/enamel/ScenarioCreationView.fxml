@@ -95,7 +95,7 @@
             </HBox>
             <AnchorPane layoutY="4.0" prefHeight="667.0" prefWidth="1024.0">
                <children>
-                  <VBox layoutX="-2.0" layoutY="77.0" prefHeight="90.0" prefWidth="697.0" spacing="2.0">
+                  <VBox layoutX="2.0" layoutY="104.0" prefHeight="90.0" prefWidth="697.0" spacing="2.0">
                      <children>
                         <Label prefHeight="23.0" prefWidth="263.0" text="STEP ONE (Required)">
                            <font>
@@ -117,7 +117,7 @@
                         <Insets left="20.0" />
                      </padding>
                   </VBox>
-                  <VBox layoutX="2.0" layoutY="170.0" prefHeight="164.0" prefWidth="697.0" spacing="2.0">
+                  <VBox layoutX="2.0" layoutY="194.0" prefHeight="164.0" prefWidth="697.0" spacing="2.0">
                      <children>
                         <Label prefHeight="23.0" prefWidth="568.0" text="STEP TWO (Please add one or more options to your scene)">
                            <font>
@@ -155,7 +155,7 @@
                         <Insets left="20.0" />
                      </padding>
                   </VBox>
-                  <VBox layoutX="1.0" layoutY="334.0" prefHeight="164.0" prefWidth="697.0" spacing="2.0">
+                  <VBox layoutX="2.0" layoutY="358.0" prefHeight="164.0" prefWidth="697.0" spacing="2.0">
                      <children>
                         <Label prefHeight="27.0" prefWidth="128.0" text="Option 2" underline="true">
                            <font>
@@ -260,7 +260,7 @@
                         <Insets left="20.0" />
                      </padding>
                   </VBox>
-                  <VBox layoutX="-2.0" layoutY="503.0" prefHeight="164.0" prefWidth="741.0" spacing="2.0">
+                  <VBox layoutX="-2.0" layoutY="522.0" prefHeight="140.0" prefWidth="741.0" spacing="2.0">
                      <children>
                         <Label prefHeight="27.0" prefWidth="128.0" text="Option 3" underline="true">
                            <font>
@@ -272,7 +272,7 @@
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="732.0" spacing="20.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="77.0" prefWidth="721.0" spacing="20.0">
                            <children>
                               <VBox alignment="CENTER" maxHeight="55.0" prefHeight="82.0" prefWidth="94.0" spacing="10.0">
                                  <children>
@@ -286,7 +286,7 @@
                                     <ComboBox fx:id="interactionBox" onAction="#presetInteractionSet" prefHeight="25.0" prefWidth="168.0" />
                                  </children>
                               </VBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="408.0" spacing="15.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="408.0" spacing="15.0">
                                  <children>
                                     <VBox prefHeight="91.0" prefWidth="368.0">
                                        <children>
@@ -316,74 +316,14 @@
                               <Insets top="5.0" />
                            </padding>
                         </HBox>
-                        <Label prefHeight="17.0" prefWidth="685.0" text="*Note you must click the 'Save Interaction' button for each button you set an interaction for." />
                      </children>
                      <padding>
                         <Insets left="20.0" />
                      </padding>
                   </VBox>
-                  <HBox layoutX="6.0" layoutY="-5.0" prefHeight="80.0" prefWidth="728.0" spacing="60.0">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="80.0" prefWidth="1206.0">
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="Scenario Builder">
-                                 <font>
-                                    <Font name="Broadway" size="32.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Scene Creation">
-                                 <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                        <VBox alignment="TOP_RIGHT" prefHeight="80.0" prefWidth="748.0" spacing="10.0">
-                           <children>
-                              <VBox alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="86.0">
-                                 <children>
-                                    <Label text="Scenario Name :" underline="true">
-                                       <font>
-                                          <Font name="System Italic" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="scenarioNameLabel" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="154.0" text="Scenario Name">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="85.0">
-                                 <children>
-                                    <Label text="Scene Name :" underline="true">
-                                       <font>
-                                          <Font name="System Italic" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="sceneNameLabel" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="152.0" text="Unnamed Scene">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
                   <VBox layoutX="740.0" layoutY="-2.0" prefHeight="661.0" prefWidth="283.0">
                      <children>
-                        <TitledPane animated="true" layoutX="10.0" layoutY="10.0" prefHeight="537.0" prefWidth="283.0" text="List of Scenes">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="200.0">
-                                 <children>
-                                    <ListView fx:id="sceneListView" prefHeight="473.0" prefWidth="283.0" />
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </TitledPane>
-                        <HBox prefHeight="198.0" prefWidth="325.0">
+                        <HBox prefHeight="90.0" prefWidth="283.0">
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="325.0" spacing="5.0">
                                  <children>
@@ -417,6 +357,47 @@
                               </VBox>
                            </children>
                         </HBox>
+                        <TitledPane animated="true" layoutX="10.0" layoutY="10.0" prefHeight="576.0" prefWidth="283.0" text="List of Scenes">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="281.0">
+                                 <children>
+                                    <ListView fx:id="sceneListView" prefHeight="548.0" prefWidth="283.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="-3.0" prefHeight="20.0" prefWidth="721.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="423.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="80.0" text="Scene Name :">
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="sceneNameLabel" prefHeight="17.0" prefWidth="185.0" text="Unnamed New Scene">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER" layoutX="2.0" layoutY="30.0" prefHeight="55.0" prefWidth="733.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Scenario Builder">
+                           <font>
+                              <Font name="Broadway" size="32.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="scenarioNameLabel" alignment="CENTER" prefHeight="17.0" prefWidth="735.0" text="Scenario Name">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
                   </VBox>
                </children>

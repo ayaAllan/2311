@@ -162,6 +162,14 @@ public class ScenarioParser {
 			else if (fileLine.length() >= 12 && fileLine.substring(0, 12).equals("/~user-input")) {
 				userInput = true;
 			}
+			//Do nothing if it is the open tag
+			else if(fileLine.length() >= 21 && fileLine.substring(0, 21).equals("/~BEGINNING-OF-SCENE=")) {
+				//dont read
+			}
+			//Do nothing if it is the close tag
+			else if(fileLine.length() >= 15 && fileLine.substring(0, 15).equals("/~END-OF-SCENE=")) {
+				//dont read
+			}
 			// Anything other than the specified commands above, is to be
 			// interpreted as text that
 			// will be spoken for the user to hear.

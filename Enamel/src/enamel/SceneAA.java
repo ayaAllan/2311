@@ -13,25 +13,18 @@ public class SceneAA {
 
 	// attribute for each user input in the ScenarioCreationView
 	private String question;
-
 	private List<BrailleCell> brailleCells;
-
 	private String sceneName;
-
 	private List<Integer> buttons;
-
 	private Map<Integer, String> interactionPreset;
-
 	private Map<Integer, String> interactionTextInput;
-
-	// need another attrubute for interactionAudio, havent decided on the type yet
-
-	// number of buttons
 	private int nob;
+	// need another attrubute for interactionAudio, havent decided on the type yet
 
 	public SceneAA(int noc, int nob) {
 		this.sceneName = null;
 		this.question = null;
+		this.nob = nob;
 
 		this.brailleCells = new ArrayList<BrailleCell>();
 		for (int i = 0; i < noc; i++) {
@@ -46,6 +39,7 @@ public class SceneAA {
 			this.interactionPreset.put(i, "No Interaction");
 		}
 		this.interactionTextInput = new HashMap<Integer, String>();
+		
 	}
 
 	public String getQuestion() {
@@ -71,6 +65,10 @@ public class SceneAA {
 	public Map<Integer, String> getInteractionTextInput() {
 		return this.interactionTextInput;
 	}
+	
+	public int getNOB() {
+		return this.nob;
+	}
 
 	public void setName(String sceneName) {
 		this.sceneName = sceneName;
@@ -88,9 +86,7 @@ public class SceneAA {
 			} else {
 				pinsString = pinsString + "0";
 			}
-
 		}
-
 		this.brailleCells.get(index).setPins(pinsString);
 	}
 
@@ -99,15 +95,11 @@ public class SceneAA {
 	public List<Boolean> getPinsAsBoolean(BrailleCell bCell) {
 
 		List<Boolean> pinsAsBoolean = new ArrayList<Boolean>();
-
 		for (int i = 0; i < bCell.getNumberOfPins(); i++) {
 			Boolean tempState = bCell.getPinState(i);
 			pinsAsBoolean.add(tempState);
-
 		}
-
 		return pinsAsBoolean;
-
 	}
 
 	public void clearPins(int index) {
