@@ -1,0 +1,83 @@
+Cell 1
+Button 3
+
+/~BEGINNING-OF-SCENE=scene1
+/~disp-clearAll
+/~pause:1
+/~disp-cell-pins:0 10000000
+/~repeat
+is this the letter a?
+press 1 for yes
+press 2 for no
+press 3 to repeat the question
+/~endrepeat
+/~skip-button:0 GOTO:1
+/~skip-button:1 GOTO:2
+/~repeat-button:2
+/~user-input
+/~GOTO:1
+/~sound:correct.wav
+correct, it is the letter a
+/~disp-clearAll
+/~skip:END-OF-SCENE=scene1
+/~GOTO:2
+/~sound:wrong.wav
+incorrect that is not the letter a
+/~disp-clearAll
+/~skip:END-OF-SCENE=scene1
+/~END-OF-SCENE=scene1
+
+/~BEGINNING-OF-SCENE=scene2
+/~disp-clearAll
+/~reset-buttons
+/~pause:1
+/~disp-cell-pins:0 00000000
+this is testing the skip button
+button 3 should skip
+buttons one and two should do nothing
+/~skip-button:2 GOTO:3
+/~user-input
+/~GOTO:3
+/~skip:END-OF-SCENE=scene2
+/~END-OF-SCENE=scene2
+
+/~BEGINNING-OF-SCENE=scene3
+/~disp-clearAll
+/~reset-buttons
+/~pause:1
+/~disp-cell-pins:0 00000000
+the skip button works
+press button one to skip to next question
+/~skip-button:0 GOTO:1
+/~user-input
+/~GOTO:1
+/~skip:END-OF-SCENE=scene3
+/~END-OF-SCENE=scene3
+
+/~BEGINNING-OF-SCENE=scene4
+/~disp-clearAll
+/~reset-buttons
+/~pause:1
+/~disp-cell-pins:0 10011000
+/~repeat
+is this the letter g?
+press 1 for yes
+press 2 for no
+press 3 to repeat the question
+/~endrepeat
+/~skip-button:0 GOTO:1
+/~skip-button:1 GOTO:2
+/~repeat-button:2
+/~user-input
+/~GOTO:1
+/~sound:wrong.wav
+incorrect, the current pins being displayed is the letter d not the letter g
+/~disp-clearAll
+/~skip:END-OF-SCENE=scene4
+/~GOTO:2
+/~sound:correct.wav
+correct, the curret pins are displaying d not g
+/~disp-clearAll
+/~skip:END-OF-SCENE=scene4
+/~END-OF-SCENE=scene4
+Scenario Sample Scenario is now finished.  Please close the simulation.
