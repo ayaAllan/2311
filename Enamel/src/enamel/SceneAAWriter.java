@@ -28,6 +28,13 @@ public class SceneAAWriter {
 
 	}
 
+	public void writeAudioOption1() {
+		if (this.scene.audioOption1Exists()) {
+			String fileName = this.scene.getAudioNameOption1();
+			this.sceneAsTxt.add("/~sound:" + fileName);
+		}
+	}
+
 	public void writePins() {
 
 		sceneAsTxt.add("/~pause:1");
@@ -56,7 +63,7 @@ public class SceneAAWriter {
 			String interactionPreset = this.scene.getInteractionPreset().get(i);
 			if (interactionPreset == ("No Interaction")) {
 				// dont add a skip or repeat button
-			} else if (interactionPreset.equals("Repeat Scene")) {
+			} else if (interactionPreset.equals("Repeat Question Text")) {
 				this.sceneAsTxt.add("/~repeat-button:" + (i - 1));
 			} else {
 				this.sceneAsTxt.add("/~skip-button:" + (i - 1) + " GOTO:" + i);
@@ -81,25 +88,45 @@ public class SceneAAWriter {
 			if (interactionPreset == ("Play Correct Audio Clip")) {
 				this.sceneAsTxt.add("/~GOTO:" + j);
 				this.sceneAsTxt.add("/~sound:correct.wav");
-				this.sceneAsTxt.add(interactionText);
+				if (this.scene.getInteractionTextInput().get(j) == null) {
+
+				} else {
+					this.sceneAsTxt.add(interactionText);
+				}
+				if (this.scene.getInteractionAudioNameAtIndex(j).equals("No Audio File")) {
+					// do nothing dont play audio
+				} else {
+					this.sceneAsTxt.add("/~pause:1");
+					this.sceneAsTxt.add("/~sound:" + this.scene.getInteractionAudioNameAtIndex(j));
+				}
 				this.sceneAsTxt.add("/~disp-clearAll");
 				this.sceneAsTxt.add("/~skip:END-OF-SCENE=" + this.scene.getSceneName());
 
 			} else if (interactionPreset == ("Play Wrong Audio Clip")) {
 				this.sceneAsTxt.add("/~GOTO:" + j);
 				this.sceneAsTxt.add("/~sound:wrong.wav");
-				this.sceneAsTxt.add(interactionText);
+				if (this.scene.getInteractionTextInput().get(j) == null) {
+
+				} else {
+					this.sceneAsTxt.add(interactionText);
+				}
+				if (this.scene.getInteractionAudioNameAtIndex(j).equals("No Audio File")) {
+					// do nothing dont play audio
+				} else {
+					this.sceneAsTxt.add("/~pause:1");
+					this.sceneAsTxt.add("/~sound:" + this.scene.getInteractionAudioNameAtIndex(j));
+				}
 				this.sceneAsTxt.add("/~disp-clearAll");
 				this.sceneAsTxt.add("/~skip:END-OF-SCENE=" + this.scene.getSceneName());
 
 			} else if (interactionPreset == ("Skip to Next Scene")) {
 				this.sceneAsTxt.add("/~GOTO:" + j);
 				this.sceneAsTxt.add("/~skip:END-OF-SCENE=" + this.scene.getSceneName());
-			} else if (interactionPreset == ("Repeat Scene")) {
+			} else if (interactionPreset == ("Repeat Question Text")) {
 				// do nothing this is implemented before the scene starts
 
 			} else {
-				// no interaction
+				// do nothing
 
 			}
 
@@ -117,7 +144,7 @@ public class SceneAAWriter {
 		Boolean hasRepeatInteraction = false;
 		for (int j = 1; j <= this.scene.getNOB(); j++) {
 			String interactionPreset = this.scene.getInteractionPreset().get(j);
-			if (interactionPreset == "Repeat Scene") {
+			if (interactionPreset == "Repeat Question Text") {
 				hasRepeatInteraction = true;
 			}
 		}
@@ -144,6 +171,9 @@ public class SceneAAWriter {
 		if (hasRepeatInteraction) {
 			this.sceneAsTxt.add("/~endrepeat");
 		}
+
+		this.sceneAsTxt.add("/~pause:1");
+		this.writeAudioOption1();
 
 		this.writeInteractions();
 

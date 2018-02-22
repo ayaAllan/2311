@@ -13,11 +13,14 @@ public class SceneAA {
 
 	// attribute for each user input in the ScenarioCreationView
 	private String question;
+	private String audioNameOption1;
+	private Boolean audioExistsOption1 = false;
 	private List<BrailleCell> brailleCells;
 	private String sceneName;
 	private List<Integer> buttons;
 	private Map<Integer, String> interactionPreset;
 	private Map<Integer, String> interactionTextInput;
+	private Map<Integer, String> interactionAudioNames;
 	private int nob;
 	// need another attrubute for interactionAudio, havent decided on the type yet
 
@@ -39,11 +42,32 @@ public class SceneAA {
 			this.interactionPreset.put(i, "No Interaction");
 		}
 		this.interactionTextInput = new HashMap<Integer, String>();
+		this.interactionAudioNames = new HashMap<Integer, String>();
+		for (int i = 1; i <=nob; i ++) {
+			this.interactionAudioNames.put(i, "No Audio File");
+		}
 		
 	}
 
 	public String getQuestion() {
 		return question;
+	}
+	
+	public String getAudioNameOption1() {
+		return this.audioNameOption1;
+	}
+	
+	public String getInteractionAudioNameAtIndex(int i) {
+		if(i > nob) {
+			throw new IndexOutOfBoundsException();
+		} else {
+			return this.interactionAudioNames.get(i);
+		}
+
+	}
+	
+	public Boolean audioOption1Exists() {
+		return this.audioExistsOption1;
 	}
 
 	public List<BrailleCell> getBrailleCells() {
@@ -72,6 +96,15 @@ public class SceneAA {
 
 	public void setName(String sceneName) {
 		this.sceneName = sceneName;
+	}
+	
+	public void setAudioNameOption1(String fileName) {
+		this.audioExistsOption1 = true;
+		this.audioNameOption1 = fileName;
+	}
+	
+	public void setInteractionAudioNameAtIndex(String fileName, int index) {
+		this.interactionAudioNames.put(index, fileName);
 	}
 
 	public void setPinsScene(char letter, int index) throws InterruptedException {

@@ -1,22 +1,21 @@
 package enamel;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.File;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JOptionPane;
+
+import org.assertj.core.util.Files;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,16 +27,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class ScenarioCreationController implements Initializable {
@@ -86,6 +85,17 @@ public class ScenarioCreationController implements Initializable {
 	@FXML
 	private Button saveSceneButton, newSceneButton, deleteSceneButton;
 
+	// all the audio attributes:
+	private Boolean isRecordingOption1 = false;
+	private Boolean isRecordingOption3 = false;
+	@FXML
+	private Button recordAudioOption3Button, recordAudioOption1Button;
+	@FXML
+	private Circle liveCircleOption1, liveCircleOption3;
+	@FXML
+	private Label liveOption1, liveOption3;
+	private Recorder recorder = new Recorder();
+
 	// create a scenario to keep track of all the scenes the user creates within the
 	// same scenario
 	private ScenarioAA scenario;
@@ -130,7 +140,7 @@ public class ScenarioCreationController implements Initializable {
 
 		// initialize the interactions drop down menu
 		interactionList = FXCollections.observableArrayList("No Interaction", "Play Correct Audio Clip",
-				"Play Wrong Audio Clip", "Repeat Scene", "Skip to Next Scene");
+				"Play Wrong Audio Clip", "Repeat Question Text", "Skip to Next Scene");
 		interactionBox.setValue("No Interaction");
 		interactionBox.setItems(interactionList);
 
@@ -151,10 +161,88 @@ public class ScenarioCreationController implements Initializable {
 		this.newSceneButton.setDisable(true);
 		this.deleteSceneButton.setDisable(true);
 
+		// set the recording display to off for now
+		this.liveCircleOption1.setVisible(false);
+		this.liveOption1.setVisible(false);
+		this.liveCircleOption3.setVisible(false);
+		this.liveOption3.setVisible(false);
+
 	}
 
-	public void recordAudioButton(ActionEvent event) {
-		// TODO
+	public void recordAudioButtonOption1(ActionEvent event) {
+		if (!isRecordingOption1) {
+
+			this.isRecordingOption1 = true;
+			String tempName = "./FactoryScenarios/AudioFiles/option1_TempAudioFile.wav";
+			this.recorder.setFileName(tempName);
+			// switch button to stop recording
+			this.recordAudioOption1Button.setText("Stop Recording");
+
+			// set the live label and circle to be visible so that they know they are
+			// recording
+			this.liveCircleOption1.setVisible(true);
+			this.liveOption1.setVisible(true);
+
+			// start recording
+			Thread recordThread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					recorder.start();
+				}
+			});
+			recordThread.start();
+
+		} else {
+			this.isRecordingOption1 = false;
+
+			// switch button back to default record audio
+			this.recordAudioOption1Button.setText("Record Audio");
+
+			// set the live label and circle to not be visible anymore
+			this.liveCircleOption1.setVisible(false);
+			this.liveOption1.setVisible(false);
+
+			// stop recording
+			recorder.finish();
+		}
+	}
+
+	public void recordAudioButtonOption3(ActionEvent event) {
+		if (!isRecordingOption3) {
+			this.isRecordingOption3 = true;
+			String tempName = "./FactoryScenarios/AudioFiles/option3_" + "interaction" + "_" + this.nobBox.getValue()
+					+ ".wav";
+			this.recorder.setFileName(tempName);
+			// switch button to stop recording
+			this.recordAudioOption3Button.setText("Stop Recording");
+
+			// set the live label and circle to be visible so that they know they are
+			// recording
+			this.liveCircleOption3.setVisible(true);
+			this.liveOption3.setVisible(true);
+
+			// start recording
+			Thread recordThread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					recorder.start();
+				}
+			});
+			recordThread.start();
+
+		} else {
+			this.isRecordingOption3 = false;
+
+			// switch button back to default record audio
+			this.recordAudioOption3Button.setText("Record Audio");
+
+			// set the live label and circle to not be visible anymore
+			this.liveCircleOption3.setVisible(false);
+			this.liveOption3.setVisible(false);
+
+			// stop recording
+			recorder.finish();
+		}
 	}
 
 	public void setPinsBox(ActionEvent event) throws InterruptedException {
@@ -402,10 +490,6 @@ public class ScenarioCreationController implements Initializable {
 		this.scenario.getCurrentScene().getInteractionTextInput().put(buttonNumber, inputedText);
 	}
 
-	public void recordAudioInteractionButton(ActionEvent event) {
-		// TODO
-	}
-
 	public void saveInteractionButton(ActionEvent event) {
 
 		// get the current button number that the user wants to add interactions to
@@ -452,7 +536,7 @@ public class ScenarioCreationController implements Initializable {
 		}
 	}
 
-	public void saveSceneButton(ActionEvent event) {
+	public void saveSceneButton(ActionEvent event) throws IOException {
 
 		// get the scenename that the user entered
 		String sceneName = sceneNameTextField.getText();
@@ -533,6 +617,52 @@ public class ScenarioCreationController implements Initializable {
 
 		this.newSceneButton.setDisable(false);
 		this.deleteSceneButton.setDisable(false);
+
+		// change the names of the audio files if the user created any
+		String fileNameAndPathOption1 = "./FactoryScenarios/AudioFiles/" + this.scenario.getScenarioName() + "_"
+				+ this.scenario.getCurrentScene().getSceneName() + "_" + "option1" + ".wav";
+
+		File tempNameOption1 = new File("./FactoryScenarios/AudioFiles/option1_TempAudioFile.wav");
+		File properNameOption1 = new File(fileNameAndPathOption1);
+
+		if (properNameOption1.exists()) {
+			Files.delete(properNameOption1);
+		}
+
+		boolean success = tempNameOption1.renameTo(properNameOption1);
+
+		if (!success) {
+			// jpanel pop up for incorrect renaming
+			// should just replace the file
+		} else {
+			this.scenario.getCurrentScene().setAudioNameOption1(this.scenario.getScenarioName() + "_"
+					+ this.scenario.getCurrentScene().getSceneName() + "_" + "option1" + ".wav");
+		}
+
+		for (int i = 1; i <= this.scenario.getNOB(); i++) {
+			// change the names again for the 3rd option recording
+			String fileNameAndPathOption3 = "./FactoryScenarios/AudioFiles/" + this.scenario.getScenarioName() + "_"
+					+ this.scenario.getCurrentScene().getSceneName() + "_" + "interaction" + "_" + i + ".wav";
+
+			File tempNameOption3 = new File(
+					"./FactoryScenarios/AudioFiles/option3_" + "interaction" + "_" + i + ".wav");
+			File properNameOption3 = new File(fileNameAndPathOption3);
+
+			if (properNameOption3.exists()) {
+				Files.delete(properNameOption3);
+			}
+
+			boolean success3 = tempNameOption3.renameTo(properNameOption3);
+
+			if (!success3) {
+				// jpanel pop up for incorrect renaming
+				// should just replace the file
+			} else {
+				this.scenario.getCurrentScene().setInteractionAudioNameAtIndex(this.scenario.getScenarioName() + "_"
+						+ this.scenario.getCurrentScene().getSceneName() + "_" + "interaction" + "_" + i + ".wav", i);
+			}
+
+		}
 
 	}
 
@@ -779,8 +909,7 @@ public class ScenarioCreationController implements Initializable {
 			}
 
 		}
-		writer.println(
-				"Scenario " + this.scenario.getScenarioName() + " is now finished.  Please close the simulation.");
+		writer.println(this.scenario.getScenarioName() + " is now finished.  Please close the simulation.");
 		writer.close();
 
 		// return user to the main menu so they can load their newly created scenario

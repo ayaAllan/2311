@@ -19,6 +19,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="enamel.ScenarioCreationController">
@@ -129,7 +130,7 @@
                               <Font name="System Bold" size="19.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="17.0" prefWidth="400.0" text="Type or record a question/statement for the current scene: ">
+                        <Label prefHeight="17.0" prefWidth="400.0" text="Type and/or record a question/statement for the current scene: ">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -139,7 +140,7 @@
                               <TextArea fx:id="questionTextArea" maxHeight="65.0" prefHeight="65.0" prefWidth="354.0" />
                               <VBox alignment="CENTER" prefHeight="70.0" prefWidth="109.0" spacing="16.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#recordAudioButton" prefHeight="41.0" prefWidth="107.0" text="Record Audio">
+                                    <Button fx:id="recordAudioOption1Button" mnemonicParsing="false" onAction="#recordAudioButtonOption1" prefHeight="41.0" prefWidth="107.0" text="Record Audio">
                                        <font>
                                           <Font size="11.0" />
                                        </font></Button>
@@ -148,6 +149,12 @@
                                     <Insets bottom="5.0" top="5.0" />
                                  </HBox.margin>
                               </VBox>
+                              <HBox alignment="CENTER_LEFT" maxHeight="30.0" maxWidth="126.0" minHeight="14.0" prefHeight="18.0" prefWidth="126.0" spacing="5.0">
+                                 <children>
+                                    <Circle fx:id="liveCircleOption1" fill="#ff1f1f" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Label fx:id="liveOption1" prefHeight="17.0" prefWidth="48.0" text="Live" />
+                                 </children>
+                              </HBox>
                            </children>
                         </HBox>
                      </children>
@@ -272,7 +279,7 @@
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="77.0" prefWidth="721.0" spacing="20.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="94.0" prefWidth="721.0" spacing="20.0">
                            <children>
                               <VBox alignment="CENTER" maxHeight="55.0" prefHeight="82.0" prefWidth="94.0" spacing="10.0">
                                  <children>
@@ -286,22 +293,33 @@
                                     <ComboBox fx:id="interactionBox" onAction="#presetInteractionSet" prefHeight="25.0" prefWidth="168.0" />
                                  </children>
                               </VBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="408.0" spacing="15.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="94.0" prefWidth="408.0" spacing="15.0">
                                  <children>
-                                    <VBox prefHeight="91.0" prefWidth="368.0">
+                                    <VBox prefHeight="93.0" prefWidth="398.0">
                                        <children>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="478.0" spacing="5.0">
+                                          <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="398.0" spacing="5.0">
                                              <children>
                                                 <Label prefHeight="16.0" prefWidth="369.0" text="Speech/Audio on button click. (OPTIONAL)" />
                                              </children>
                                           </HBox>
-                                          <HBox alignment="CENTER" prefHeight="59.0" prefWidth="358.0" spacing="10.0">
+                                          <HBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="398.0" spacing="10.0">
                                              <children>
-                                                <TextArea fx:id="interactionTextArea" onKeyReleased="#interactionTextFinished" prefHeight="60.0" prefWidth="395.0" />
-                                                <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="272.0" text="Record Audio">
-                                                   <font>
-                                                      <Font size="11.0" />
-                                                   </font></Button>
+                                                <TextArea fx:id="interactionTextArea" onKeyReleased="#interactionTextFinished" prefHeight="44.0" prefWidth="260.0" />
+                                                <VBox alignment="CENTER" prefHeight="64.0" prefWidth="149.0">
+                                                   <children>
+                                                      <Button fx:id="recordAudioOption3Button" mnemonicParsing="false" onAction="#recordAudioButtonOption3" prefHeight="38.0" prefWidth="139.0" text="Record Audio">
+                                                         <font>
+                                                            <Font size="11.0" />
+                                                         </font>
+                                                      </Button>
+                                                      <HBox alignment="CENTER" maxHeight="30.0" maxWidth="141.0" minHeight="14.0" prefHeight="18.0" prefWidth="141.0" spacing="5.0">
+                                                         <children>
+                                                            <Circle fx:id="liveCircleOption3" fill="#ff1f1f" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+                                                            <Label fx:id="liveOption3" prefHeight="17.0" prefWidth="35.0" text="Live" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </HBox>
                                        </children>
