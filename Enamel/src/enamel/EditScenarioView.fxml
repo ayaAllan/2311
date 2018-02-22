@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="enamel.EditScenarioController">
+   <children>
+      <VBox prefHeight="768.0" prefWidth="1024.0">
+         <children>
+            <MenuBar VBox.vgrow="NEVER">
+               <menus>
+                  <Menu mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open…" />
+                        <Menu mnemonicParsing="false" text="Open Recent" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Save As…" />
+                        <MenuItem mnemonicParsing="false" text="Revert" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Preferences…" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Quit" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Edit">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cut" />
+                        <MenuItem mnemonicParsing="false" text="Copy" />
+                        <MenuItem mnemonicParsing="false" text="Paste" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Select All" />
+                        <MenuItem mnemonicParsing="false" text="Unselect All" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER" layoutY="673.0" prefHeight="70.0" prefWidth="1024.0" spacing="75.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="673.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#mainMenuButton" prefHeight="42.0" prefWidth="135.0" text="Main Menu">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="saveSceneButton" mnemonicParsing="false" onAction="#saveSceneButton" prefHeight="42.0" prefWidth="135.0" text="Save Scene" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="newSceneButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newSceneButton" prefHeight="42.0" prefWidth="135.0" text="New Scene" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="deleteSceneButton" layoutX="325.0" layoutY="24.0" mnemonicParsing="false" onAction="#deleteSceneOnClick" prefHeight="42.0" prefWidth="135.0" text="Delete Currently Selected Scene" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#finishScenarioButton" prefHeight="42.0" prefWidth="135.0" text="Finish Editing Scenario" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <AnchorPane layoutY="4.0" prefHeight="667.0" prefWidth="1024.0">
+                     <children>
+                        <VBox layoutX="2.0" layoutY="104.0" prefHeight="90.0" prefWidth="697.0" spacing="2.0">
+                           <children>
+                              <Label prefHeight="23.0" prefWidth="263.0" text="STEP ONE (Required)">
+                                 <font>
+                                    <Font name="System Bold Italic" size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Give this scene a name incase you would like to change it in the furture:">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                                 <children>
+                                    <TextField fx:id="sceneNameTextField" onKeyReleased="#userTyped" prefHeight="30.0" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </VBox>
+                        <VBox layoutX="2.0" layoutY="194.0" prefHeight="164.0" prefWidth="697.0" spacing="2.0">
+                           <children>
+                              <Label prefHeight="23.0" prefWidth="568.0" text="STEP TWO (Please add one or more options to your scene)">
+                                 <font>
+                                    <Font name="System Bold Italic" size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="BOTTOM_LEFT" prefHeight="46.0" prefWidth="128.0" text="Option 1" underline="true">
+                                 <font>
+                                    <Font name="System Bold" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="17.0" prefWidth="400.0" text="Type and/or record a question/statement for the current scene: ">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" maxHeight="87.0" prefHeight="87.0" prefWidth="793.0" spacing="20.0">
+                                 <children>
+                                    <TextArea fx:id="questionTextArea" maxHeight="65.0" prefHeight="65.0" prefWidth="354.0" />
+                                    <VBox alignment="CENTER" prefHeight="70.0" prefWidth="109.0" spacing="16.0">
+                                       <children>
+                                          <Button fx:id="recordAudioOption1Button" mnemonicParsing="false" onAction="#recordAudioButtonOption1" prefHeight="41.0" prefWidth="107.0" text="Record Audio">
+                                             <font>
+                                                <Font size="11.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <HBox alignment="CENTER_LEFT" maxHeight="30.0" maxWidth="126.0" minHeight="14.0" prefHeight="18.0" prefWidth="126.0" spacing="5.0">
+                                       <children>
+                                          <Circle fx:id="liveCircleOption1" fill="#ff1f1f" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+                                          <Label fx:id="liveOption1" prefHeight="17.0" prefWidth="48.0" text="Live" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </VBox>
+                        <VBox layoutX="2.0" layoutY="358.0" prefHeight="164.0" prefWidth="697.0" spacing="2.0">
+                           <children>
+                              <Label prefHeight="27.0" prefWidth="128.0" text="Option 2" underline="true">
+                                 <font>
+                                    <Font name="System Bold" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Choose which pins to display for each braille cell.  Select the pins manually or select a letter from the english alphabet:">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="109.0" prefWidth="793.0" spacing="50.0">
+                                 <children>
+                                    <VBox alignment="CENTER" prefHeight="103.0" prefWidth="90.0" spacing="10.0">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="27.0" prefWidth="80.0" text="Cell Number:" />
+                                          <ComboBox fx:id="nocBox" onAction="#selectedBrailleCell" prefHeight="25.0" prefWidth="42.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <GridPane alignment="CENTER" prefHeight="135.0" prefWidth="148.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <RadioButton fx:id="rb2" mnemonicParsing="false" onAction="#radioButtonClicked2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <RadioButton fx:id="rb1" mnemonicParsing="false" onAction="#radioButtonClicked1" GridPane.columnIndex="1" />
+                                                <RadioButton fx:id="rb4" mnemonicParsing="false" onAction="#radioButtonClicked4" GridPane.columnIndex="2" />
+                                                <RadioButton fx:id="rb5" mnemonicParsing="false" onAction="#radioButtonClicked5" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                <RadioButton fx:id="rb3" mnemonicParsing="false" onAction="#radioButtonClicked3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <RadioButton fx:id="rb6" mnemonicParsing="false" onAction="#radioButtonClicked6" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                <RadioButton fx:id="rb7" mnemonicParsing="false" onAction="#radioButtonClicked7" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <RadioButton fx:id="rb8" mnemonicParsing="false" onAction="#radioButtonClicked8" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                <Label prefHeight="17.0" prefWidth="15.0" text="1">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="21.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="10.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="3" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="21.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="10.0" layoutY="48.0" prefHeight="17.0" prefWidth="15.0" text="2" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="21.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="32.0" layoutY="82.0" prefHeight="17.0" prefWidth="15.0" text="7" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="21.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="32.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="4" GridPane.columnIndex="3">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="21.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="121.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="5" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="21.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="32.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="6" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="21.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="32.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="8" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="21.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="46.0" prefWidth="88.0" text="Display English Letter:" textAlignment="CENTER" wrapText="true" />
+                                          <ComboBox fx:id="letterBox" onAction="#setPinsBox" prefHeight="25.0" prefWidth="60.0" />
+                                       </children>
+                                    </VBox>
+                                    <Button mnemonicParsing="false" onAction="#clearPinsButton" prefHeight="39.0" prefWidth="94.0" text="Clear Pins" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" top="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </VBox>
+                        <VBox layoutX="-2.0" layoutY="522.0" prefHeight="140.0" prefWidth="741.0" spacing="2.0">
+                           <children>
+                              <Label prefHeight="27.0" prefWidth="128.0" text="Option 3" underline="true">
+                                 <font>
+                                    <Font name="System Bold" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="17.0" prefWidth="375.0" text="Choose an interaction for any of the buttons:">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="94.0" prefWidth="721.0" spacing="20.0">
+                                 <children>
+                                    <VBox alignment="CENTER" maxHeight="55.0" prefHeight="82.0" prefWidth="94.0" spacing="10.0">
+                                       <children>
+                                          <Label text="Button Number:" />
+                                          <ComboBox fx:id="nobBox" onAction="#selectedButtonNumber" prefHeight="25.0" prefWidth="7.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" maxHeight="44.0" prefHeight="63.0" prefWidth="179.0" spacing="10.0">
+                                       <children>
+                                          <Label text="Interaction on button click:" />
+                                          <ComboBox fx:id="interactionBox" onAction="#presetInteractionSet" prefHeight="25.0" prefWidth="168.0" />
+                                       </children>
+                                    </VBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="94.0" prefWidth="408.0" spacing="15.0">
+                                       <children>
+                                          <VBox prefHeight="93.0" prefWidth="398.0">
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="398.0" spacing="5.0">
+                                                   <children>
+                                                      <Label prefHeight="16.0" prefWidth="369.0" text="Speech/Audio on button click. (OPTIONAL)" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="398.0" spacing="10.0">
+                                                   <children>
+                                                      <TextArea fx:id="interactionTextArea" onKeyReleased="#interactionTextFinished" prefHeight="44.0" prefWidth="260.0" />
+                                                      <VBox alignment="CENTER" prefHeight="64.0" prefWidth="149.0">
+                                                         <children>
+                                                            <Button fx:id="recordAudioOption3Button" mnemonicParsing="false" onAction="#recordAudioButtonOption3" prefHeight="38.0" prefWidth="139.0" text="Record Audio">
+                                                               <font>
+                                                                  <Font size="11.0" />
+                                                               </font>
+                                                            </Button>
+                                                            <HBox alignment="CENTER" maxHeight="30.0" maxWidth="141.0" minHeight="14.0" prefHeight="18.0" prefWidth="141.0" spacing="5.0">
+                                                               <children>
+                                                                  <Circle fx:id="liveCircleOption3" fill="#ff1f1f" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+                                                                  <Label fx:id="liveOption3" prefHeight="17.0" prefWidth="35.0" text="Live" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <padding>
+                                          <Insets right="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets top="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </VBox>
+                        <VBox layoutX="740.0" layoutY="-2.0" prefHeight="661.0" prefWidth="283.0">
+                           <children>
+                              <HBox prefHeight="90.0" prefWidth="283.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="325.0" spacing="5.0">
+                                       <children>
+                                          <Label text="Select which scene to edit:">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="listOfScenesBox" onAction="#loadSceneBox" prefWidth="150.0" />
+                                          <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="283.0" spacing="80.0">
+                                             <children>
+                                                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneUpOnClick" text="Move Scene Up">
+                                                   <font>
+                                                      <Font size="11.0" />
+                                                   </font>
+                                                </Button>
+                                                <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneDownOnClick" text="Move Scene Down">
+                                                   <font>
+                                                      <Font size="11.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <padding>
+                                                <Insets top="5.0" />
+                                             </padding>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <TitledPane animated="true" layoutX="10.0" layoutY="10.0" prefHeight="576.0" prefWidth="283.0" text="List of Scenes">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="281.0">
+                                       <children>
+                                          <ListView fx:id="sceneListView" prefHeight="548.0" prefWidth="283.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="-3.0" prefHeight="20.0" prefWidth="721.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="423.0">
+                                 <children>
+                                    <Label prefHeight="17.0" prefWidth="80.0" text="Scene Name :">
+                                       <font>
+                                          <Font name="System Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="sceneNameLabel" prefHeight="17.0" prefWidth="185.0" text="Unnamed New Scene">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <VBox alignment="CENTER" layoutX="2.0" layoutY="30.0" prefHeight="55.0" prefWidth="733.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Scenario Editor">
+                                 <font>
+                                    <Font name="System Bold Italic" size="32.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="scenarioNameLabel" alignment="CENTER" prefHeight="17.0" prefWidth="735.0" text="Scenario Name">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</VBox>

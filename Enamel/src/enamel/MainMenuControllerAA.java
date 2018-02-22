@@ -51,6 +51,18 @@ public class MainMenuControllerAA implements Initializable {
 		window.show();
 
 	}
+	
+	/*
+	 * Brings the user to the edit scenario introduction
+	 */
+	public void editScenarioButton(ActionEvent event) throws IOException {
+		Parent creationSetupParent = FXMLLoader.load(getClass().getResource("EditScenarioIntroView.fxml"));
+		Scene creationSetupScene = new Scene(creationSetupParent);
+
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		window.setScene(creationSetupScene);
+		window.show();
+	}
 
 	/*
 	 * When the user clicks the load scenario button they will be prompted with a
@@ -75,12 +87,15 @@ public class MainMenuControllerAA implements Initializable {
 		// code prof gave us to run in seperate thread to aviod crashing
 		Thread starterCodeThread = new Thread("Starter Code Thread") {
 			public void run() {
-				ScenarioParser s = new ScenarioParser(true);
-				s.setScenarioFile("FactoryScenarios/" + chooser.getSelectedFile().getName());
+				try {
+					ScenarioParser s = new ScenarioParser(true);
+					s.setScenarioFile("FactoryScenarios/" + chooser.getSelectedFile().getName());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		};
 		starterCodeThread.start();
 
 	}
-
 }
