@@ -1,5 +1,6 @@
 package enamel;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.event.ActionEvent;
@@ -59,30 +61,44 @@ public class EditScenarioIntroController implements Initializable{
 
 		String scenarioFileName = this.selectedScenarioLabel.getText() + "_" + "storage.bin";
 		String scenarioPath = "./FactoryScenarios/ScenarioStorage/" + scenarioFileName;
-		
-		//if(!scenarioPathExists)
-		//should give a pop up to say the object no longer exists to edit the file
-		try {
-			ObjectInputStream is = new ObjectInputStream(new FileInputStream(scenarioPath));
-			this.scenario = (ScenarioAA) is.readObject();
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		// if(!scenarioPathExists)
+		// should give a pop up to say the object no longer exists to edit the file
+		File scenarioPathFile = new File(scenarioPath);
+		if (!scenarioPathFile.exists()) {
+
+			Thread jpaneThread = new Thread("Starter Code Thread") {
+				public void run() {
+					JOptionPane.showMessageDialog(null,
+							"Editing teaching scenarios that were created by another application are currently not supported in version 1.0.0");
+				}
+			};
+			jpaneThread.start();
+
+		} else {
+			try {
+				ObjectInputStream is = new ObjectInputStream(new FileInputStream(scenarioPath));
+				this.scenario = (ScenarioAA) is.readObject();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("EditScenarioView.fxml"));
+
+			Parent mmParent = loader.load();
+			Scene mmScene = new Scene(mmParent);
+
+
+			EditScenarioController controller = loader.getController();
+			controller.initializeScenario(this.scenario);
+
+
+			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			window.setScene(mmScene);
+			window.show();
 		}
-
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("EditScenarioView.fxml"));
-
-		Parent mmParent = loader.load();
-		Scene mmScene = new Scene(mmParent);
-
-
-		EditScenarioController controller = loader.getController();
-		controller.initializeScenario(this.scenario);
-
-
-		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		window.setScene(mmScene);
-		window.show();
+		
 
 	}
 

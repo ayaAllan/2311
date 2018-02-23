@@ -55,6 +55,18 @@ public class MainMenuControllerAA implements Initializable {
 		window.setScene(creationSetupScene);
 		window.show();
 	}
+	
+	/*
+	 * Brings the user to the edit scenario introduction
+	 */
+	public void sampleScenarioButton(ActionEvent event) throws IOException {
+		Parent creationSetupParent = FXMLLoader.load(getClass().getResource("SampleScenarioView.fxml"));
+		Scene creationSetupScene = new Scene(creationSetupParent);
+
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		window.setScene(creationSetupScene);
+		window.show();
+	}
 
 	/*
 	 * When the user clicks the load scenario button they will be prompted with a
