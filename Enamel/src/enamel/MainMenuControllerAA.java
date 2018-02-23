@@ -1,7 +1,6 @@
 package enamel;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,22 +20,15 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainMenuControllerAA implements Initializable {
-
-	// current options for the users reading speed
-	ObservableList<String> readSpeedList = FXCollections.observableArrayList("Very Fast", "Fast", "Medium", "Slow",
-			"Very Slow", "Beginner");
-
-	// self explanatory, pretty useless now as it will be implemented in the late
-	// future
+	
 	@FXML
-	private ChoiceBox readSpeedBox;
+	private CheckBox visuallyCapableCheckBox;
 
 	// initialize the main menu with the choice box containing the reading speed
 	// options. The default is set to begginer
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		readSpeedBox.setValue("Beginner");
-		readSpeedBox.setItems(readSpeedList);
+		this.visuallyCapableCheckBox.setSelected(true);
 	}
 
 	/*
@@ -83,12 +75,20 @@ public class MainMenuControllerAA implements Initializable {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
 		}
+		
+		//check if user is visually capable and set the value in the scenario parser
+		Boolean isVisuallyCapable;
+		if(this.visuallyCapableCheckBox.isSelected()) {
+			isVisuallyCapable = true;
+		} else {
+			isVisuallyCapable = false;
+		}
 
 		// code prof gave us to run in seperate thread to aviod crashing
 		Thread starterCodeThread = new Thread("Starter Code Thread") {
 			public void run() {
 				try {
-					ScenarioParser s = new ScenarioParser(true);
+					ScenarioParser s = new ScenarioParser(isVisuallyCapable);
 					s.setScenarioFile("FactoryScenarios/" + chooser.getSelectedFile().getName());
 				} catch (Exception e) {
 					e.printStackTrace();

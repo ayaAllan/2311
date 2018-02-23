@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -20,23 +19,23 @@
                               
                               
                               
-                              	<Button layoutX="396.0" layoutY="266.0" onAction="#loadScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Load Scenario">
+                              	<Button layoutX="435.0" layoutY="265.0" onAction="#loadScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Load Scenario">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
-         <Button layoutX="396.0" layoutY="166.0" mnemonicParsing="false" onAction="#createScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Create  Scenario">
+         <Button layoutX="437.0" layoutY="166.0" mnemonicParsing="false" onAction="#createScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Create  Scenario">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
-         <Button layoutX="396.0" layoutY="466.0" prefHeight="50.0" prefWidth="151.0" text="Sample Scenarios">
+         <Button layoutX="435.0" layoutY="465.0" prefHeight="50.0" prefWidth="151.0" text="Sample Scenarios">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
-         <Button layoutX="396.0" layoutY="566.0" prefHeight="50.0" prefWidth="151.0" text="User Manual">
+         <Button layoutX="435.0" layoutY="569.0" prefHeight="50.0" prefWidth="151.0" text="User Manual">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
-         <Label layoutX="207.0" layoutY="98.0" text="This application aims to provide visually-impaired users with the ability to help kids learn to how to read braille." />
+         <Label alignment="CENTER" layoutX="1.0" layoutY="98.0" prefHeight="17.0" prefWidth="1024.0" text="This application aims to provide visually-impaired users with the ability to help kids learn to how to read braille." />
          <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1024.0">
            <menus>
              <Menu mnemonicParsing="false" text="File">
@@ -56,23 +55,21 @@
              </Menu>
            </menus>
          </MenuBar>
-         <Label layoutX="256.0" layoutY="232.0" text="Create a new teaching scenario for your student(s) using a convenient application." />
-         <Label layoutX="197.0" layoutY="335.0" text="Choose an existing teaching scenario from one that has been previously created or one from the file browser." />
-         <Label layoutX="220.0" layoutY="536.0" text="Some preset scenarios for you to try out yourself to get an idea of what our application can do." />
-         <Text layoutX="231.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the Authoring App!">
+         <Label alignment="CENTER" layoutY="232.0" prefHeight="17.0" prefWidth="1024.0" text="Create a new teaching scenario for your student(s) using a convenient application." />
+         <Label alignment="CENTER" layoutX="-2.0" layoutY="335.0" prefHeight="17.0" prefWidth="1024.0" text="Choose an existing teaching scenario from one that has been previously created or one from the file browser." />
+         <Label alignment="CENTER" layoutX="-1.0" layoutY="536.0" prefHeight="17.0" prefWidth="1024.0" text="Some preset scenarios for you to try out yourself to get an idea of what our application can do." />
+         <Text layoutX="-2.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the Authoring App!" textAlignment="CENTER" wrappingWidth="1024.0000076293945">
             <font>
                <Font name="Broadway" size="32.0" />
             </font></Text>
-         <CheckBox layoutX="32.0" layoutY="677.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="224.0" text="Are you visually capable?" />
-         <Label alignment="CENTER" layoutX="838.0" layoutY="681.0" prefHeight="17.0" prefWidth="150.0" text="Reading Speed" />
-         <ChoiceBox fx:id="readSpeedBox" layoutX="839.0" layoutY="710.0" prefWidth="150.0" />
-         <Button layoutX="396.0" layoutY="366.0" onAction="#editScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Edit Scenario">
+         <CheckBox fx:id="visuallyCapableCheckBox" layoutX="435.0" layoutY="671.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="224.0" text="Are you visually capable?" />
+         <Button layoutX="435.0" layoutY="365.0" onAction="#editScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Edit Scenario">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font>
          </Button>
-         <Label layoutX="383.0" layoutY="433.0" text="Edit a previously created scenario." />
-         <Label layoutX="299.0" layoutY="637.0" text="Need Help? Try reading our usermanual.  It is visually impaired friendly." />
+         <Label alignment="CENTER" layoutX="-1.0" layoutY="433.0" prefHeight="17.0" prefWidth="1024.0" text="Edit a previously created scenario." />
+         <Label alignment="CENTER" layoutX="-2.0" layoutY="637.0" prefHeight="17.0" prefWidth="1024.0" text="Need Help? Try reading our usermanual.  It is visually impaired friendly." />
       </children>
    </AnchorPane>
 

@@ -25,7 +25,7 @@
                   </Button>
                </children>
             </HBox>
-            <Label alignment="CENTER" layoutY="23.0" prefHeight="42.0" prefWidth="400.0" text="WELCOME TO THE TEACHING SCENARIO EDITOR!">
+            <Label alignment="CENTER" layoutY="23.0" prefHeight="42.0" prefWidth="400.0" text="TEACHING SCENARIO EDITOR">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>

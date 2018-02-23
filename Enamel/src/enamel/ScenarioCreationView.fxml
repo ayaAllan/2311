@@ -100,7 +100,7 @@
                      <children>
                         <Label prefHeight="23.0" prefWidth="263.0" text="STEP ONE (Required)">
                            <font>
-                              <Font name="Cooper Black" size="19.0" />
+                              <Font name="System Bold Italic" size="19.0" />
                            </font>
                         </Label>
                         <Label text="Give this scene a name incase you would like to change it in the furture:">
@@ -122,7 +122,7 @@
                      <children>
                         <Label prefHeight="23.0" prefWidth="568.0" text="STEP TWO (Please add one or more options to your scene)">
                            <font>
-                              <Font name="Cooper Black" size="19.0" />
+                              <Font name="System Bold Italic" size="19.0" />
                            </font>
                         </Label>
                         <Label alignment="BOTTOM_LEFT" prefHeight="46.0" prefWidth="128.0" text="Option 1" underline="true">
@@ -130,7 +130,7 @@
                               <Font name="System Bold" size="19.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="17.0" prefWidth="400.0" text="Type and/or record a question/statement for the current scene: ">
+                        <Label prefHeight="17.0" prefWidth="558.0" text="Type and/or record a question/statement for the current scene: ">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -162,14 +162,14 @@
                         <Insets left="20.0" />
                      </padding>
                   </VBox>
-                  <VBox layoutX="2.0" layoutY="358.0" prefHeight="164.0" prefWidth="697.0" spacing="2.0">
+                  <VBox layoutX="2.0" layoutY="358.0" prefHeight="164.0" prefWidth="733.0" spacing="2.0">
                      <children>
                         <Label prefHeight="27.0" prefWidth="128.0" text="Option 2" underline="true">
                            <font>
                               <Font name="System Bold" size="19.0" />
                            </font>
                         </Label>
-                        <Label text="Choose which pins to display for each braille cell.  Select the pins manually or select a letter from the english alphabet:">
+                        <Label prefHeight="17.0" prefWidth="712.0" text="Choose which pins to display for each braille cell.  Select the pins manually or select a letter from the english alphabet:">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -178,7 +178,7 @@
                            <children>
                               <VBox alignment="CENTER" prefHeight="103.0" prefWidth="90.0" spacing="10.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="27.0" prefWidth="80.0" text="Cell Number:" />
+                                    <Label alignment="CENTER" prefHeight="47.0" prefWidth="80.0" text="Cell Number:" wrapText="true" />
                                     <ComboBox fx:id="nocBox" onAction="#selectedBrailleCell" prefHeight="25.0" prefWidth="42.0" />
                                  </children>
                               </VBox>
@@ -252,7 +252,7 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="46.0" prefWidth="88.0" text="Display English Letter:" textAlignment="CENTER" wrapText="true" />
+                                    <Label alignment="CENTER" prefHeight="52.0" prefWidth="88.0" text="Display Letter:" textAlignment="CENTER" wrapText="true" />
                                     <ComboBox fx:id="letterBox" onAction="#setPinsBox" prefHeight="25.0" prefWidth="60.0" />
                                  </children>
                               </VBox>
@@ -283,7 +283,7 @@
                            <children>
                               <VBox alignment="CENTER" maxHeight="55.0" prefHeight="82.0" prefWidth="94.0" spacing="10.0">
                                  <children>
-                                    <Label text="Button Number:" />
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="131.0" text="Button Number:" />
                                     <ComboBox fx:id="nobBox" onAction="#selectedButtonNumber" prefHeight="25.0" prefWidth="7.0" />
                                  </children>
                               </VBox>
@@ -350,17 +350,17 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="listOfScenesBox" onAction="#loadSceneBox" prefWidth="150.0" />
-                                    <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="283.0" spacing="80.0">
+                                    <ComboBox fx:id="listOfScenesBox" onAction="#loadSceneBox" prefHeight="25.0" prefWidth="223.0" />
+                                    <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="283.0" spacing="20.0">
                                        <children>
-                                          <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneUpOnClick" text="Move Scene Up">
+                                          <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneUpOnClick" prefHeight="24.0" prefWidth="136.0" text="Move Scene Up">
                                              <font>
-                                                <Font size="11.0" />
+                                                <Font size="10.0" />
                                              </font>
                                           </Button>
-                                          <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneDownOnClick" text="Move Scene Down">
+                                          <Button layoutX="81.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneDownOnClick" prefHeight="24.0" prefWidth="133.0" text="Move Scene Down">
                                              <font>
-                                                <Font size="11.0" />
+                                                <Font size="10.0" />
                                              </font>
                                           </Button>
                                        </children>
@@ -390,11 +390,6 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="423.0">
                            <children>
-                              <Label prefHeight="17.0" prefWidth="80.0" text="Scene Name :">
-                                 <font>
-                                    <Font name="System Italic" size="12.0" />
-                                 </font>
-                              </Label>
                               <Label fx:id="sceneNameLabel" prefHeight="17.0" prefWidth="185.0" text="Unnamed New Scene">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
@@ -408,7 +403,7 @@
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Scenario Builder">
                            <font>
-                              <Font name="Broadway" size="32.0" />
+                              <Font name="System Bold Italic" size="32.0" />
                            </font>
                         </Label>
                         <Label fx:id="scenarioNameLabel" alignment="CENTER" prefHeight="17.0" prefWidth="735.0" text="Scenario Name">
