@@ -1,10 +1,11 @@
 package enamel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class ScenarioAA {
+public class ScenarioAA implements Serializable{
 
 	// INCOMPLETE CLASS
 

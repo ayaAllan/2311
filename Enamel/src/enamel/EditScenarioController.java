@@ -154,7 +154,7 @@ public class EditScenarioController implements Initializable {
 
 		sceneList = FXCollections.observableArrayList();
 		sceneListBoxVersion = FXCollections.observableArrayList("No Scene Selected");
-		this.listOfScenesBox.setValue("No Scene Selected");
+		
 
 		// cant save a scene that hasnt been created yet
 		// also set other buttons disable values based on what the user can do at this
@@ -169,8 +169,22 @@ public class EditScenarioController implements Initializable {
 		this.liveCircleOption3.setVisible(false);
 		this.liveOption3.setVisible(false);
 
-		// have to initialize all fields with attributes
+	
+		List<String> listOfScenesWO = new ArrayList<>();
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+			listOfScenesWO.add(this.scenario.getScenario().get(i).getSceneName());
+		}
+		ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
+		this.sceneListView.setItems(listOfScenesOWOL);
 
+		List<String> listOfScenesLS = new ArrayList<>();
+		listOfScenesLS.add("No Scene Selected");
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+			listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
+		}
+		ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
+		this.listOfScenesBox.setValue("No Scene Selected");
+		this.listOfScenesBox.setItems(listOfScenesOL);
 	}
 
 	public void recordAudioButtonOption1(ActionEvent event) {

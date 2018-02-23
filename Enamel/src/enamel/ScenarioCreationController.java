@@ -1,8 +1,10 @@
 package enamel;
 
 import java.io.File;
-
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 
@@ -911,6 +913,24 @@ public class ScenarioCreationController implements Initializable {
 		}
 		writer.println(this.scenario.getScenarioName() + " is now finished.  Please close the simulation.");
 		writer.close();
+		
+		//save object as binary file to load it later in editor
+		String fileName = this.scenario.getScenarioName() + "_" + "storage.bin";
+		String filePath = "./FactoryScenarios/ScenarioStorage/" + fileName;
+		
+		try {
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePath));
+			os.writeObject(this.scenario);
+			os.close();
+		} catch(FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} 
+		
+
+		
+		
 
 		// return user to the main menu so they can load their newly created scenario
 		Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));

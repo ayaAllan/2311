@@ -1,6 +1,8 @@
 package enamel;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -51,21 +53,21 @@ public class EditScenarioIntroController implements Initializable{
 	 * clicking this button progresses the user to the next window to start  editing their teaching scenario of choice
 	 */
 	public void editScenarioButton(ActionEvent event) throws IOException {
+		
+		
 		//temp scenario for testing
-		this.scenario = new ScenarioAA("test", 5, 5);
-		
-		
-		
-		
-		
-		//load the scenario name with the nob and noc
-		
-		//create the scenario
-		//this.scenario = new ScenarioAA(name, nob, noc);
-		//load the entire scenario attributes with the correct values using the loader method
 
-		//for loop, for each scene we must initialize all attributes
-
+		String scenarioFileName = this.selectedScenarioLabel.getText() + "_" + "storage.bin";
+		String scenarioPath = "./FactoryScenarios/ScenarioStorage/" + scenarioFileName;
+		
+		//if(!scenarioPathExists)
+		//should give a pop up to say the object no longer exists to edit the file
+		try {
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream(scenarioPath));
+			this.scenario = (ScenarioAA) is.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("EditScenarioView.fxml"));
