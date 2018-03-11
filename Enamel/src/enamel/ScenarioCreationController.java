@@ -38,6 +38,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -56,7 +57,7 @@ public class ScenarioCreationController implements Initializable {
 	private ObservableList<Character> letterList;
 
 	@FXML
-	private Label sceneNameLabel, scenarioNameLabel;
+	private Label scenarioNameLabel, currentSceneSetLabel;
 
 	@FXML
 	private TextField sceneNameTextField;
@@ -68,7 +69,7 @@ public class ScenarioCreationController implements Initializable {
 	@FXML
 	private RadioButton rb1, rb2, rb3, rb4, rb5, rb6, rb7, rb8;
 
-	// number of buttons drop down box
+	// number of buttons, number of cells
 	@FXML
 	private ComboBox<Integer> nobBox, nocBox;
 
@@ -76,7 +77,7 @@ public class ScenarioCreationController implements Initializable {
 	private ComboBox<Character> letterBox;
 
 	@FXML
-	private ComboBox<String> interactionBox, listOfScenesBox;
+	private ComboBox<String> interactionBox;
 
 	@FXML
 	private ListView<String> sceneListView;
@@ -154,7 +155,6 @@ public class ScenarioCreationController implements Initializable {
 
 		sceneList = FXCollections.observableArrayList();
 		sceneListBoxVersion = FXCollections.observableArrayList("No Scene Selected");
-		this.listOfScenesBox.setValue("No Scene Selected");
 
 		// cant save a scene that hasnt been created yet
 		// also set other buttons disable values based on what the user can do at this
@@ -320,88 +320,6 @@ public class ScenarioCreationController implements Initializable {
 		} else {
 			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(1);
 		}
-		// leave this here for testing purposes in the future
-		// trying to print to test
-		// Boolean index11 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(0);
-		// Boolean index12 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(1);
-		// Boolean index13 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(2);
-		// Boolean index14 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(3);
-		// Boolean index15 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(4);
-		// Boolean index16 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(5);
-		// Boolean index17 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(6);
-		// Boolean index18 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(7);
-		//
-		// Boolean index21 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(0);
-		// Boolean index22 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(1);
-		// Boolean index23 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(2);
-		// Boolean index24 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(3);
-		// Boolean index25 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(4);
-		// Boolean index26 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(5);
-		// Boolean index27 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(6);
-		// Boolean index28 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(7);
-		//
-		// Boolean index31 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(0);
-		// Boolean index32 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(1);
-		// Boolean index33 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(2);
-		// Boolean index34 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(3);
-		// Boolean index35 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(4);
-		// Boolean index36 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(5);
-		// Boolean index37 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(6);
-		// Boolean index38 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(7);
-		//
-		//
-		// System.out.println("radio1 clicked");
-		// System.out.println(index11);
-		// System.out.println(index12);
-		// System.out.println(index13);
-		// System.out.println(index14);
-		// System.out.println(index15);
-		// System.out.println(index16);
-		// System.out.println(index17);
-		// System.out.println(index18);
-		// System.out.println("----------------------------------");
-		// System.out.println(index21);
-		// System.out.println(index22);
-		// System.out.println(index23);
-		// System.out.println(index24);
-		// System.out.println(index25);
-		// System.out.println(index26);
-		// System.out.println(index27);
-		// System.out.println(index28);
-		// System.out.println("----------------------------------");
-		// System.out.println(index31);
-		// System.out.println(index32);
-		// System.out.println(index33);
-		// System.out.println(index34);
-		// System.out.println(index35);
-		// System.out.println(index36);
-		// System.out.println(index37);
-		// System.out.println(index38);
-		// System.out.println("----------------------------------");
 	}
 
 	public void radioButtonClicked2(ActionEvent event) {
@@ -492,29 +410,6 @@ public class ScenarioCreationController implements Initializable {
 		this.scenario.getCurrentScene().getInteractionTextInput().put(buttonNumber, inputedText);
 	}
 
-	public void saveInteractionButton(ActionEvent event) {
-
-		// get the current button number that the user wants to add interactions to
-		int currentButtonNumber = this.nobBox.getValue();
-
-		// save the preset interaction for the current button number in the current
-		// scene object
-		String interactionString = interactionBox.getValue();
-		this.scenario.getCurrentScene().setInteractionPreset(currentButtonNumber, interactionString);
-
-		// save the text-to-speach input for the current button number in the current
-		// scene object
-		if (interactionTextArea.getText() != "") {
-			String interactionTextInput = interactionTextArea.getText();
-			this.scenario.getCurrentScene().setInteractionTextInput(currentButtonNumber, interactionTextInput);
-		}
-
-		// when the user clicks the button, set the drop down menu back to 'no
-		// interaction'
-		this.interactionBox.setValue("No Interaction");
-		this.interactionTextArea.clear();
-	}
-
 	/*
 	 * clicking this button returns the user to the main menu
 	 */
@@ -559,18 +454,12 @@ public class ScenarioCreationController implements Initializable {
 		// index which is at a different location of what u found
 		if (sceneExists) {
 
-			// this.sceneNameLabel.setText(sceneName);
-			// String questionText = questionTextArea.getText();
-			// // set the question to what the user typed
-			// this.scenario.getCurrentScene().setQuestion(questionText);
-			// this.listOfScenesBox.setValue(sceneName);
 			int index = this.scenario.findSceneIndex(sceneName);
 
 			if (index == -1) {
 				// do nothing
 			} else if (this.scenario.getCurrentSceneIndex() != index) {
 				this.scenario.getScenario().remove(index);
-				System.out.println(index);
 
 			} else {
 				// do nothing
@@ -580,7 +469,6 @@ public class ScenarioCreationController implements Initializable {
 		// add the scene name to the scenario and set the text in the top right corner
 		// to the current scene name
 		this.scenario.getCurrentScene().setName(sceneName);
-		this.sceneNameLabel.setText(sceneName);
 
 		// get the inputed text
 		String questionText = questionTextArea.getText();
@@ -593,29 +481,7 @@ public class ScenarioCreationController implements Initializable {
 		}
 		ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 		this.sceneListView.setItems(listOfScenesOWOL);
-
-		List<String> listOfScenesLS = new ArrayList<>();
-		listOfScenesLS.add("No Scene Selected");
-		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-			listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-		}
-		ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-		this.listOfScenesBox.setValue(sceneName);
-		this.listOfScenesBox.setItems(listOfScenesOL);
-
-		// need to remove all the extra created null scenes due to the user incorrectly
-		// pressing new scene too many times
-		// for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-		//
-		// System.out.println(this.scenario.getScenario().get(i) == null);
-		// System.out.println(this.scenario.getScenario().get(i).getSceneName());
-		// System.out.println(this.scenario.getScenario().get(i).equals(null));
-		// System.out.println(this.scenario.getScenario().get(i).getSceneName() ==
-		// null);
-		// if (this.scenario.getScenario().get(i).getSceneName() == null) {
-		// this.scenario.getScenario().remove(i);
-		// }
-		// }
+		this.currentSceneSetLabel.setText(sceneName);
 
 		this.newSceneButton.setDisable(false);
 		this.deleteSceneButton.setDisable(false);
@@ -669,7 +535,7 @@ public class ScenarioCreationController implements Initializable {
 	}
 
 	public void newSceneButton(ActionEvent event) {
-		this.listOfScenesBox.setValue("No Scene Selected");
+		this.currentSceneSetLabel.setText("Unnamed New Scene");
 
 		// create new scene to work on but do not store it yet in the list, it should
 		// only be stored in the list(Scenario attribute list of scenes) when its saved
@@ -694,20 +560,22 @@ public class ScenarioCreationController implements Initializable {
 		this.letterBox.setValue('-');
 		this.nobBox.setValue(1);
 		this.interactionBox.setValue("No Interaction");
-		this.sceneNameLabel.setText("Unnammed New Scene");
 		this.interactionTextArea.clear();
+		// delselect everything in the list
+		this.sceneListView.getSelectionModel().clearSelection();
 		saveSceneButton.setDisable(true);
 		this.newSceneButton.setDisable(true);
 	}
 
-	public void loadSceneBox(ActionEvent event) {
-		String selectedSceneName = listOfScenesBox.getValue();
+	public void loadSceneOnClick(MouseEvent event) {
 
-		if (selectedSceneName == "No Scene Selected") {
+		String selectedSceneName = this.sceneListView.getSelectionModel().getSelectedItem();
+		System.out.println("selected scene: " + selectedSceneName);
+
+		if (sceneListView.getSelectionModel().isEmpty() == true) {
 			// do nothing
-			this.sceneNameLabel.setText("Please Create a New Scene");
+			this.currentSceneSetLabel.setText("Please Create a New Scene");
 		} else {
-
 			// was getting a wierd null pointer exception based on the method
 			// findSceneIndex() implementation
 			// this fixes it
@@ -719,11 +587,11 @@ public class ScenarioCreationController implements Initializable {
 			}
 
 			if (indexOfValue == -1) {
-				// temporary joption pane for testing purposes
 				// JOptionPane.showConfirmDialog(null, "its -1 fix it -corv");
 			} else {
 				this.scenario.setCurrentScene(indexOfValue);
 				// update all text fields with the current scenes values
+				this.currentSceneSetLabel.setText(this.scenario.getCurrentScene().getSceneName());
 				this.sceneNameTextField.setText(this.scenario.getCurrentScene().getSceneName());
 				this.questionTextArea.setText(this.scenario.getCurrentScene().getQuestion());
 				this.nocBox.setValue(1);
@@ -739,7 +607,6 @@ public class ScenarioCreationController implements Initializable {
 				this.nobBox.setValue(1);
 				this.interactionBox.setValue(this.scenario.getCurrentScene().getInteractionPreset().get(1));
 				this.interactionTextArea.setText(this.scenario.getCurrentScene().getInteractionTextInput().get(1));
-				this.sceneNameLabel.setText(this.scenario.getCurrentScene().getSceneName());
 				this.saveSceneButton.setDisable(false);
 				this.deleteSceneButton.setDisable(false);
 
@@ -752,17 +619,18 @@ public class ScenarioCreationController implements Initializable {
 						this.scenario.getScenario().remove(i);
 					}
 				}
-
 			}
+
 		}
+
 	}
 
 	public void deleteSceneOnClick(ActionEvent event) {
 
-		if (this.listOfScenesBox.getValue().equals("No Scene Selected")) {
+		if (this.currentSceneSetLabel.getText().equals("No Scene Selected")) {
 			// do nothing, there is nothing to delete
 		} else {
-			String currentlySelectedScene = this.listOfScenesBox.getValue();
+			String currentlySelectedScene = this.currentSceneSetLabel.getText();
 
 			int selectedSceneIndex = this.scenario.findSceneIndex(currentlySelectedScene);
 			this.scenario.getScenario().remove(selectedSceneIndex);
@@ -773,18 +641,9 @@ public class ScenarioCreationController implements Initializable {
 			}
 			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 			this.sceneListView.setItems(listOfScenesOWOL);
-
-			List<String> listOfScenesLS = new ArrayList<>();
-			listOfScenesLS.add("No Scene Selected");
-			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-			}
-			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-			this.listOfScenesBox.setItems(listOfScenesOL);
-
-			// repeat code from new scene to clear everything
-			this.listOfScenesBox.setValue("No Scene Selected");
-			this.sceneNameLabel.setText("Please Create a New Scene");
+			this.currentSceneSetLabel.setText("No Scene Selected");
+			// delselect everything in the list
+			this.sceneListView.getSelectionModel().clearSelection();
 
 			// clear whatever needs to be cleared
 			this.sceneNameTextField.clear();
@@ -821,10 +680,12 @@ public class ScenarioCreationController implements Initializable {
 		if (this.scenario.getCurrentSceneIndex() == 0) {
 			// do nothing, reached border
 		} else {
+
 			List<SceneAA> scenarioObjectList = this.scenario.getScenario();
 			// swap with the next scene in the list
 			Collections.swap(scenarioObjectList, this.scenario.getCurrentSceneIndex() - 1,
 					this.scenario.getCurrentSceneIndex());
+			this.scenario.setCurrentSceneIndex(this.scenario.getCurrentSceneIndex() - 1);
 
 			List<String> listOfScenesWO = new ArrayList<>();
 			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
@@ -832,15 +693,6 @@ public class ScenarioCreationController implements Initializable {
 			}
 			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 			this.sceneListView.setItems(listOfScenesOWOL);
-
-			List<String> listOfScenesLS = new ArrayList<>();
-			listOfScenesLS.add("No Scene Selected");
-			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-			}
-			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-			this.listOfScenesBox.setItems(listOfScenesOL);
-
 		}
 
 	}
@@ -854,6 +706,7 @@ public class ScenarioCreationController implements Initializable {
 			// swap with the next scene in the list
 			Collections.swap(scenarioObjectList, this.scenario.getCurrentSceneIndex() + 1,
 					this.scenario.getCurrentSceneIndex());
+			this.scenario.setCurrentSceneIndex(this.scenario.getCurrentSceneIndex() + 1);
 
 			List<String> listOfScenesWO = new ArrayList<>();
 			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
@@ -861,15 +714,6 @@ public class ScenarioCreationController implements Initializable {
 			}
 			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 			this.sceneListView.setItems(listOfScenesOWOL);
-
-			List<String> listOfScenesLS = new ArrayList<>();
-			listOfScenesLS.add("No Scene Selected");
-			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-			}
-			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-			this.listOfScenesBox.setItems(listOfScenesOL);
-
 		}
 	}
 
@@ -884,13 +728,7 @@ public class ScenarioCreationController implements Initializable {
 	}
 
 	public void finishScenarioButton(ActionEvent event) throws IOException {
-		// //clean up any newly created scenes that arent used
-		// for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-		// if (this.scenario.getScenario().get(i).getSceneName() == null) {
-		// this.scenario.getScenario().remove(i);
-		// }
-		// }
-		//
+
 		// get the scenario name and number of buttons as a string
 		String primitiveScenarioName = this.scenario.getScenarioName();
 		String scenarioNameString = primitiveScenarioName + ".txt";
@@ -913,24 +751,20 @@ public class ScenarioCreationController implements Initializable {
 		}
 		writer.println(this.scenario.getScenarioName() + " is now finished.  Please close the simulation.");
 		writer.close();
-		
-		//save object as binary file to load it later in editor
+
+		// save object as binary file to load it later in editor
 		String fileName = this.scenario.getScenarioName() + "_" + "storage.bin";
 		String filePath = "./FactoryScenarios/ScenarioStorage/" + fileName;
-		
+
 		try {
 			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePath));
 			os.writeObject(this.scenario);
 			os.close();
-		} catch(FileNotFoundException fnfe) {
+		} catch (FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-		} 
-		
-
-		
-		
+		}
 
 		// return user to the main menu so they can load their newly created scenario
 		Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
@@ -939,7 +773,5 @@ public class ScenarioCreationController implements Initializable {
 		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		window.setScene(mmScene);
 		window.show();
-
 	}
-
 }

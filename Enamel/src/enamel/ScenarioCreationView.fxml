@@ -339,18 +339,17 @@
                         <Insets left="20.0" />
                      </padding>
                   </VBox>
-                  <VBox layoutX="740.0" layoutY="-2.0" prefHeight="661.0" prefWidth="283.0">
+                  <VBox layoutX="740.0" layoutY="-2.0" prefHeight="674.0" prefWidth="283.0">
                      <children>
                         <HBox prefHeight="90.0" prefWidth="283.0">
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="325.0" spacing="5.0">
                                  <children>
-                                    <Label text="Select which scene to edit:">
+                                    <Label fx:id="currentSceneSetLabel" text="No Scene Selected">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="listOfScenesBox" onAction="#loadSceneBox" prefHeight="25.0" prefWidth="223.0" />
                                     <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="283.0" spacing="20.0">
                                        <children>
                                           <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#moveSceneUpOnClick" prefHeight="24.0" prefWidth="136.0" text="Move Scene Up">
@@ -375,31 +374,18 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <TitledPane animated="true" layoutX="10.0" layoutY="10.0" prefHeight="576.0" prefWidth="283.0" text="List of Scenes">
+                        <TitledPane animated="true" layoutX="10.0" layoutY="10.0" prefHeight="629.0" prefWidth="283.0" text="List of Scenes">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="281.0">
                                  <children>
-                                    <ListView fx:id="sceneListView" prefHeight="548.0" prefWidth="283.0" />
+                                    <ListView fx:id="sceneListView" onMouseClicked="#loadSceneOnClick" prefHeight="581.0" prefWidth="283.0" />
                                  </children>
                               </AnchorPane>
                            </content>
                         </TitledPane>
                      </children>
                   </VBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="-3.0" prefHeight="20.0" prefWidth="721.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="423.0">
-                           <children>
-                              <Label fx:id="sceneNameLabel" prefHeight="17.0" prefWidth="185.0" text="Unnamed New Scene">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-                  <VBox alignment="CENTER" layoutX="2.0" layoutY="30.0" prefHeight="55.0" prefWidth="733.0">
+                  <VBox alignment="CENTER" layoutX="2.0" layoutY="8.0" prefHeight="86.0" prefWidth="733.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Scenario Builder">
                            <font>
