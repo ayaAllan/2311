@@ -29,9 +29,9 @@ public class SceneAAWriter {
 	}
 
 	public void writeAudioOption1() {
-		if (this.scene.audioOption1Exists()) {
+		if (this.scene.audioOption1Exists()) {//checks to see if the user has recorded audio 
 			String fileName = this.scene.getAudioNameOption1();
-			this.sceneAsTxt.add("/~sound:" + fileName);
+			this.sceneAsTxt.add("/~sound:" + fileName); //this is what is written
 		}
 	}
 
@@ -50,11 +50,9 @@ public class SceneAAWriter {
 				} else {
 					binaryPins = binaryPins + "0";
 				}
-
 			}
 			sceneAsTxt.add("/~disp-cell-pins:" + i + " " + binaryPins);
 		}
-
 	}
 
 	public void writeInteractions() {

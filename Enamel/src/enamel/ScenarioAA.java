@@ -70,20 +70,15 @@ public class ScenarioAA implements Serializable{
 		this.scenarioName = name;
 	}
 
+	
 	public int findSceneIndex(String sceneName) {
-		int index = -1;
-		System.out.println("-----------START ----------------- ");
+		int index = -1;	//nothing to return
 		for (int i = 0; i < this.listOfScenes.size(); i++) {
-			System.out.println(this.listOfScenes.get(i).getSceneName());
-			System.out.println(sceneName);
-			System.out.println(sceneName.equals(this.listOfScenes.get(i).getSceneName()));
-			System.out.println("---end of line --- ");
 			if (sceneName.equals(this.listOfScenes.get(i).getSceneName())) {
-				index = i;
+				index = i; //returns where the scene is in the list if its found
 			}
 		}
-		System.out.println("-----------END ----------------- ");
-		return index;
+		return index; //otherwise return -1
 
 	}
 
@@ -92,32 +87,11 @@ public class ScenarioAA implements Serializable{
 		this.currentSceneIndex = index;
 	}
 
+	//setCurrentScene
 	public void newCurrentScene(SceneAA scene) {
 		this.currentScene = scene;
 	}
-
-	// not used, keeping incase something changes
-	public void nextScene() {
-		this.currentSceneIndex++;
-		SceneAA s = new SceneAA(noc, nob);
-		this.currentScene = s;
-		this.listOfScenes.add(s);
-	}
-
-	// not used, keeping incase something changes
-	public void previousScene() throws IndexOutOfBoundsException {
-		if (this.currentSceneIndex == 0) {
-			throw new IndexOutOfBoundsException();
-		} else {
-			this.currentSceneIndex--;
-			this.currentScene = listOfScenes.get(currentSceneIndex);
-		}
-	}
-
-	public void goToScene(int scenarioNumber) {
-		this.currentScene = this.listOfScenes.get(scenarioNumber);
-	}
-
+	
 	public void addScene(SceneAA scene) {
 		this.listOfScenes.add(scene);
 	}

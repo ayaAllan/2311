@@ -70,7 +70,8 @@ public class SceneAATest {
 		SceneAA scene = new SceneAA(1, 2);
 		String question = "hgh";
 		scene.setQuestion(question);
-		assertEquals(question, scene.getQuestion());
+		assertEquals("hgh", scene.getQuestion());
+		String question2 = null;
 	}
 
 	@Test
