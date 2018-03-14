@@ -35,6 +35,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -53,7 +54,7 @@ public class EditScenarioController implements Initializable {
 	private ObservableList<Character> letterList;
 
 	@FXML
-	private Label sceneNameLabel, scenarioNameLabel;
+	private Label currentSceneSetLabel, scenarioNameLabel;
 
 	@FXML
 	private TextField sceneNameTextField;
@@ -73,13 +74,13 @@ public class EditScenarioController implements Initializable {
 	private ComboBox<Character> letterBox;
 
 	@FXML
-	private ComboBox<String> interactionBox, listOfScenesBox;
+	private ComboBox<String> interactionBox;
 
 	@FXML
 	private ListView<String> sceneListView;
 
 	@FXML
-	private ObservableList<String> sceneList, sceneListBoxVersion;
+	private ObservableList<String> sceneList;
 
 	@FXML
 	private Button saveSceneButton, newSceneButton, deleteSceneButton;
@@ -153,22 +154,54 @@ public class EditScenarioController implements Initializable {
 		letterBox.setItems(letterList);
 
 		sceneList = FXCollections.observableArrayList();
-		sceneListBoxVersion = FXCollections.observableArrayList("No Scene Selected");
 		
+		//load the first scene if it exists otherwise just start off with new scene
+		if(this.scenario.getScenario().isEmpty() || this.scenario.getScenario().get(0) == null) {
+			//no scenes exist so just load a fresh scenario
+			saveSceneButton.setDisable(true);
+			this.newSceneButton.setDisable(true);
+			this.deleteSceneButton.setDisable(true);
+			
+		} else {
 
-		// cant save a scene that hasnt been created yet
-		// also set other buttons disable values based on what the user can do at this
-		// point
-		saveSceneButton.setDisable(true);
-		this.newSceneButton.setDisable(true);
-		this.deleteSceneButton.setDisable(true);
+			this.scenario.setCurrentScene(0);
+			// update all text fields with the current scenes values
+			this.currentSceneSetLabel.setText(this.scenario.getCurrentScene().getSceneName());
+			this.sceneNameTextField.setText(this.scenario.getCurrentScene().getSceneName());
+			this.questionTextArea.setText(this.scenario.getCurrentScene().getQuestion());
+			this.nocBox.setValue(1);
+			rb1.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(0));
+			rb2.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(1));
+			rb3.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(2));
+			rb4.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(3));
+			rb5.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(4));
+			rb6.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(5));
+			rb7.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(6));
+			rb8.setSelected(this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(7));
+			this.letterBox.setValue('-');
+			this.nobBox.setValue(1);
+			this.interactionBox.setValue(this.scenario.getCurrentScene().getInteractionPreset().get(1));
+			this.interactionTextArea.setText(this.scenario.getCurrentScene().getInteractionTextInput().get(1));
+			this.saveSceneButton.setDisable(false);
+			this.deleteSceneButton.setDisable(false);
 
+			// part for enabling the new scene button but also removing the new scene the
+			// user createdso you dont get null references
+			this.newSceneButton.setDisable(false);
+			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+
+				if (this.scenario.getScenario().get(i).getSceneName() == null) {
+					this.scenario.getScenario().remove(i);
+				}
+			}
+
+		}
+			
 		// set the recording display to off for now
 		this.liveCircleOption1.setVisible(false);
 		this.liveOption1.setVisible(false);
 		this.liveCircleOption3.setVisible(false);
 		this.liveOption3.setVisible(false);
-
 	
 		List<String> listOfScenesWO = new ArrayList<>();
 		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
@@ -176,15 +209,6 @@ public class EditScenarioController implements Initializable {
 		}
 		ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 		this.sceneListView.setItems(listOfScenesOWOL);
-
-		List<String> listOfScenesLS = new ArrayList<>();
-		listOfScenesLS.add("No Scene Selected");
-		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-			listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-		}
-		ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-		this.listOfScenesBox.setValue("No Scene Selected");
-		this.listOfScenesBox.setItems(listOfScenesOL);
 	}
 
 	public void recordAudioButtonOption1(ActionEvent event) {
@@ -575,18 +599,12 @@ public class EditScenarioController implements Initializable {
 		// index which is at a different location of what u found
 		if (sceneExists) {
 
-			// this.sceneNameLabel.setText(sceneName);
-			// String questionText = questionTextArea.getText();
-			// // set the question to what the user typed
-			// this.scenario.getCurrentScene().setQuestion(questionText);
-			// this.listOfScenesBox.setValue(sceneName);
 			int index = this.scenario.findSceneIndex(sceneName);
 
 			if (index == -1) {
 				// do nothing
 			} else if (this.scenario.getCurrentSceneIndex() != index) {
 				this.scenario.getScenario().remove(index);
-				System.out.println(index);
 
 			} else {
 				// do nothing
@@ -596,7 +614,6 @@ public class EditScenarioController implements Initializable {
 		// add the scene name to the scenario and set the text in the top right corner
 		// to the current scene name
 		this.scenario.getCurrentScene().setName(sceneName);
-		this.sceneNameLabel.setText(sceneName);
 
 		// get the inputed text
 		String questionText = questionTextArea.getText();
@@ -609,29 +626,7 @@ public class EditScenarioController implements Initializable {
 		}
 		ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 		this.sceneListView.setItems(listOfScenesOWOL);
-
-		List<String> listOfScenesLS = new ArrayList<>();
-		listOfScenesLS.add("No Scene Selected");
-		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-			listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-		}
-		ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-		this.listOfScenesBox.setValue(sceneName);
-		this.listOfScenesBox.setItems(listOfScenesOL);
-
-		// need to remove all the extra created null scenes due to the user incorrectly
-		// pressing new scene too many times
-		// for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-		//
-		// System.out.println(this.scenario.getScenario().get(i) == null);
-		// System.out.println(this.scenario.getScenario().get(i).getSceneName());
-		// System.out.println(this.scenario.getScenario().get(i).equals(null));
-		// System.out.println(this.scenario.getScenario().get(i).getSceneName() ==
-		// null);
-		// if (this.scenario.getScenario().get(i).getSceneName() == null) {
-		// this.scenario.getScenario().remove(i);
-		// }
-		// }
+		this.currentSceneSetLabel.setText(sceneName);
 
 		this.newSceneButton.setDisable(false);
 		this.deleteSceneButton.setDisable(false);
@@ -685,7 +680,7 @@ public class EditScenarioController implements Initializable {
 	}
 
 	public void newSceneButton(ActionEvent event) {
-		this.listOfScenesBox.setValue("No Scene Selected");
+		this.currentSceneSetLabel.setText("Unnamed New Scene");
 
 		// create new scene to work on but do not store it yet in the list, it should
 		// only be stored in the list(Scenario attribute list of scenes) when its saved
@@ -710,20 +705,22 @@ public class EditScenarioController implements Initializable {
 		this.letterBox.setValue('-');
 		this.nobBox.setValue(1);
 		this.interactionBox.setValue("No Interaction");
-		this.sceneNameLabel.setText("Unnammed New Scene");
 		this.interactionTextArea.clear();
+		// delselect everything in the list
+		this.sceneListView.getSelectionModel().clearSelection();
 		saveSceneButton.setDisable(true);
 		this.newSceneButton.setDisable(true);
 	}
 
-	public void loadSceneBox(ActionEvent event) {
-		String selectedSceneName = listOfScenesBox.getValue();
+	public void loadSceneOnClick(MouseEvent event) {
 
-		if (selectedSceneName == "No Scene Selected") {
+		String selectedSceneName = this.sceneListView.getSelectionModel().getSelectedItem();
+		System.out.println("selected scene: " + selectedSceneName);
+
+		if (sceneListView.getSelectionModel().isEmpty() == true) {
 			// do nothing
-			this.sceneNameLabel.setText("Please Create a New Scene");
+			this.currentSceneSetLabel.setText("Please Create a New Scene");
 		} else {
-
 			// was getting a wierd null pointer exception based on the method
 			// findSceneIndex() implementation
 			// this fixes it
@@ -735,11 +732,11 @@ public class EditScenarioController implements Initializable {
 			}
 
 			if (indexOfValue == -1) {
-				// temporary joption pane for testing purposes
 				// JOptionPane.showConfirmDialog(null, "its -1 fix it -corv");
 			} else {
 				this.scenario.setCurrentScene(indexOfValue);
 				// update all text fields with the current scenes values
+				this.currentSceneSetLabel.setText(this.scenario.getCurrentScene().getSceneName());
 				this.sceneNameTextField.setText(this.scenario.getCurrentScene().getSceneName());
 				this.questionTextArea.setText(this.scenario.getCurrentScene().getQuestion());
 				this.nocBox.setValue(1);
@@ -755,7 +752,6 @@ public class EditScenarioController implements Initializable {
 				this.nobBox.setValue(1);
 				this.interactionBox.setValue(this.scenario.getCurrentScene().getInteractionPreset().get(1));
 				this.interactionTextArea.setText(this.scenario.getCurrentScene().getInteractionTextInput().get(1));
-				this.sceneNameLabel.setText(this.scenario.getCurrentScene().getSceneName());
 				this.saveSceneButton.setDisable(false);
 				this.deleteSceneButton.setDisable(false);
 
@@ -768,17 +764,18 @@ public class EditScenarioController implements Initializable {
 						this.scenario.getScenario().remove(i);
 					}
 				}
-
 			}
+
 		}
+
 	}
 
 	public void deleteSceneOnClick(ActionEvent event) {
 
-		if (this.listOfScenesBox.getValue().equals("No Scene Selected")) {
+		if (this.currentSceneSetLabel.getText().equals("No Scene Selected")) {
 			// do nothing, there is nothing to delete
 		} else {
-			String currentlySelectedScene = this.listOfScenesBox.getValue();
+			String currentlySelectedScene = this.currentSceneSetLabel.getText();
 
 			int selectedSceneIndex = this.scenario.findSceneIndex(currentlySelectedScene);
 			this.scenario.getScenario().remove(selectedSceneIndex);
@@ -789,18 +786,9 @@ public class EditScenarioController implements Initializable {
 			}
 			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 			this.sceneListView.setItems(listOfScenesOWOL);
-
-			List<String> listOfScenesLS = new ArrayList<>();
-			listOfScenesLS.add("No Scene Selected");
-			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-			}
-			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-			this.listOfScenesBox.setItems(listOfScenesOL);
-
-			// repeat code from new scene to clear everything
-			this.listOfScenesBox.setValue("No Scene Selected");
-			this.sceneNameLabel.setText("Please Create a New Scene");
+			this.currentSceneSetLabel.setText("No Scene Selected");
+			// delselect everything in the list
+			this.sceneListView.getSelectionModel().clearSelection();
 
 			// clear whatever needs to be cleared
 			this.sceneNameTextField.clear();
@@ -837,10 +825,12 @@ public class EditScenarioController implements Initializable {
 		if (this.scenario.getCurrentSceneIndex() == 0) {
 			// do nothing, reached border
 		} else {
+
 			List<SceneAA> scenarioObjectList = this.scenario.getScenario();
 			// swap with the next scene in the list
 			Collections.swap(scenarioObjectList, this.scenario.getCurrentSceneIndex() - 1,
 					this.scenario.getCurrentSceneIndex());
+			this.scenario.setCurrentSceneIndex(this.scenario.getCurrentSceneIndex() - 1);
 
 			List<String> listOfScenesWO = new ArrayList<>();
 			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
@@ -848,15 +838,6 @@ public class EditScenarioController implements Initializable {
 			}
 			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 			this.sceneListView.setItems(listOfScenesOWOL);
-
-			List<String> listOfScenesLS = new ArrayList<>();
-			listOfScenesLS.add("No Scene Selected");
-			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-			}
-			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-			this.listOfScenesBox.setItems(listOfScenesOL);
-
 		}
 
 	}
@@ -870,6 +851,7 @@ public class EditScenarioController implements Initializable {
 			// swap with the next scene in the list
 			Collections.swap(scenarioObjectList, this.scenario.getCurrentSceneIndex() + 1,
 					this.scenario.getCurrentSceneIndex());
+			this.scenario.setCurrentSceneIndex(this.scenario.getCurrentSceneIndex() + 1);
 
 			List<String> listOfScenesWO = new ArrayList<>();
 			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
@@ -877,15 +859,6 @@ public class EditScenarioController implements Initializable {
 			}
 			ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 			this.sceneListView.setItems(listOfScenesOWOL);
-
-			List<String> listOfScenesLS = new ArrayList<>();
-			listOfScenesLS.add("No Scene Selected");
-			for (int i = 0; i < this.scenario.getScenario().size(); i++) {
-				listOfScenesLS.add(this.scenario.getScenario().get(i).getSceneName());
-			}
-			ObservableList<String> listOfScenesOL = FXCollections.observableArrayList(listOfScenesLS);
-			this.listOfScenesBox.setItems(listOfScenesOL);
-
 		}
 	}
 

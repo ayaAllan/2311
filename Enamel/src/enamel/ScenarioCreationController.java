@@ -83,7 +83,7 @@ public class ScenarioCreationController implements Initializable {
 	private ListView<String> sceneListView;
 
 	@FXML
-	private ObservableList<String> sceneList, sceneListBoxVersion;
+	private ObservableList<String> sceneList;
 
 	@FXML
 	private Button saveSceneButton, newSceneButton, deleteSceneButton;
@@ -154,7 +154,7 @@ public class ScenarioCreationController implements Initializable {
 		letterBox.setItems(letterList);
 
 		sceneList = FXCollections.observableArrayList();
-		sceneListBoxVersion = FXCollections.observableArrayList("No Scene Selected");
+		
 
 		// cant save a scene that hasnt been created yet
 		// also set other buttons disable values based on what the user can do at this
