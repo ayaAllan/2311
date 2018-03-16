@@ -25,6 +25,8 @@ public class SceneAA implements Serializable{
 	private int nob;
 	// need another attrubute for interactionAudio, havent decided on the type yet
 
+	
+	
 	public SceneAA(int noc, int nob) {
 		this.sceneName = null;
 		this.question = null;
@@ -151,9 +153,4 @@ public class SceneAA implements Serializable{
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-
-	public void setQuestionAudio(AudioClip audio) {
-		// TODO
-	}
-
 }
