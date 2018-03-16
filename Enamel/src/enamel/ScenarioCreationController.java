@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -159,15 +160,34 @@ public class ScenarioCreationController implements Initializable {
 		// cant save a scene that hasnt been created yet
 		// also set other buttons disable values based on what the user can do at this
 		// point
-		saveSceneButton.setDisable(true);
-		this.newSceneButton.setDisable(true);
-		this.deleteSceneButton.setDisable(true);
+//		saveSceneButton.setDisable(true);
+//		this.newSceneButton.setDisable(true);
+//		this.deleteSceneButton.setDisable(true);
 
 		// set the recording display to off for now
 		this.liveCircleOption1.setVisible(false);
 		this.liveOption1.setVisible(false);
 		this.liveCircleOption3.setVisible(false);
 		this.liveOption3.setVisible(false);
+		
+		//create an intro scene
+		SceneAA introScene = this.scenario.getCurrentScene();
+		introScene.setName("First Scene");
+		
+		//setup this intro scene in GUI
+		List<String> listOfScenesWO = new ArrayList<>();
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+			listOfScenesWO.add(this.scenario.getScenario().get(i).getSceneName());
+		}
+		ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
+		this.sceneListView.setItems(listOfScenesOWOL);
+		this.currentSceneSetLabel.setText("First Scene");
+		this.sceneNameTextField.setText("First Scene");
+		this.sceneListView.getSelectionModel().select(this.scenario.getCurrentSceneIndex());
+		
+
+		
+		
 
 	}
 
@@ -482,6 +502,7 @@ public class ScenarioCreationController implements Initializable {
 		ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 		this.sceneListView.setItems(listOfScenesOWOL);
 		this.currentSceneSetLabel.setText(sceneName);
+		this.sceneListView.getSelectionModel().select(this.scenario.getCurrentSceneIndex());
 
 		this.newSceneButton.setDisable(false);
 		this.deleteSceneButton.setDisable(false);
@@ -717,6 +738,46 @@ public class ScenarioCreationController implements Initializable {
 		}
 	}
 
+	// run scenario while creating it
+	public void previewScenario(ActionEvent event) throws FileNotFoundException, UnsupportedEncodingException {
+		// create a temporary text file
+		
+
+		String tempFileName = "previewScenarioFile_3DadC6WjBKgYCbsm.txt";
+
+		PrintWriter writer = new PrintWriter("./FactoryScenarios/" + tempFileName, "UTF-8");
+		writer.println("Cell " + this.scenario.getNOC());
+		writer.println("Button " + this.scenario.getNOB());
+
+		Boolean isFirstScene = true;
+
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+
+			SceneAAWriter sceneWriter = new SceneAAWriter(this.scenario.getScenario().get(i), isFirstScene);
+			isFirstScene = false;
+			List<String> sceneTxt = sceneWriter.getSceneAsTxt();
+			for (int j = 0; j < sceneTxt.size(); j++) {
+				writer.println(sceneTxt.get(j));
+			}
+
+		}
+		writer.println(this.scenario.getScenarioName() + " is now finished.  Please close the simulation.");
+		writer.close();
+
+		// run that file with scenario parser class in a seperate thread
+		Thread starterCodeThread = new Thread("Starter Code Thread") {
+			public void run() {
+				try {
+					ScenarioParser s = new ScenarioParser(true);
+					s.setScenarioFile("FactoryScenarios/" + tempFileName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		starterCodeThread.start();
+	}
+
 	// user cannot click save button unless they entered a valid scene name
 	@FXML
 	public void userTyped(KeyEvent event) {
@@ -765,7 +826,7 @@ public class ScenarioCreationController implements Initializable {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-
+		
 		// return user to the main menu so they can load their newly created scenario
 		Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
 		Scene mmScene = new Scene(mmParent);

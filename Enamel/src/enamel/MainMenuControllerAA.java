@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +30,12 @@ public class MainMenuControllerAA implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.visuallyCapableCheckBox.setSelected(true);
+		
+		// delete the temp file that was used for testing a scenario during editing/creation
+		File tempPreviewFile = new File("./FactoryScenarios/previewScenarioFile_3DadC6WjBKgYCbsm.txt");
+		if(tempPreviewFile.exists() && !tempPreviewFile.isDirectory()) {
+			tempPreviewFile.delete();
+		}
 	}
 
 	/*

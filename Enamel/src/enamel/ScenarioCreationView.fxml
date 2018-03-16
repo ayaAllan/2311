@@ -5,11 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
@@ -24,45 +20,6 @@
 
 <VBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="enamel.ScenarioCreationController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
             <HBox alignment="CENTER" layoutY="673.0" prefHeight="70.0" prefWidth="1024.0" spacing="75.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="673.0">
@@ -341,9 +298,9 @@
                   </VBox>
                   <VBox layoutX="740.0" layoutY="-2.0" prefHeight="674.0" prefWidth="283.0">
                      <children>
-                        <HBox prefHeight="90.0" prefWidth="283.0">
+                        <HBox prefHeight="84.0" prefWidth="283.0">
                            <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="325.0" spacing="5.0">
+                              <VBox alignment="BOTTOM_CENTER" maxHeight="65.0" prefHeight="65.0" prefWidth="283.0" spacing="5.0">
                                  <children>
                                     <Label fx:id="currentSceneSetLabel" text="No Scene Selected">
                                        <font>
@@ -374,20 +331,25 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <TitledPane animated="true" layoutX="10.0" layoutY="10.0" prefHeight="629.0" prefWidth="283.0" text="List of Scenes">
+                        <TitledPane animated="true" layoutX="10.0" layoutY="10.0" prefHeight="539.0" prefWidth="283.0" text="List of Scenes">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="281.0">
                                  <children>
-                                    <ListView fx:id="sceneListView" onMouseClicked="#loadSceneOnClick" prefHeight="581.0" prefWidth="283.0" />
+                                    <ListView fx:id="sceneListView" onMouseClicked="#loadSceneOnClick" prefHeight="517.0" prefWidth="283.0" />
                                  </children>
                               </AnchorPane>
                            </content>
                         </TitledPane>
+                        <HBox alignment="CENTER" prefHeight="64.0" prefWidth="283.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#previewScenario" prefHeight="54.0" prefWidth="283.0" text="Preview Teaching Scenario" />
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" layoutX="2.0" layoutY="8.0" prefHeight="86.0" prefWidth="733.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Scenario Builder">
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Teaching Scenario Builder">
                            <font>
                               <Font name="System Bold Italic" size="32.0" />
                            </font>

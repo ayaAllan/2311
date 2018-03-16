@@ -37,7 +37,7 @@ public class SampleScenarioController implements Initializable{
 			public void run() {
 				try {
 					ScenarioParser s = new ScenarioParser(isVisuallyCapable);
-					s.setScenarioFile("./FactoryScenarios/Scenario_1.txt");
+					s.setScenarioFile("./FactoryScenarios/SampleScenarios/Scenario_1.txt");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,7 +59,7 @@ public class SampleScenarioController implements Initializable{
 			public void run() {
 				try {
 					ScenarioParser s = new ScenarioParser(isVisuallyCapable);
-					s.setScenarioFile("./FactoryScenarios/Scenario_2.txt");
+					s.setScenarioFile("./FactoryScenarios/SampleScenarios/Scenario_2.txt");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -81,7 +81,7 @@ public class SampleScenarioController implements Initializable{
 			public void run() {
 				try {
 					ScenarioParser s = new ScenarioParser(isVisuallyCapable);
-					s.setScenarioFile("./FactoryScenarios/Scenario_3.txt");
+					s.setScenarioFile("./FactoryScenarios/SampleScenarios/Scenario_3.txt");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
