@@ -23,6 +23,8 @@ import org.assertj.core.util.Files;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,7 +39,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
@@ -87,7 +91,7 @@ public class ScenarioCreationController implements Initializable {
 	private ObservableList<String> sceneList;
 
 	@FXML
-	private Button saveSceneButton, newSceneButton, deleteSceneButton;
+	private Button saveSceneButton, newSceneButton, deleteSceneButton, previewScenarioButton, mmButton, finishScenarioButton;
 
 	// all the audio attributes:
 	private Boolean isRecordingOption1 = false;
@@ -99,6 +103,13 @@ public class ScenarioCreationController implements Initializable {
 	@FXML
 	private Label liveOption1, liveOption3;
 	private Recorder recorder = new Recorder();
+	
+	final KeyCombination keyCombMainMenu = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombSaveScene = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombNewScene = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombDeleteScene = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombFinishScenario = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombPreviewScenario = new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN);
 
 	// create a scenario to keep track of all the scenes the user creates within the
 	// same scenario
@@ -109,7 +120,7 @@ public class ScenarioCreationController implements Initializable {
 
 	}
 
-	public void initializeScenario(String name, int nob, int noc) {
+	public void initializeScenario(String name, int nob, int noc, Scene createScenarioScene) {
 
 		// initialize a new scene and scenario, the scenario will be constructed with
 		// the scenario name, number of buttons, and number of cells from the previous
@@ -186,7 +197,25 @@ public class ScenarioCreationController implements Initializable {
 		this.sceneListView.getSelectionModel().select(this.scenario.getCurrentSceneIndex());
 		
 
-		
+		createScenarioScene.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler() {
+
+			@Override
+			public void handle(Event arg0) {
+				if (keyCombMainMenu.match((KeyEvent) arg0)) {
+	                mmButton.fire();
+	            } else if(keyCombDeleteScene.match((KeyEvent)arg0)) {
+	            	deleteSceneButton.fire();
+	            } else if(keyCombSaveScene.match((KeyEvent)arg0)) {
+	            	saveSceneButton.fire();
+	            } else if(keyCombNewScene.match((KeyEvent)arg0)) {
+	            	newSceneButton.fire();
+	            } else if(keyCombPreviewScenario.match((KeyEvent)arg0)) {
+	            	previewScenarioButton.fire();
+	            } else if(keyCombFinishScenario.match((KeyEvent)arg0)) {
+	            	finishScenarioButton.fire();
+	            }
+			}
+	    });
 		
 
 	}
@@ -440,12 +469,17 @@ public class ScenarioCreationController implements Initializable {
 				"If you return to the main menu now without saving your scenario, all progress will be lost!\n Click no to stay. \n Click yes to lose all progress",
 				"Please Confirm:", JOptionPane.YES_NO_OPTION);
 		if (value == JOptionPane.YES_OPTION) {
-			Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("MainMenuViewAA.fxml"));
+			Parent mmParent = loader.load();
+			
 			Scene mmScene = new Scene(mmParent);
-
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(mmScene);
 			window.show();
+			
+			MainMenuControllerAA controller = loader.getController();
+			controller.initializeMainMenu(mmScene);
 
 		} else {
 			// do nothing
@@ -648,7 +682,7 @@ public class ScenarioCreationController implements Initializable {
 
 	public void deleteSceneOnClick(ActionEvent event) {
 
-		if (this.currentSceneSetLabel.getText().equals("No Scene Selected")) {
+		if (this.currentSceneSetLabel.getText().equals("No Scene Selected") || this.currentSceneSetLabel.getText().equals("Unnamed New Scene")) {
 			// do nothing, there is nothing to delete
 		} else {
 			String currentlySelectedScene = this.currentSceneSetLabel.getText();
@@ -828,11 +862,17 @@ public class ScenarioCreationController implements Initializable {
 		}
 		
 		// return user to the main menu so they can load their newly created scenario
-		Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("MainMenuViewAA.fxml"));
+		Parent mmParent = loader.load();
+		
 		Scene mmScene = new Scene(mmParent);
-
 		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		window.setScene(mmScene);
 		window.show();
+		
+		MainMenuControllerAA controller = loader.getController();
+		controller.initializeMainMenu(mmScene);
 	}
+	
 }

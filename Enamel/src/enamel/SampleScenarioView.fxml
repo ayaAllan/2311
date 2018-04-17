@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -16,19 +15,18 @@
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#sampleScenarioButton1" prefHeight="55.0" prefWidth="167.0" text="Sample Scenario 1" />
-            <Button mnemonicParsing="false" onAction="#sampleScenarioButton2" prefHeight="55.0" prefWidth="167.0" text="Sample Scenario 2" />
-            <Button mnemonicParsing="false" onAction="#sampleScenarioButton3" prefHeight="55.0" prefWidth="167.0" text="Sample Scenario 3" />
+            <Button fx:id="s1Button" mnemonicParsing="false" onAction="#sampleScenarioButton1" prefHeight="55.0" prefWidth="167.0" text="Sample Scenario 1" />
+            <Button fx:id="s2Button" mnemonicParsing="false" onAction="#sampleScenarioButton2" prefHeight="55.0" prefWidth="167.0" text="Sample Scenario 2" />
+            <Button fx:id="s3Button" mnemonicParsing="false" onAction="#sampleScenarioButton3" prefHeight="55.0" prefWidth="167.0" text="Sample Scenario 3" />
          </children>
       </VBox>
-      <HBox alignment="CENTER" prefHeight="77.0" prefWidth="400.0" spacing="30.0">
+      <HBox alignment="TOP_CENTER" prefHeight="72.0" prefWidth="400.0" spacing="30.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#mainMenuButton" prefHeight="36.0" prefWidth="135.0" text="Main Menu">
+            <Button fx:id="mmButton" mnemonicParsing="false" onAction="#mainMenuButton" prefHeight="36.0" prefWidth="135.0" text="Main Menu">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <CheckBox fx:id="visuallyCapableCheckBox" mnemonicParsing="false" prefHeight="54.0" prefWidth="193.0" text="Are you visually capable?" />
          </children>
       </HBox>
    </children>

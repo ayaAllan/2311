@@ -1,9 +1,12 @@
 package enamel;
 
 import java.io.File;
-
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -19,6 +22,8 @@ import org.assertj.core.util.Files;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,7 +38,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
@@ -83,7 +90,7 @@ public class EditScenarioController implements Initializable {
 	private ObservableList<String> sceneList;
 
 	@FXML
-	private Button saveSceneButton, newSceneButton, deleteSceneButton;
+	private Button saveSceneButton, newSceneButton, deleteSceneButton, previewScenarioButton, mmButton, finishScenarioButton;
 
 	// all the audio attributes:
 	private Boolean isRecordingOption1 = false;
@@ -95,6 +102,13 @@ public class EditScenarioController implements Initializable {
 	@FXML
 	private Label liveOption1, liveOption3;
 	private Recorder recorder = new Recorder();
+	
+	final KeyCombination keyCombMainMenu = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombSaveScene = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombNewScene = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombDeleteScene = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombFinishScenario = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombPreviewScenario = new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN);
 
 	// create a scenario to keep track of all the scenes the user creates within the
 	// same scenario
@@ -105,7 +119,7 @@ public class EditScenarioController implements Initializable {
 
 	}
 
-	public void initializeScenario(ScenarioAA scenarioPassed) {
+	public void initializeScenario(ScenarioAA scenarioPassed, Scene editScenarioScene) {
 
 		// initialize a new scene and scenario, the scenario will be constructed with
 		// the scenario name, number of buttons, and number of cells from the previous
@@ -209,6 +223,26 @@ public class EditScenarioController implements Initializable {
 		}
 		ObservableList<String> listOfScenesOWOL = FXCollections.observableArrayList(listOfScenesWO);
 		this.sceneListView.setItems(listOfScenesOWOL);
+		
+		editScenarioScene.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler() {
+
+			@Override
+			public void handle(Event arg0) {
+				if (keyCombMainMenu.match((KeyEvent) arg0)) {
+	                mmButton.fire();
+	            } else if(keyCombDeleteScene.match((KeyEvent)arg0)) {
+	            	deleteSceneButton.fire();
+	            } else if(keyCombSaveScene.match((KeyEvent)arg0)) {
+	            	saveSceneButton.fire();
+	            } else if(keyCombNewScene.match((KeyEvent)arg0)) {
+	            	newSceneButton.fire();
+	            } else if(keyCombPreviewScenario.match((KeyEvent)arg0)) {
+	            	previewScenarioButton.fire();
+	            } else if(keyCombFinishScenario.match((KeyEvent)arg0)) {
+	            	finishScenarioButton.fire();
+	            }
+			}
+	    });
 	}
 
 	public void recordAudioButtonOption1(ActionEvent event) {
@@ -360,88 +394,6 @@ public class EditScenarioController implements Initializable {
 		} else {
 			this.scenario.getCurrentScene().getBrailleCells().get(index).raiseOnePin(1);
 		}
-		// leave this here for testing purposes in the future
-		// trying to print to test
-		// Boolean index11 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(0);
-		// Boolean index12 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(1);
-		// Boolean index13 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(2);
-		// Boolean index14 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(3);
-		// Boolean index15 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(4);
-		// Boolean index16 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(5);
-		// Boolean index17 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(6);
-		// Boolean index18 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(0).getPinState(7);
-		//
-		// Boolean index21 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(0);
-		// Boolean index22 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(1);
-		// Boolean index23 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(2);
-		// Boolean index24 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(3);
-		// Boolean index25 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(4);
-		// Boolean index26 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(5);
-		// Boolean index27 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(6);
-		// Boolean index28 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(1).getPinState(7);
-		//
-		// Boolean index31 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(0);
-		// Boolean index32 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(1);
-		// Boolean index33 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(2);
-		// Boolean index34 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(3);
-		// Boolean index35 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(4);
-		// Boolean index36 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(5);
-		// Boolean index37 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(6);
-		// Boolean index38 =
-		// this.scenario.getCurrentScene().getBrailleCells().get(2).getPinState(7);
-		//
-		//
-		// System.out.println("radio1 clicked");
-		// System.out.println(index11);
-		// System.out.println(index12);
-		// System.out.println(index13);
-		// System.out.println(index14);
-		// System.out.println(index15);
-		// System.out.println(index16);
-		// System.out.println(index17);
-		// System.out.println(index18);
-		// System.out.println("----------------------------------");
-		// System.out.println(index21);
-		// System.out.println(index22);
-		// System.out.println(index23);
-		// System.out.println(index24);
-		// System.out.println(index25);
-		// System.out.println(index26);
-		// System.out.println(index27);
-		// System.out.println(index28);
-		// System.out.println("----------------------------------");
-		// System.out.println(index31);
-		// System.out.println(index32);
-		// System.out.println(index33);
-		// System.out.println(index34);
-		// System.out.println(index35);
-		// System.out.println(index36);
-		// System.out.println(index37);
-		// System.out.println(index38);
-		// System.out.println("----------------------------------");
 	}
 
 	public void radioButtonClicked2(ActionEvent event) {
@@ -532,29 +484,6 @@ public class EditScenarioController implements Initializable {
 		this.scenario.getCurrentScene().getInteractionTextInput().put(buttonNumber, inputedText);
 	}
 
-	public void saveInteractionButton(ActionEvent event) {
-
-		// get the current button number that the user wants to add interactions to
-		int currentButtonNumber = this.nobBox.getValue();
-
-		// save the preset interaction for the current button number in the current
-		// scene object
-		String interactionString = interactionBox.getValue();
-		this.scenario.getCurrentScene().setInteractionPreset(currentButtonNumber, interactionString);
-
-		// save the text-to-speach input for the current button number in the current
-		// scene object
-		if (interactionTextArea.getText() != "") {
-			String interactionTextInput = interactionTextArea.getText();
-			this.scenario.getCurrentScene().setInteractionTextInput(currentButtonNumber, interactionTextInput);
-		}
-
-		// when the user clicks the button, set the drop down menu back to 'no
-		// interaction'
-		this.interactionBox.setValue("No Interaction");
-		this.interactionTextArea.clear();
-	}
-
 	/*
 	 * clicking this button returns the user to the main menu
 	 */
@@ -565,12 +494,17 @@ public class EditScenarioController implements Initializable {
 				"If you return to the main menu now without saving your scenario, all progress will be lost!\n Click no to stay. \n Click yes to lose all progress",
 				"Please Confirm:", JOptionPane.YES_NO_OPTION);
 		if (value == JOptionPane.YES_OPTION) {
-			Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("MainMenuViewAA.fxml"));
+			Parent mmParent = loader.load();
+			
 			Scene mmScene = new Scene(mmParent);
-
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(mmScene);
 			window.show();
+			
+			MainMenuControllerAA controller = loader.getController();
+			controller.initializeMainMenu(mmScene);
 
 		} else {
 			// do nothing
@@ -861,6 +795,46 @@ public class EditScenarioController implements Initializable {
 			this.sceneListView.setItems(listOfScenesOWOL);
 		}
 	}
+	
+	// run scenario while creating it
+	public void previewScenario(ActionEvent event) throws FileNotFoundException, UnsupportedEncodingException {
+		// create a temporary text file
+		
+
+		String tempFileName = "previewScenarioFile_3DadC6WjBKgYCbsm.txt";
+
+		PrintWriter writer = new PrintWriter("./FactoryScenarios/" + tempFileName, "UTF-8");
+		writer.println("Cell " + this.scenario.getNOC());
+		writer.println("Button " + this.scenario.getNOB());
+
+		Boolean isFirstScene = true;
+
+		for (int i = 0; i < this.scenario.getScenario().size(); i++) {
+
+			SceneAAWriter sceneWriter = new SceneAAWriter(this.scenario.getScenario().get(i), isFirstScene);
+			isFirstScene = false;
+			List<String> sceneTxt = sceneWriter.getSceneAsTxt();
+			for (int j = 0; j < sceneTxt.size(); j++) {
+				writer.println(sceneTxt.get(j));
+			}
+
+		}
+		writer.println(this.scenario.getScenarioName() + " is now finished.  Please close the simulation.");
+		writer.close();
+
+		// run that file with scenario parser class in a seperate thread
+		Thread starterCodeThread = new Thread("Starter Code Thread") {
+			public void run() {
+				try {
+					ScenarioParser s = new ScenarioParser(true);
+					s.setScenarioFile("FactoryScenarios/" + tempFileName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		starterCodeThread.start();
+	}
 
 	// user cannot click save button unless they entered a valid scene name
 	@FXML
@@ -902,15 +876,34 @@ public class EditScenarioController implements Initializable {
 		}
 		writer.println(this.scenario.getScenarioName() + " is now finished.  Please close the simulation.");
 		writer.close();
+		
+		// save object as binary file to load it later in editor
+		String fileName = this.scenario.getScenarioName() + "_" + "storage.bin";
+		String filePath = "./FactoryScenarios/ScenarioStorage/" + fileName;
+
+		try {
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePath));
+			os.writeObject(this.scenario);
+			os.close();
+		} catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		
 
 		// return user to the main menu so they can load their newly created scenario
-		Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("MainMenuViewAA.fxml"));
+		Parent mmParent = loader.load();
+		
 		Scene mmScene = new Scene(mmParent);
-
 		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		window.setScene(mmScene);
 		window.show();
-
+		
+		MainMenuControllerAA controller = loader.getController();
+		controller.initializeMainMenu(mmScene);
 	}
-
+	
 }

@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +23,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class EditScenarioIntroController implements Initializable{
@@ -29,26 +35,50 @@ public class EditScenarioIntroController implements Initializable{
 	private String scenarioFileName;
 
 	@FXML
-	private Button editScenarioButton;
+	private Button continueButton, mmButton;
 	
 	@FXML
 	private Label selectedScenarioLabel;
+	
+	final KeyCombination keyCombMainMenu = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombContinue = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.editScenarioButton.setDisable(true);
+		this.continueButton.setDisable(true);
+	}
+	
+	public void initializeEditIntro(Scene editScenarioSetupScene) {
+		
+		editScenarioSetupScene.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler() {
+
+			@Override
+			public void handle(Event arg0) {
+				if (keyCombMainMenu.match((KeyEvent) arg0)) {
+	                mmButton.fire();
+	            } else if(keyCombContinue.match((KeyEvent)arg0)) {
+	            	continueButton.fire();
+	            }
+			}
+	    });
+		
 	}
 
 	/*
 	 * clicking this button returns the user to the main menu
 	 */
 	public void mainMenuButton(ActionEvent event) throws IOException {
-		Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("MainMenuViewAA.fxml"));
+		Parent mmParent = loader.load();
+		
 		Scene mmScene = new Scene(mmParent);
-
 		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		window.setScene(mmScene);
 		window.show();
+		
+		MainMenuControllerAA controller = loader.getController();
+		controller.initializeMainMenu(mmScene);
 	}
 
 	/*
@@ -86,16 +116,16 @@ public class EditScenarioIntroController implements Initializable{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("EditScenarioView.fxml"));
 
-			Parent mmParent = loader.load();
-			Scene mmScene = new Scene(mmParent);
+			Parent editScenarioParent = loader.load();
+			Scene editScenarioScene = new Scene(editScenarioParent);
 
 
 			EditScenarioController controller = loader.getController();
-			controller.initializeScenario(this.scenario);
+			controller.initializeScenario(this.scenario, editScenarioScene);
 
 
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			window.setScene(mmScene);
+			window.setScene(editScenarioScene);
 			window.show();
 		}
 		
@@ -128,7 +158,7 @@ public class EditScenarioIntroController implements Initializable{
 			if (this.selectedScenarioLabel.getText().equals("No Scenario Selected")) {
 				// dont enable them to load
 			} else {
-				this.editScenarioButton.setDisable(false);
+				this.continueButton.setDisable(false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

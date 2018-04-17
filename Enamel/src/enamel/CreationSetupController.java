@@ -3,6 +3,8 @@ package enamel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +14,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -38,7 +43,10 @@ public class CreationSetupController implements Initializable {
 	@FXML
 	private TextField scenarioNameTextField;
 	@FXML
-	private Button continueButton;
+	private Button continueButton, mmButton;
+	
+	final KeyCombination keyCombMainMenu = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+	final KeyCombination keyCombContinue = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
 
 	/*
 	 * Setup the creation window with the drop down window for the number of buttons
@@ -59,12 +67,17 @@ public class CreationSetupController implements Initializable {
 	 * clicking this button returns the user to the main menu
 	 */
 	public void mainMenuButton(ActionEvent event) throws IOException {
-		Parent mmParent = FXMLLoader.load(getClass().getResource("MainMenuViewAA.fxml"));
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("MainMenuViewAA.fxml"));
+		Parent mmParent = loader.load();
+		
 		Scene mmScene = new Scene(mmParent);
-
 		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		window.setScene(mmScene);
 		window.show();
+		
+		MainMenuControllerAA controller = loader.getController();
+		controller.initializeMainMenu(mmScene);
 	}
 
 	/*
@@ -86,17 +99,17 @@ public class CreationSetupController implements Initializable {
 		loader.setLocation(getClass().getResource("ScenarioCreationView.fxml"));
 
 		// loads the next window which will be the scenario creation
-		Parent mmParent = loader.load();
-		Scene mmScene = new Scene(mmParent);
+		Parent createScenarioParent = loader.load();
+		Scene createScenarioScene = new Scene(createScenarioParent);
 
 		// after the scene is set, forward the number of buttons, number of braille
 		// cells and scenario name to the scenario creation controller
 		ScenarioCreationController controller = loader.getController();
-		controller.initializeScenario(primitiveScenarioName, nobBox.getValue(), noc);
+		controller.initializeScenario(primitiveScenarioName, nobBox.getValue(), noc, createScenarioScene);
 
 		// go to the scenario creation window
 		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		window.setScene(mmScene);
+		window.setScene(createScenarioScene);
 		window.show();
 
 	}
@@ -108,6 +121,21 @@ public class CreationSetupController implements Initializable {
 		} else {
 			continueButton.setDisable(true);
 		}
+	}
+
+	public void initializeCreationSetup(Scene creationSetupScene) {
+		creationSetupScene.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler() {
+
+			@Override
+			public void handle(Event arg0) {
+				if (keyCombContinue.match((KeyEvent) arg0)) {
+	                continueButton.fire();
+	            } else if(keyCombMainMenu.match((KeyEvent)arg0)) {
+	            	mmButton.fire();
+	            }
+			}
+	    });
+		
 	}
 
 }

@@ -1,60 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="768" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="enamel.MainMenuControllerAA">
-   <AnchorPane prefHeight="768" prefWidth="1000.0">
+<VBox fx:id="screenRegionVBox" prefHeight="768" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="enamel.MainMenuControllerAA">
+   <AnchorPane fx:id="mainMenuAnchorPane" prefHeight="768" prefWidth="1000.0">
       <children>
       
                               
                               
                               
                               
-                              	<Button layoutX="435.0" layoutY="265.0" onAction="#loadScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Load Scenario">
+                              	<Button fx:id="lsButton" layoutX="435.0" layoutY="265.0" onAction="#loadScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Load Scenario">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
-         <Button layoutX="437.0" layoutY="166.0" mnemonicParsing="false" onAction="#createScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Create  Scenario">
+         <Button fx:id="csButton" layoutX="437.0" layoutY="166.0" mnemonicParsing="false" onAction="#createScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Create  Scenario">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
-         <Button layoutX="435.0" layoutY="465.0" onAction="#sampleScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Sample Scenarios">
+         <Button fx:id="ssButton" layoutX="435.0" layoutY="465.0" onAction="#sampleScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Sample Scenarios">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
-         <Button layoutX="435.0" layoutY="569.0" prefHeight="50.0" prefWidth="151.0" text="User Manual">
+         <Button fx:id="umButton" layoutX="435.0" layoutY="569.0" prefHeight="50.0" prefWidth="151.0" text="User Manual">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
          <Label alignment="CENTER" layoutX="1.0" layoutY="98.0" prefHeight="17.0" prefWidth="1024.0" text="This application aims to provide visually-impaired users with the ability to help kids learn to how to read braille." />
-         <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1024.0">
-           <menus>
-             <Menu mnemonicParsing="false" text="File">
-               <items>
-                 <MenuItem mnemonicParsing="false" text="Close" />
-               </items>
-             </Menu>
-             <Menu mnemonicParsing="false" text="Edit">
-               <items>
-                 <MenuItem mnemonicParsing="false" text="Delete" />
-               </items>
-             </Menu>
-             <Menu mnemonicParsing="false" text="Help">
-               <items>
-                 <MenuItem mnemonicParsing="false" text="About" />
-               </items>
-             </Menu>
-           </menus>
-         </MenuBar>
          <Label alignment="CENTER" layoutY="232.0" prefHeight="17.0" prefWidth="1024.0" text="Create a new teaching scenario for your student(s) using a convenient application." />
          <Label alignment="CENTER" layoutX="-2.0" layoutY="335.0" prefHeight="17.0" prefWidth="1024.0" text="Choose an existing teaching scenario from one that has been previously created or one from the file browser." />
          <Label alignment="CENTER" layoutX="-1.0" layoutY="536.0" prefHeight="17.0" prefWidth="1024.0" text="Some preset scenarios for you to try out yourself to get an idea of what our application can do." />
@@ -62,8 +39,7 @@
             <font>
                <Font name="Broadway" size="32.0" />
             </font></Text>
-         <CheckBox fx:id="visuallyCapableCheckBox" layoutX="435.0" layoutY="671.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="224.0" text="Are you visually capable?" />
-         <Button layoutX="435.0" layoutY="365.0" onAction="#editScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Edit Scenario">
+         <Button fx:id="esButton" layoutX="435.0" layoutY="365.0" onAction="#editScenarioButton" prefHeight="50.0" prefWidth="151.0" text="Edit Scenario">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font>

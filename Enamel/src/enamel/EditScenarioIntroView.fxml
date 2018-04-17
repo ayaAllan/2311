@@ -13,12 +13,12 @@
          <children>
             <HBox alignment="TOP_CENTER" layoutY="330.0" prefHeight="65.0" prefWidth="400.0" spacing="75.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#mainMenuButton" prefHeight="42.0" prefWidth="135.0" text="Main Menu">
+                  <Button fx:id="mmButton" mnemonicParsing="false" onAction="#mainMenuButton" prefHeight="42.0" prefWidth="135.0" text="Main Menu">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="editScenarioButton" mnemonicParsing="false" onAction="#editScenarioButton" prefHeight="42.0" prefWidth="135.0" text="Edit Scenario">
+                  <Button fx:id="continueButton" mnemonicParsing="false" onAction="#editScenarioButton" prefHeight="42.0" prefWidth="135.0" text="Continue">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
