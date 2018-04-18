@@ -61,7 +61,7 @@ public class SceneAA implements Serializable{
 	}
 	
 	public String getInteractionAudioNameAtIndex(int i) {
-		if(i > nob) {
+		if(i > nob || i < 1) {
 			throw new IndexOutOfBoundsException();
 		} else {
 			return this.interactionAudioNames.get(i);
@@ -115,7 +115,7 @@ public class SceneAA implements Serializable{
 	}
 
 	public void setPinsScene(List<Boolean> radioButtons, int index) {
-		String pinsString = null;
+		String pinsString = "";
 		for (int i = 0; i < 8; i++) {
 			if (radioButtons.get(i) == true) {
 				pinsString = pinsString + "1";
