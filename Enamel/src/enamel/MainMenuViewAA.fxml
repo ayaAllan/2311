@@ -32,9 +32,9 @@
                <Font name="Arial Black" size="12.0" />
             </font></Button>
          <Label alignment="CENTER" layoutX="1.0" layoutY="98.0" prefHeight="17.0" prefWidth="1024.0" text="This application aims to provide visually-impaired users with the ability to help kids learn to how to read braille." />
-         <Label alignment="CENTER" layoutY="232.0" prefHeight="17.0" prefWidth="1024.0" text="Create a new teaching scenario for your student(s) using a convenient application." />
-         <Label alignment="CENTER" layoutX="-2.0" layoutY="335.0" prefHeight="17.0" prefWidth="1024.0" text="Choose an existing teaching scenario from one that has been previously created or one from the file browser." />
-         <Label alignment="CENTER" layoutX="-1.0" layoutY="536.0" prefHeight="17.0" prefWidth="1024.0" text="Some preset scenarios for you to try out yourself to get an idea of what our application can do." />
+         <Label alignment="CENTER" layoutY="232.0" prefHeight="17.0" prefWidth="1024.0" text="Create a new custom teaching scenario." />
+         <Label alignment="CENTER" layoutX="-2.0" layoutY="335.0" prefHeight="17.0" prefWidth="1024.0" text="Play a previously created scenario." />
+         <Label alignment="CENTER" layoutX="-1.0" layoutY="536.0" prefHeight="17.0" prefWidth="1024.0" text="Preset teaching scenarios." />
          <Text layoutX="-2.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the Authoring App!" textAlignment="CENTER" wrappingWidth="1024.0000076293945">
             <font>
                <Font name="Broadway" size="32.0" />
@@ -45,7 +45,7 @@
             </font>
          </Button>
          <Label alignment="CENTER" layoutX="-1.0" layoutY="433.0" prefHeight="17.0" prefWidth="1024.0" text="Edit a previously created scenario." />
-         <Label alignment="CENTER" layoutX="-2.0" layoutY="637.0" prefHeight="17.0" prefWidth="1024.0" text="Need Help? Try reading our usermanual.  It is visually impaired friendly." />
+         <Label alignment="CENTER" layoutX="-2.0" layoutY="637.0" prefHeight="17.0" prefWidth="1024.0" text="Need Help? Try reading our usermanual." />
       </children>
    </AnchorPane>
 
