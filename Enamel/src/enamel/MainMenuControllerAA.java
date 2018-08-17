@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -183,5 +184,16 @@ public class MainMenuControllerAA implements Initializable {
 			}
 		};
 		starterCodeThread.start();
+	}
+	
+	public void userManualOnClick() {
+		if (Desktop.isDesktopSupported()) {
+		    try {
+		        File myFile = new File("./Documentation/EECS 2311 User Manual.pdf");
+		        Desktop.getDesktop().open(myFile);
+		    } catch (IOException ex) {
+		        // no application registered for PDFs
+		    }
+		}
 	}
 }

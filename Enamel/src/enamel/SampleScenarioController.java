@@ -24,8 +24,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class SampleScenarioController implements Initializable {
-	@FXML
-	private CheckBox visuallyCapableCheckBox;
+
 
 	@FXML
 	private Button s1Button, s2Button, s3Button, mmButton;
@@ -100,11 +99,25 @@ public class SampleScenarioController implements Initializable {
 
 	public void sampleScenarioButton2() {
 		// check if user is visually capable and set the value in the scenario parser
-		Boolean isVisuallyCapable;
-		if (this.visuallyCapableCheckBox.isSelected()) {
-			isVisuallyCapable = true;
-		} else {
-			isVisuallyCapable = false;
+		try {
+			FileReader reader = new FileReader("SettingsAA/settingsAA.txt");
+			BufferedReader bufferedReader = new BufferedReader(reader);
+
+			String visualCapabilitySetting = bufferedReader.readLine();
+
+			if (visualCapabilitySetting.equals("isVisuallyCapable = true")) {
+				isVisuallyCapable = true;
+			} else if (visualCapabilitySetting.equals("isVisuallyCapable = false")) {
+				isVisuallyCapable = false;
+			} else {
+				// means error, just set to default for now
+				isVisuallyCapable = true;
+			}
+
+			reader.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		Thread starterCodeThread = new Thread("Starter Code Thread") {
@@ -122,11 +135,25 @@ public class SampleScenarioController implements Initializable {
 
 	public void sampleScenarioButton3() {
 		// check if user is visually capable and set the value in the scenario parser
-		Boolean isVisuallyCapable;
-		if (this.visuallyCapableCheckBox.isSelected()) {
-			isVisuallyCapable = true;
-		} else {
-			isVisuallyCapable = false;
+		try {
+			FileReader reader = new FileReader("SettingsAA/settingsAA.txt");
+			BufferedReader bufferedReader = new BufferedReader(reader);
+
+			String visualCapabilitySetting = bufferedReader.readLine();
+
+			if (visualCapabilitySetting.equals("isVisuallyCapable = true")) {
+				isVisuallyCapable = true;
+			} else if (visualCapabilitySetting.equals("isVisuallyCapable = false")) {
+				isVisuallyCapable = false;
+			} else {
+				// means error, just set to default for now
+				isVisuallyCapable = true;
+			}
+
+			reader.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		Thread starterCodeThread = new Thread("Starter Code Thread") {

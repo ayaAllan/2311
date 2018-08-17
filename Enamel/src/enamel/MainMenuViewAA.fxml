@@ -27,7 +27,7 @@
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
-         <Button fx:id="umButton" layoutX="435.0" layoutY="569.0" prefHeight="50.0" prefWidth="151.0" text="User Manual">
+         <Button fx:id="umButton" layoutX="435.0" layoutY="569.0" onAction="#userManualOnClick" prefHeight="50.0" prefWidth="151.0" text="User Manual">
             <font>
                <Font name="Arial Black" size="12.0" />
             </font></Button>
