@@ -192,7 +192,7 @@ public class MainMenuControllerAA implements Initializable {
 		        File myFile = new File("./Documentation/EECS 2311 User Manual.pdf");
 		        Desktop.getDesktop().open(myFile);
 		    } catch (IOException ex) {
-		        // no application registered for PDFs
+		        
 		    }
 		}
 	}
