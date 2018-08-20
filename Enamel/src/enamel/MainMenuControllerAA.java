@@ -189,7 +189,7 @@ public class MainMenuControllerAA implements Initializable {
 	public void userManualOnClick() {
 		if (Desktop.isDesktopSupported()) {
 		    try {
-		        File myFile = new File("./Documentation/EECS 2311 User Manual.pdf");
+		        File myFile = new File("./Documentation/EECS 2311 User Manual vF.pdf");
 		        Desktop.getDesktop().open(myFile);
 		    } catch (IOException ex) {
 		        
